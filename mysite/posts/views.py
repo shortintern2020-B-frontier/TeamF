@@ -1,6 +1,8 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template import loader
+from django.contrib.auth.models import User
+from django.urls import reverse
 
 from .models import Comment
 
@@ -30,5 +32,11 @@ def comment_post(request, post_id, user_id, comment):
     Author:
         Masato Umakoshi
     """
-    return HttpResponse(
-        f"Post id: {post_id}, User id: {user_id}, comment content: {comment}")
+    comment = Comment(
+        user=User.get(pk=user_id),
+        # post=Post.get(pk=post_id),
+        comment=comment
+    )
+    comment.save()
+    # post_id may be post.id??
+    return HttpResponseRedirect(reverse('posts:show', args=(post_id,)))
