@@ -1,8 +1,28 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.template import loader
+
+from models import Comment
 
 
 # Create your views here.
+def show(request, post_id):
+    """Showing single post.
+
+    Author:
+        Masato Umakoshi
+    """
+    # post = Post.objects.get(pk=post_id)
+    comments = Comment.objects.filter(post__id=post_id)
+
+    template = loader.get_template('posts/index.html')
+    context = {
+        # 'post': post,
+        'comments': comments
+    }
+    return HttpResponse(template.render(context, request))
+
+
 def comment_post(request, post_id, user_id, comment):
     """Posting comment function.
 
