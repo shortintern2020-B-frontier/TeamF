@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.template import loader
 
-from models import Comment
+from .models import Comment
 
 
 # Create your views here.
