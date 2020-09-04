@@ -8,7 +8,7 @@
     {% if comments %}
       <ul>
         {% for comment in comments %}
-        <li><a href="posts/{{ comment.id }}/">{{ comment.comment }}</a></li>
+        <li>{{ comment.comment }}</li>
         {% endfor %}
       </ul>
     {% else %}
