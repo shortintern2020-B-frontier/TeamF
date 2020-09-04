@@ -5,10 +5,13 @@
     <title>My test page</title>
   </head>
   <body>
+    <h1>Post/Show</h1>
     {% if comments %}
       <ul>
         {% for comment in comments %}
-        <li>{{ comment.comment }}</li>
+        <li>
+          {{ comment.comment }}
+        </li>
         {% endfor %}
       </ul>
     {% else %}
