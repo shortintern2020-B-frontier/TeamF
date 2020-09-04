@@ -3,6 +3,20 @@ from django.db import models
 
 # Create your models here.
 class Comment(models.Model):
+    """Comment model for comment on threads.
+
+    Scheme:
+        comment: varchar(500)
+        created_at: timestamp
+        updated_at: timestamp
+        is_deleted: bool
+
+    Note:
+        is_deleted is `True` means that the comment is deleted.
+
+    Author:
+        Masato Umakoshi
+    """
     # post = models.ForeignKey(Post)
     # user = models.ForeignKey(User)
     comment = models.CharField(max_length=200)
