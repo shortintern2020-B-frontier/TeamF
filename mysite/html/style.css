@@ -1,0 +1,138 @@
+@charset "utf-8";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header, footer, main, aside {
+  display: block;
+}
+
+body, #wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#wrapper {
+  background: #bcf;
+  font-size: 100%;
+  font-family: sans-serif;
+}
+
+header {
+  padding: 0.5em;
+  background: #15a;
+  color: #fff;
+  font-size: 200%;
+  font-weight: bold;
+  text-align: center;
+}
+
+footer {
+  clear: both;
+  margin-top: auto;
+  padding: 1.5em;
+  background: #222;
+  color: #fff;
+  text-align: center;
+}
+
+ul {
+  padding: 0.5em;
+}
+
+li {
+  margin-left: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+#content {
+  width: 100%;
+  min-width: 320px;
+  margin: 2em 0;
+  padding: 0 0.5em;
+}
+
+/* Main */
+main {
+  padding: 0.5em;
+  background: #fff;
+}
+
+main h1 {
+  margin-top: 0;
+  margin-bottom: 1em;
+  padding: 0.5em 0.4em;
+  border-bottom: #189 2px solid;
+  border-left: #189 20px solid;
+  line-height: 1.5em;
+  background: #eee;
+  color: #333;
+  font-size: 140%;
+  font-weight: bold;
+}
+
+main h2 {
+  margin-top: 2em;
+  margin-bottom: 1em;
+  padding: 0.5em 0.7em;
+  border-bottom: #eb0 2px solid;
+  border-left: #eb0 20px solid;
+  line-height: 1.5em;
+  background: #eee;
+  color: #333;
+  font-size: 120%;
+  font-weight: bold;
+}
+
+main h3 {
+  margin-top: 2em;
+  margin-bottom: 1em;
+  padding: 0.5em 1.2em;
+  border-bottom: #222 2px solid;
+  border-left: #222 20px solid;
+  line-height: 1.5em;
+  background: #eee;
+  color: #333;
+  font-size: 100%;
+  font-weight: bold;
+}
+
+.scroll_list {
+  margin: 0 auto;
+  padding: 0;
+  width: 90%;
+  direction: rtl;
+  overflow-x: auto;
+  white-space: nowrap;
+  overflow-scrolling: touch;
+  -webkit-overflow-scrolling: touch;
+}
+
+.post_box {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 10px;
+  min-width: 120px;
+  height: 500px;
+  background: #ddd;
+  direction: ltr;
+  text-align: left;
+  white-space: normal;
+  writing-mode: vertical-rl;
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+  #content {
+    overflow: hidden;
+    max-width: 960px;
+    margin: 2em auto;
+  }
+}
