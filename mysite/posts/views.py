@@ -13,9 +13,10 @@ def show(request, post_id):
         Masato Umakoshi
     """
     # post = Post.objects.get(pk=post_id)
-    comments = Comment.objects.filter(post__id=post_id)
+    # comments = Comment.objects.filter(post__id=post_id)
+    comments = Comment.objects.all()
 
-    template = loader.get_template('posts/index.html')
+    template = loader.get_template('posts/show.html')
     context = {
         # 'post': post,
         'comments': comments
