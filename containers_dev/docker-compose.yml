@@ -1,0 +1,45 @@
+version: '3.7'
+
+volumes:
+  pgdata:
+    driver_opts:
+      type: none
+      device: $PWD/dbdata
+      o: bind
+services:
+  nginx:
+    image: nginx
+    container_name: container.nginx02
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./nginx/conf:/etc/nginx/conf.d
+      - ./nginx/uwsgi_params:/etc/nginx/uwsgi_params
+      - ./src/static:/static
+      - ./nginx/log:/var/log/nginx
+    depends_on:
+      - web
+  web:
+    build: .
+    container_name: container.uwsgi02
+    command: uwsgi --ini /code/mysite/django.ini
+    volumes:
+      - ./src:/code
+    expose:
+      - "8001"
+    depends_on:
+      - db
+  db:
+    image: postgres
+    restart: always
+    container_name: container.postgres02
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: "postgresdb"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "test"
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=C"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    hostname: postgres
