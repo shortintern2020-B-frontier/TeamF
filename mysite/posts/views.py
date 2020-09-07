@@ -92,6 +92,11 @@ def delete(request, num):
 def comment_create(request, post_id):
     """Posting comment function.
 
+    TODO:
+        handle
+            * Not logged in user
+            * Not post request
+
     Author:
         Masato Umakoshi
     """
