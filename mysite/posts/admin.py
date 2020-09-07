@@ -1,6 +1,7 @@
 from django.contrib import admin
 # from .models import User, Book, Post, Wokashi, Ahare, Bookmark, Comment, Nice
 from .models import Book, Post, Wokashi, Ahare, Bookmark, Comment, Nice
+from django.contrib.auth.models import User
 
 # Takahashi Shunichi
 # admin.site.register(User)
