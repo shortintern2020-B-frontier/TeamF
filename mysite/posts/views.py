@@ -1,11 +1,11 @@
 # from django.contrib.auth.models import User
 from django.db import transaction
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.template import loader
 from django.urls import reverse
 
-from .forms import PostForm, CommentForm
+from .forms import CommentForm, PostForm
 from .models import Book, Comment, Post, User
 
 
@@ -20,7 +20,13 @@ def index(request):
 # Takahashi Shunichi
 def detail(request, num):
     post = Post.objects.get(id=num)
-    params = {"title": "ポスト詳細", "post": post, "form": CommentForm}
+    comments = Comment.objects.filter(post_id=num)
+    params = {
+        "title": "ポスト詳細",
+        "post": post,
+        "comments": comments,
+        "form": CommentForm
+    }
     return render(request, "posts/detail.html", params)
 
 
