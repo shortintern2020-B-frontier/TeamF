@@ -43,7 +43,7 @@ def index(request):
         p.ahare_set.all().aggregate(Sum('count'))['count__sum'] for p in post
     ]
     zipped_post = zip(post, wokashi_sum, ahare_sum)
-    
+
     params = {
         "title": "ポスト一覧",
         "post": zipped_post,
@@ -109,15 +109,19 @@ def create(request):
         title = (request.POST["title"], )
         author = (request.POST["author"], )
 
-        # cover_path = ''
-        cover_path = get_book_cover_path(title, author)
-        time.sleep(1)
-
-        if cover_path == 'No book found':
-            book = Book(title=title, author=author) #すでに存在するなら追加しない
-        else:
-            book = Book(title=title, author=author, cover_path=cover_path) #すでに存在するなら追加しない
-        book.save()
+        try:
+            book = Book.objects.get(title=title, author=author)
+        except ObjectDoesNotExist as e:
+            cover_path = get_book_cover_path(title, author)
+            time.sleep(1)
+            if cover_path != 'No book found':
+                book = Book(title=title, author=author, cover_path=cover_path)
+                book.save()
+            else:
+                NOCOVERPATH = 'temp' #表紙がなかった場合に表示する画像のパス
+                book = Book(title=title, author=author, cover_path=NOCOVERPATH)
+                book.save()
+            
         user = User.objects.get(id=request.user.id)
         post = Post(user_id=user, content=content, book_id=book)
         post.save()
