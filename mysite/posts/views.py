@@ -5,7 +5,7 @@ from django.shortcuts import redirect, render
 from django.template import loader
 from django.urls import reverse
 
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 from .models import Book, Comment, Post, User
 
 
@@ -20,7 +20,7 @@ def index(request):
 # Takahashi Shunichi
 def detail(request, num):
     post = Post.objects.get(id=num)
-    params = {"title": "ポスト詳細", "post": post}
+    params = {"title": "ポスト詳細", "post": post, "form": CommentForm}
     return render(request, "posts/detail.html", params)
 
 
@@ -101,17 +101,18 @@ def comment_create(request, num):
         Masato Umakoshi
     """
     # If not post, raise 404
-    if request.method != "Post":
-        raise Http404("Question does not exist")
+    if request.method != "POST":
+        raise Http404("Hogehoge")
 
     # This may be too naive
     user_id = request.user.id
     content = request.POST["content"]
     comment = Comment(
-        user=User.objects.get(pk=user_id),
-        post=Post.objects.get(pk=num),
+        user_id=User.objects.get(pk=user_id),
+        post_id=Post.objects.get(pk=num),
         content=content,
     )
     comment.save()
     # post_id may be post.id??
-    return HttpResponseRedirect(reverse("posts:show", args=(num, )))
+    # return HttpResponseRedirect(reverse("posts:show", args=(num, )))
+    return redirect(to="/posts")
