@@ -88,15 +88,15 @@ def delete(request, num):
     return render(request, "posts/delete.html", params)
 
 
-def comment_post(request, post_id, user_id, comment):
+def comment_create(request, post_id, user_id, comment):
     """Posting comment function.
 
     Author:
         Masato Umakoshi
     """
     comment = Comment(
-        user=User.get(pk=user_id),
-        # post=Post.get(pk=post_id),
+        user=User.objects.get(pk=user_id),
+        post=Post.objects.get(pk=post_id),
         comment=comment,
     )
     comment.save()
