@@ -4,8 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <title>タイムライン画面</title>
+  <link rel="stylesheet" href="common.css">
+  <link rel="stylesheet" href="signup.css">
+  <title>サインアップ画面</title>
 </head>
 
 <body>
@@ -30,28 +31,54 @@
 
       <main>
         <form action="#" method="post">
-          <form action="#" method="post">
-            <ul>
-              <li>
-                <p>ユーザー名</p>
-                <input type="text" name="username">
-              </li>
-              <li>
-                <p>メールアドレス</p>
-                <input type="text" name="email">
-              </li>
-              <li>
-                <p>パスワード</p>
-                <input type="text" name="password1">
-              </li>
-              <li>
-                <p>パスワード確認</p>
-                <input type="text" name="password2">
-              </li>
-              <li>
-                <input type="button" value="サインアップ">
-              </li>
-          </form>
+          <ul>
+            <li>
+              <p>ユーザー名</p>
+              <input type="text" name="username">
+            </li>
+            <li>
+              <p>メールアドレス</p>
+              <input type="text" name="email">
+            </li>
+            <li>
+              <p>パスワード</p>
+              <input type="text" name="password1">
+            </li>
+            <li>
+              <p>パスワード確認</p>
+              <input type="text" name="password2">
+            </li>
+            <li>
+              <div class="img-selection">
+                <input id="img-choice1" type="radio" name="user_img" value="1">
+                <label for="img-choice1">
+                  <img src="img/bookusagi.png">
+                </label>
+
+                <input id="img-choice2" type="radio" name="user_img" value="2">
+                <label for="img-choice2">
+                  <img src="img/bookusagi.png">
+                </label>
+
+                <input id="img-choice3" type="radio" name="user_img" value="3">
+                <label for="img-choice3">
+                  <img src="img/bookusagi.png">
+                </label>
+
+                <input id="img-choice4" type="radio" name="user_img" value="4">
+                <label for="img-choice4">
+                  <img src="img/bookusagi.png">
+                </label>
+
+                <input id="img-choice5" type="radio" name="user_img" value="5">
+                <label for="img-choice5">
+                  <img src="img/bookusagi.png">
+                </label>
+              </div>
+            </li>
+            <li>
+              <input type="button" value="サインアップ">
+            </li>
         </form>
       </main>
     </div>
