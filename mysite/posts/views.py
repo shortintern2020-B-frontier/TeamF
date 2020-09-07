@@ -1,6 +1,6 @@
 # from django.contrib.auth.models import User
 from django.db import transaction
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import redirect, render
 from django.template import loader
 from django.urls import reverse
@@ -94,6 +94,10 @@ def comment_create(request, post_id, user_id, comment):
     Author:
         Masato Umakoshi
     """
+    # If not post, raise 404
+    if request.method != "Post":
+        raise Http404("Question does not exist")
+
     comment = Comment(
         user=User.objects.get(pk=user_id),
         post=Post.objects.get(pk=post_id),
