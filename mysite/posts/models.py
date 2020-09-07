@@ -1,5 +1,12 @@
 from django.db import models
-from users.models import User
+from app.models import User
+
+# # Takahashi Shunichi
+# class User(models.Model):
+#     nickname = models.CharField(max_length=255)
+#     icon_path = models.CharField(max_length=255)
+#     email = models.EmailField(max_length=255)
+#     password = models.CharField(max_length=255)
 
 # Takahashi Shunichi
 class Book(models.Model):

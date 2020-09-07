@@ -1,10 +1,31 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from users.models import User
+from app.models import User
 from .models import Book, Post, Wokashi, Ahare, Bookmark, Comment, Nice
 from .forms import PostForm
 from django.db import transaction
+import urllib.parse
+
+# from .models import User
+
+import requests
+import time
+
+RAKUTEN_BOOKS_API_URL = "https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404"
+RAKUTEN_APP_ID = "1065776451953533134"
+def get_book_cover_path(title, author):
+    encoded_title = urllib.parse.quote(str(title))
+    encoded_author = urllib.parse.quote(str(author))
+    response = requests.get("{}?format=json&applicationId={}&title={}&author={}".format(RAKUTEN_BOOKS_API_URL, RAKUTEN_APP_ID, encoded_title, encoded_author))
+    cover_path = ''
+    if response.status_code != requests.codes.ok:
+        cover_path = 'Requests failed'
+    elif response.json()["count"] == 0:
+        cover_path = 'No book found'
+    else:
+        cover_path = response.json()["Items"][0]["Item"]["largeImageUrl"]
+    return cover_path
 
 # Takahashi Shunichi
 def index(request):
@@ -33,7 +54,14 @@ def create(request):
         title = request.POST['title'],
         author = request.POST['author'],
 
-        book = Book(title=title, author=author) #すでに存在するなら追加しない
+        # cover_path = ''
+        cover_path = get_book_cover_path(title, author)
+        time.sleep(1)
+
+        if cover_path == 'No book found':
+            book = Book(title=title, author=author) #すでに存在するなら追加しない
+        else:
+            book = Book(title=title, author=author, cover_path=cover_path) #すでに存在するなら追加しない
         book.save()
         user = User.objects.get(id=request.user.id)
         post = Post(user_id=user, content=content, book_id=book)
