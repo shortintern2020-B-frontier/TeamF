@@ -88,6 +88,7 @@ def delete(request, num):
     return render(request, "posts/delete.html", params)
 
 
+@transaction.atomic
 def comment_create(request, post_id, user_id, comment):
     """Posting comment function.
 
