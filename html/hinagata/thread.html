@@ -1,0 +1,66 @@
+<!-- Created by Yamamoto Sota -->
+
+<!DOCTYPE html>
+<html kang="ja">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="common.css">
+        <link rel="stylesheet" href="thread.css">
+		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />
+        <title>スレッド画面</title>
+    </head>
+    <body>
+        <header>
+            <div id="logo-img">サービス名</div>
+      
+            <button id="signup-btn" onclick="location.href=''">サインアップ</button>
+            <button id="signin-btn">サインイン</button>
+      
+            <input id="drawer-checkbox" type="checkbox">
+            <label id="drawer-icon" for="drawer-checkbox">メニュー</label>
+            <div id="drawer-content">
+              <div class="menu-item">メニュー</div>
+              <div class="menu-item">しおり</div>
+              <div class="menu-item">週間をかしランキング</div>
+              <div class="menu-item">週間あはれランキング</div>
+            </div>
+        </header>
+        <div class = "post">
+            <P class = "post">
+                <img src="img/book.png" class="bookicon" alt="bookicon" align="middle">
+                その空飛ぶ物体は、実は子どもたちめいめいの網膜にうつった太陽の残像であった。
+            </P>
+            <div class = "bookinfo">
+                <p class = "author">- 朝永信一郎 </p>
+                <p class = "booktitle">「見える光、見えない光」</p>
+            </div>
+        </div>
+        <div class = "contents">
+            <div class = "box">
+            <div class = "comment">
+                <div class = "userinfo">
+                    <p class = "username">Yamamoto Sota</p>
+                    <p class = "time">yyyy-mm-dd-hh-mm-ss</p>
+                </div>
+                <p>
+                    <p class = "id">1：</p>
+                    <p class = "comment">これあれですね。さすがって感じの文章であれですね。</p>
+                </p>
+            </div>
+            </div>
+        </div>
+        <div class = "post_comment">
+            <form method="POST" action="#">
+                <p class="username">
+                <img src="img/bookusagi.png" width="55px" class="icon" alt="icon" align="middle">
+                Username
+                </p>
+                <textarea name="contents" rows="8" cols="100">
+                </textarea>
+                <br><br>
+                <input type="button" name="btn1" value="投稿する">
+            </form>
+        </div>
+        <button class="fixed-btn">投稿</button>
+    </body>
+</html>
