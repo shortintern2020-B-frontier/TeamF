@@ -52,7 +52,7 @@ def index(request):
 
     params = {
         "title": "ポスト一覧",
-        "post": zipped_post,
+        "zipped_post": zipped_post,
     }
     return render(request, "posts/index.html", params)
 

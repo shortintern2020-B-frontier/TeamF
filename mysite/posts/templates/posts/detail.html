@@ -1,11 +1,13 @@
 <!-- Created by Yamamoto Sota -->
 
+{% load static %}
+
 <!DOCTYPE html>
 <html kang="ja">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" href="common.css">
-        <link rel="stylesheet" href="thread.css">
+        <link rel="stylesheet" type="text/css" href="{% static 'posts/common.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'posts/thread.css' %}">
 		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />
         <title>スレッド画面</title>
     </head>
