@@ -123,7 +123,7 @@ USE_TZ = True
 
 # All applications can use Static files of this directory
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "mainproject/static/"),
+    os.path.join(BASE_DIR, "mysite/static/"),
 )
 
 # Collectstatic command put STATICFILES_DIRS and each application's Static files together into this directory
