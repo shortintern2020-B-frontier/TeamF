@@ -41,5 +41,17 @@
         <tr><td></td><td><input type="submit" value="click"></td></tr>
         </form>
     </table>
+    {% if comments %}
+      <ul>
+        {% for comment in comments %}
+        <li>
+          hogehoge
+          {{ comment.content }}
+        </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No comments are available.</p>
+    {% endif %}
 </body>
 </html>
