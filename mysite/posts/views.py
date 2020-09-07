@@ -89,7 +89,7 @@ def delete(request, num):
 
 
 @transaction.atomic
-def comment_create(request, post_id):
+def comment_create(request, num):
     """Posting comment function.
 
     TODO:
@@ -109,9 +109,9 @@ def comment_create(request, post_id):
     content = request.POST["content"]
     comment = Comment(
         user=User.objects.get(pk=user_id),
-        post=Post.objects.get(pk=post_id),
+        post=Post.objects.get(pk=num),
         content=content,
     )
     comment.save()
     # post_id may be post.id??
-    return HttpResponseRedirect(reverse("posts:show", args=(post_id, )))
+    return HttpResponseRedirect(reverse("posts:show", args=(num, )))
