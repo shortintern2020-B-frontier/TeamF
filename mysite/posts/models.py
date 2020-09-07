@@ -55,7 +55,7 @@ class Ahare(models.Model):
 # Takahashi Shunichi
 class Bookmark(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
+    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
