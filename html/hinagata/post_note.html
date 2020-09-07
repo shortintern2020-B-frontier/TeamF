@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <title>コメント投稿画面</title>
+  <title>一文投稿画面</title>
 </head>
 
 <body>
@@ -32,11 +32,15 @@
         <main>
             <form method="POST" action="#">
                 <p class="username">
-                  <img src="img/bookusagi.png" class="icon" alt="icon" align="middle">
-                  Username
+                    <img src="img/bookusagi.png" class="icon" alt="icon" align="middle">
+                    Username
                 </p>
                 <textarea name="contents" rows="8" cols="100">
                 </textarea>
+                <p>著者</p>
+                <input type="text" name="author">
+                <p>書名</p>
+                <input type="text" name="booktitle">
                 <br><br>
                 <input type="button" name="btn1" value="投稿する">
             </form>
