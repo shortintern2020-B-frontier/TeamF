@@ -51,12 +51,18 @@ Masato Umakoshi: Modify for backend.
             <div class="box-secondary">
               <button class="bookmark-btn">しおり</button>
               <div class="wokashi">
-                <button>を</button>
-                <span>10</span>
+                <form action="{% url 'wokashi'%}" method="post">
+                    <button type="submit" value={{item.id}}>をかし</button>
+                    <span>10</span>
+                {% csrf_token %}
+                </form>
               </div>
               <div class="ahare">
-                <button>あ</button>
-                <span>20</span>
+                <form action="{% url 'ahare'%}" method="post">
+                  <button type="submit" value={{item.id}}>あはれ</button>
+                  <span>20</span>
+                {% csrf_token %}
+                </form>
               </div>
               <!--
               TODO:

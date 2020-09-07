@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from .models import Book, Post, Wokashi, Ahare, Bookmark, Comment, Nice
-# from django.contrib.auth.models import User
+from django.contrib.auth.models import User
 from .forms import CommentForm, PostForm
 from django.db import transaction
 from django.http import Http404, HttpResponse, HttpResponseRedirect
@@ -39,10 +39,31 @@ def index(request):
     return render(request, "posts/index.html", params)
 
 
+#Takahashi Shunichi
+def wokashi_create(request):
+    if request.method == "POST":
+        user_id = request.user.id
+        post_id = request.POST["post_id"]
+        wokashi = Wokashi(user_id=user_id, post_id=post_id, count=1)
+        wokashi.save()
+        return redirect(to="/posts")
+
+
+#Takahashi Shunichi
+def ahare_create(request):
+    if request.method == "POST":
+        user_id = request.user.id
+        post_id = request.POST["post_id"]
+        wokashi = Ahare(user_id=user_id, post_id=post_id, count=1)
+        wokashi.save()
+        return redirect(to="/posts")
+
+
 # Takahashi Shunichi
 # Umakoshi Masato
 def detail(request, num):
     post = Post.objects.get(id=num)
+    # comments = post.comment_set.all()
     comments = Comment.objects.filter(post_id=num)
     num_nices = [
         len(Nice.objects.filter(comment_id=comment.id)) for comment in comments
@@ -52,7 +73,7 @@ def detail(request, num):
         "title": "ポスト詳細",
         "post": post,
         "comments_num_nices": comments_num_nices,
-        "form": CommentForm,
+        "form": CommentForm(),
     }
     return render(request, "posts/detail.html", params)
 
