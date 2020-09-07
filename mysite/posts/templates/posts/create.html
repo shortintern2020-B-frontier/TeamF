@@ -34,7 +34,7 @@ Masato Umakoshi: Modify for backend.
     <div id="content">
 
         <main>
-            <form method="POST" action="{% url 'create'%}">
+            <form action="{% url 'create' %}" method="post">
                 {% csrf_token %}
                 <p class="username">
                 <img src="{% static 'posts/img/bookusagi.png' %}" class="icon" alt="icon" align="middle">
@@ -47,7 +47,9 @@ Masato Umakoshi: Modify for backend.
                 <p>書名</p>
                 <input type="text" name="title">
                 <br><br>
-                <input type="button" name="btn1" value="投稿する">
+                {# <input type="button" name="btn1" value="投稿する"> #}
+                <!-- TODO: Fix this submit -> button -->
+                <input type="submit" name="btn1" value="投稿する">
             </form>
         </main>
     </div>
