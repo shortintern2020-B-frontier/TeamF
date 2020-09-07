@@ -37,7 +37,7 @@ Masato Umakoshi: Modify for backend.
 
       <main>
         <div class="scroll-list">
-          {% for post, book in posts_books %}
+          {% for post, wokashi_sum, ahare_sum, book in posts_books %}
 
           <div class="post-box">
             <div class="box-primary">
@@ -53,14 +53,14 @@ Masato Umakoshi: Modify for backend.
               <div class="wokashi">
                 <form action="{% url 'wokashi'%}" method="post">
                     <button type="submit" value={{item.id}}>をかし</button>
-                    <span>10</span>
+                    <span>{{ wokashi_sum }}</span>
                 {% csrf_token %}
                 </form>
               </div>
               <div class="ahare">
                 <form action="{% url 'ahare'%}" method="post">
                   <button type="submit" value={{item.id}}>あはれ</button>
-                  <span>20</span>
+                  <span>{{ ahare_sum }}</span>
                 {% csrf_token %}
                 </form>
               </div>

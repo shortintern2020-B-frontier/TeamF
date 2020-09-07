@@ -36,29 +36,24 @@ def get_book_cover_path(title, author):
 # Takahashi Shunichi
 # Umakoshi Masato
 def index(request):
-<<<<<<< HEAD
-    posts = Post.objects.filter(is_deleted=False)
     # TODO Fix naming: book_id.id is too wierd.
-    books = [Book.objects.get(pk=post.book_id.id) for post in posts]
-    posts_books = zip(posts, books)
+    posts = Post.objects.filter(is_deleted=False)
 
-    params = {"title": "ポスト一覧", "posts_books": posts_books}
-=======
-    post = Post.objects.filter(is_deleted=False)
     wokashi_sum = [
-        p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in post
+        p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
     ]
     ahare_sum = [
-        p.ahare_set.all().aggregate(Sum('count'))['count__sum'] for p in post
+        p.ahare_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
     ]
-    zipped_post = zip(post, wokashi_sum, ahare_sum)
-    
+
+    # TODO Fix naming: book_id.id is too wierd.
+    books = [Book.objects.get(pk=post.book_id.id) for post in posts]
+    zipped_post = zip(posts, wokashi_sum, ahare_sum, books)
+
     params = {
         "title": "ポスト一覧",
         "post": zipped_post,
-        "wokashi_sum": wokashi_sum,
     }
->>>>>>> back/master
     return render(request, "posts/index.html", params)
 
 
