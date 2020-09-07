@@ -135,7 +135,26 @@
 
         </div>
 
-        <button class="fixed-btn">投稿</button>
+        <!-- <button class="fixed-btn">投稿</button> -->
+        <input type="checkbox" class="fixed-btn" name="show-popup">
+        <div id="popup">
+          <form action="#" method="POST">
+            <!-- Written by Sota Yamamoto -->
+            <!-- Updated by Naoki Hirabayashi -->
+            <p class="username">
+              <img src="img/bookusagi.png" class="icon" alt="icon" align="middle" width="60px">
+              ユーザー名
+            </p>
+            <textarea name="passage" rows="8" cols="100" placeholder="気に入った一文を投稿しよう"></textarea>
+            <p>著者名</p>
+            <input type="text" name="author">
+            <p>書名</p>
+            <input type="text" name="booktitle">
+            <br><br>
+            <input type="submit" value="投稿する">
+            <!--  -->
+          </form>
+        </div>
       </main>
     </div>
   </div>
