@@ -43,7 +43,8 @@ def index(request):
 # Umakoshi Masato
 def detail(request, num):
     post = Post.objects.get(id=num)
-    comments = Comment.objects.filter(post_id=num)
+    comments = post.comment_set.all()
+    # comments = Comment.objects.filter(post_id=num)
     num_nices = [
         len(Nice.objects.filter(comment_id=comment.id)) for comment in comments
     ]
@@ -52,7 +53,7 @@ def detail(request, num):
         "title": "ポスト詳細",
         "post": post,
         "comments_num_nices": comments_num_nices,
-        "form": CommentForm,
+        "form": CommentForm(),
     }
     return render(request, "posts/detail.html", params)
 
