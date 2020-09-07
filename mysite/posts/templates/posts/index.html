@@ -37,7 +37,7 @@ Masato Umakoshi: Modify for backend.
 
       <main>
         <div class="scroll-list">
-          {% for item in post %}
+          {% for post, book in posts_books %}
 
           <div class="post-box">
             <div class="box-primary">
@@ -64,18 +64,14 @@ Masato Umakoshi: Modify for backend.
                 {% csrf_token %}
                 </form>
               </div>
-              <!--
-              TODO:
-                Load author name, book name before pass data.
               <div class="source">
                 <div class="author-name">
-                  <p>著者名</p>
+                  <p>{{ book.author }}</p>
                 </div>
                 <div class="book-name">
-                  <p>書名</p>
+                  <p>{{ book.title }}</p>
                 </div>
               </div>
-              -->
               {{item.book_id}}
             </div>
           </div>

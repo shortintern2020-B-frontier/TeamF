@@ -32,10 +32,13 @@ def get_book_cover_path(title, author):
     return cover_path
 
 # Takahashi Shunichi
+# Umakoshi Masato
 def index(request):
-    post = Post.objects.filter(is_deleted=False)
+    posts = Post.objects.filter(is_deleted=False)
+    books = [Book.objects.get(pk=post.book_id) for post in posts]
+    posts_books = zip(posts, books)
 
-    params = {"title": "ポスト一覧", "post": post}
+    params = {"title": "ポスト一覧", "posts_books": posts_books}
     return render(request, "posts/index.html", params)
 
 
