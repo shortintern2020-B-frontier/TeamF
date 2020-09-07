@@ -1,5 +1,4 @@
 from django.db import models
-from app.models import User
 
 # # Takahashi Shunichi
 # class User(models.Model):

@@ -1,5 +1,4 @@
 from django.contrib import admin
-from app.models import User
 from .models import Book, Post, Wokashi, Ahare, Bookmark, Comment, Nice
 
 # from .models import User

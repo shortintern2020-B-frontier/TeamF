@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from app.models import User
 from .models import Book, Post, Wokashi, Ahare, Bookmark, Comment, Nice
 from .forms import PostForm
 from django.db import transaction
