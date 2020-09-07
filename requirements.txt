@@ -17,6 +17,7 @@ pycodestyle==2.5.0
 pyflakes==2.1.1
 pynvim==0.3.2
 pytz==2020.1
+requests==2.21.0
 sqlparse==0.3.1
 toml==0.10.0
 yapf==0.30.0

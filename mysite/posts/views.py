@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from .models import Book, Post, Wokashi, Ahare, Bookmark, Comment, Nice
-# from django.contrib.auth.models import User
+from django.contrib.auth.models import User
 from .forms import CommentForm, PostForm
 from django.db import transaction
 from django.http import Http404, HttpResponse, HttpResponseRedirect
