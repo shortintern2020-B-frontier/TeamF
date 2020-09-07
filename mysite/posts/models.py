@@ -1,6 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-# # Takahashi Shunichi
+
+
+# Takahashi Shunichi
 # class User(models.Model):
 #     nickname = models.CharField(max_length=255)
 #     icon_path = models.CharField(max_length=255)
@@ -13,6 +16,7 @@ class Book(models.Model):
     author = models.CharField(max_length=255)
     cover_path = models.CharField(max_length=255)
 
+
 # Takahashi Shunichi
 class Post(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -22,6 +26,7 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
 
+
 # Takahashi Shunichi
 class Wokashi(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -29,6 +34,7 @@ class Wokashi(models.Model):
     count = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
 
 # Takahashi Shunichi
 class Ahare(models.Model):
@@ -38,6 +44,7 @@ class Ahare(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
 # Takahashi Shunichi
 class Bookmark(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -45,13 +52,32 @@ class Bookmark(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-# Takahashi Shunichi
+
 class Comment(models.Model):
+    """Comment model for comment on threads.
+
+    Scheme:
+        comment: varchar(500)
+        created_at: timestamp
+        updated_at: timestamp
+        is_deleted: bool
+
+    Note:
+        is_deleted is `True` means that the comment is deleted.
+
+    Author:
+        Takahashi Shunichi
+    """
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
     content = models.CharField(max_length=500)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.comment
+
 
 # Takahashi Shunichi
 class Nice(models.Model):

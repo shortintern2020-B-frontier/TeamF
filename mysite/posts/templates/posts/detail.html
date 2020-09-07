@@ -32,7 +32,31 @@
                 {% csrf_token %}
                 </form>
             </td>
-
         </tr>
+    </table>
+    <table>
+        <form action="{% url 'hoge' post.id %}" method="post">
+        {% csrf_token %}
+        {{ form.as_table }}
+        <tr><td></td><td><input type="submit" value="click"></td></tr>
+        </form>
+    </table>
+    {% if comments_num_nices %}
+      <ul>
+        {% for comment, num_nice in comments_num_nices %}
+        <li>
+          {{ comment.content }}
+          <form action="{% url 'nice' %}" method="post">
+          {% csrf_token %}
+          <input type="hidden", name='comment_id', value={{ comment.id }}>
+          <input type="submit" value="いいね！">
+          {{ num_nice }}
+          </form>
+        </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No comments are available.</p>
+    {% endif %}
 </body>
 </html>
