@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>スレッド画面</title>
+</head>
+
+<body>
+  <div id="wrapper">
+    <header>
+      <div id="logo-img">サービス名</div>
+
+      <button id="signup-btn" onclick="location.href=''">サインアップ</button>
+      <button id="signin-btn">サインイン</button>
+
+      <input id="drawer-checkbox" type="checkbox">
+      <label id="drawer-icon" for="drawer-checkbox">メニュー</label>
+      <div id="drawer-content">
+        <div class="menu-item">メニュー</div>
+        <div class="menu-item">しおり</div>
+        <div class="menu-item">週間をかしランキング</div>
+        <div class="menu-item">週間あはれランキング</div>
+      </div>
+    </header>
+
+    <div id="content">
+
+        <main>
+            <form method="POST" action="#">
+                <p class="username">Username</p>
+                <textarea name="contents" rows="8" cols="40">
+                </textarea>
+                <br><br>
+                <input type="button" name="btn1" value="投稿する">
+            </form>
+        </main>
+    </div>
+  </div>
+</body>
+
+</html>
