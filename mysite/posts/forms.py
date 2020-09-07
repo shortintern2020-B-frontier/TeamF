@@ -8,7 +8,7 @@ class PostForm(forms.Form):
     author = forms.CharField(label='著者名')
 
 
-class CommentForm(forms.From):
+class CommentForm(forms.Form):
     """Form for comment on posts.
 
     Author:
