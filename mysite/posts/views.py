@@ -89,7 +89,7 @@ def delete(request, num):
 
 
 @transaction.atomic
-def comment_create(request, post_id, user_id, comment):
+def comment_create(request, post_id):
     """Posting comment function.
 
     Author:
@@ -99,10 +99,13 @@ def comment_create(request, post_id, user_id, comment):
     if request.method != "Post":
         raise Http404("Question does not exist")
 
+    # This may be too naive
+    user_id = request.user.id
+    content = request.POST["content"]
     comment = Comment(
         user=User.objects.get(pk=user_id),
         post=Post.objects.get(pk=post_id),
-        comment=comment,
+        content=content,
     )
     comment.save()
     # post_id may be post.id??
