@@ -6,7 +6,7 @@ from django.template import loader
 from django.urls import reverse
 
 from .forms import CommentForm, PostForm
-from .models import Book, Comment, Post, User
+from .models import Book, Comment, Nice, Post, User
 
 
 # Takahashi Shunichi
@@ -22,11 +22,15 @@ def index(request):
 def detail(request, num):
     post = Post.objects.get(id=num)
     comments = Comment.objects.filter(post_id=num)
+    num_nices = [
+        len(Nice.objects.filter(comment_id=comment.id)) for comment in comments
+    ]
+    comments_num_nices = zip(comments, num_nices)
     params = {
         "title": "ポスト詳細",
         "post": post,
-        "comments": comments,
-        "form": CommentForm
+        "comments_num_nices": comments_num_nices,
+        "form": CommentForm,
     }
     return render(request, "posts/detail.html", params)
 
@@ -120,6 +124,35 @@ def comment_create(request, num):
         content=content,
     )
     comment.save()
+    # post_id may be post.id??
+    # return HttpResponseRedirect(reverse("posts:show", args=(num, )))
+    return redirect(to="/posts")
+
+
+@transaction.atomic
+def nice_create(request):
+    """Posting nice function.
+
+    TODO:
+        handle
+            * Not logged in user
+            * Not post request
+
+    Author:
+        Masato Umakoshi
+    """
+    # If not post, raise 404
+    if request.method != "POST":
+        raise Http404("Hogehoge")
+
+    # This may be too naive
+    user_id = request.user.id
+    comment_id = request.POST["comment_id"]
+    nice = Nice(
+        user_id=User.objects.get(pk=user_id),
+        comment_id=Comment.objects.get(pk=comment_id),
+    )
+    nice.save()
     # post_id may be post.id??
     # return HttpResponseRedirect(reverse("posts:show", args=(num, )))
     return redirect(to="/posts")

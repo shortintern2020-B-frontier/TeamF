@@ -41,15 +41,16 @@
         <tr><td></td><td><input type="submit" value="click"></td></tr>
         </form>
     </table>
-    {% if comments %}
+    {% if comments_num_nices %}
       <ul>
-        {% for comment in comments %}
+        {% for comment, num_nice in comments_num_nices %}
         <li>
           {{ comment.content }}
-          <form action="{% url 'nice' comment.id %}" method="post">
+          <form action="{% url 'nice' %}" method="post">
           {% csrf_token %}
           <input type="hidden", name='comment_id', value={{ comment.id }}>
           <input type="submit" value="いいね！">
+          {{ num_nice }}
           </form>
         </li>
         {% endfor %}
