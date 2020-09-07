@@ -35,7 +35,8 @@ def get_book_cover_path(title, author):
 # Umakoshi Masato
 def index(request):
     posts = Post.objects.filter(is_deleted=False)
-    books = [Book.objects.get(pk=post.book_id) for post in posts]
+    # TODO Fix naming: book_id.id is too wierd.
+    books = [Book.objects.get(pk=post.book_id.id) for post in posts]
     posts_books = zip(posts, books)
 
     params = {"title": "ポスト一覧", "posts_books": posts_books}
@@ -170,11 +171,11 @@ def comment_create(request, num):
 
     # This may be too naive
     user_id = request.user.id
-    content = request.POST["content"]
+    comment = request.POST["comment"]
     comment = Comment(
         user_id=User.objects.get(pk=user_id),
         post_id=Post.objects.get(pk=num),
-        content=content,
+        comment=comment,
     )
     comment.save()
     # post_id may be post.id??

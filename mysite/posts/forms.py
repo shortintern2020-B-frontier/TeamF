@@ -14,4 +14,4 @@ class CommentForm(forms.Form):
     Author:
         Masato Umakoshi
     """
-    content = forms.CharField(label='コメント')
+    comment = forms.CharField(label='コメント')
