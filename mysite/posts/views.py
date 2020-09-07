@@ -9,40 +9,6 @@ from .forms import PostForm
 from .models import Book, Comment, Post, User
 
 
-def show(request, post_id):
-    """Showing single post.
-
-    Author:
-        Masato Umakoshi
-    """
-    # post = Post.objects.get(pk=post_id)
-    # comments = Comment.objects.filter(post__id=post_id)
-    comments = Comment.objects.all()
-
-    template = loader.get_template("posts/show.html")
-    context = {
-        # 'post': post,
-        "comments": comments
-    }
-    return HttpResponse(template.render(context, request))
-
-
-def comment_post(request, post_id, user_id, comment):
-    """Posting comment function.
-
-    Author:
-        Masato Umakoshi
-    """
-    comment = Comment(
-        user=User.get(pk=user_id),
-        # post=Post.get(pk=post_id),
-        comment=comment,
-    )
-    comment.save()
-    # post_id may be post.id??
-    return HttpResponseRedirect(reverse("posts:show", args=(post_id, )))
-
-
 # Takahashi Shunichi
 def index(request):
     post = Post.objects.filter(is_deleted=False)
@@ -120,3 +86,19 @@ def delete(request, num):
 
     params = {"title": "ポスト削除", "id": num, "post": post}
     return render(request, "posts/delete.html", params)
+
+
+def comment_post(request, post_id, user_id, comment):
+    """Posting comment function.
+
+    Author:
+        Masato Umakoshi
+    """
+    comment = Comment(
+        user=User.get(pk=user_id),
+        # post=Post.get(pk=post_id),
+        comment=comment,
+    )
+    comment.save()
+    # post_id may be post.id??
+    return HttpResponseRedirect(reverse("posts:show", args=(post_id, )))
