@@ -18,6 +18,7 @@ def index(request):
 
 
 # Takahashi Shunichi
+# Umakoshi Masato
 def detail(request, num):
     post = Post.objects.get(id=num)
     comments = Comment.objects.filter(post_id=num)
