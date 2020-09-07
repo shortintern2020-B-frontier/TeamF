@@ -28,15 +28,20 @@
             <td>{{item.created_at}}</td>
             <td>{{item.updated_at}}</td>
             <td>{{item.is_deleted}}</td>
-            <td>{{wokashi_sum}}</td>
+            <td>
+                {% if wokashi_sum is None %}0{% endif %}
+                {% if not wokashi_sum is None %}{{wokashi_sum}}{% endif %}
+            </td>
             <td>
                 <form action="{% url 'wokashi'%}" method="post">
                     <button type="submit" name="post_id" value={{item.id}}>をかし</button>
                 {% csrf_token %}
                 </form>
             </td>
-            <td>{{ahare_sum}}</td>
             <td>
+                {% if ahare_sum is None %}0{% endif %}
+                {% if not ahare_sum is None %}{{ahare_sum}}{% endif %}
+            </td>            <td>
                 <form action="{% url 'ahare'%}" method="post">
                     <button type="submit" name="post_id" value={{item.id}}>あはれ</button>
                 {% csrf_token %}
