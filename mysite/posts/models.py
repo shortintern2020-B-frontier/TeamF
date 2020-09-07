@@ -1,12 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # Takahashi Shunichi
-class User(models.Model):
-    nickname = models.CharField(max_length=255)
-    icon_path = models.CharField(max_length=255)
-    email = models.EmailField(max_length=255)
-    password = models.CharField(max_length=255)
+# class User(models.Model):
+#     nickname = models.CharField(max_length=255)
+#     icon_path = models.CharField(max_length=255)
+#     email = models.EmailField(max_length=255)
+#     password = models.CharField(max_length=255)
 
 
 # Takahashi Shunichi
@@ -67,6 +68,7 @@ class Comment(models.Model):
     Author:
         Takahashi Shunichi
     """
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
     content = models.CharField(max_length=500)
     created_at = models.DateTimeField(auto_now_add=True)
