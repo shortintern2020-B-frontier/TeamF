@@ -35,7 +35,7 @@
             <form method="POST" action="{% url 'create'%}">
                 {% csrf_token %}
                 <p class="username">
-                    <img src="img/bookusagi.png" class="icon" alt="icon" align="middle">
+                <img src="{% static 'posts/img/bookusagi.png' %}" class="icon" alt="icon" align="middle">
                     Username
                 </p>
                 <textarea name="content" rows="8" cols="100">
