@@ -1,0 +1,61 @@
+/* Created by Yamamoto Sota */
+
+body {
+    background-color: rgb(219, 201, 177);
+}
+
+img {
+    max-width: 50%;
+}
+
+div.box {
+    padding: 0.5em 1em;
+    font-weight: bold;
+    background-color: white;
+    color: dimgray; 
+    border: solid 3px #6091d3;
+    border-radius: 10px;
+}
+div.box p {
+    margin: 0; 
+    padding: 0;
+}
+
+div.contents {
+    margin: 2.0rem;
+}
+
+div.comment {
+    background-color: #e6ecf0;
+    max-width: 1400px;
+}
+
+div.userinfo p {
+    display: inline-block;
+}
+
+div.bookinfo p {
+    display: inline-block;
+}
+
+p.time {
+    font-size: 80%;
+}
+
+div.post {
+    margin: 1.5rem;
+    text-align: center;
+}
+
+div.post_comment {
+    margin: 2.0rem;
+    display: inline-block;
+}
+
+.fixed-btn {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 60px;
+    height: 60px;
+}
