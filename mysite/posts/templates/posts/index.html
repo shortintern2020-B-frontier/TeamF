@@ -19,7 +19,7 @@
             <th>をかし</th><th></th>
             <th>あはれ</th><th></th>
         </tr>
-    {% for item in post %}
+    {% for item, wokashi_sum, ahare_sum in post %}
         <tr>
             <td>{{item.id}}</td>
             <td>{{item.user_id}}</td>
@@ -28,17 +28,17 @@
             <td>{{item.created_at}}</td>
             <td>{{item.updated_at}}</td>
             <td>{{item.is_deleted}}</td>
-            <td>{{item.wokashi_set.all}}</td>
+            <td>{{wokashi_sum}}</td>
             <td>
                 <form action="{% url 'wokashi'%}" method="post">
-                    <button type="submit" value={{item.id}}>をかし</button>
+                    <button type="submit" name="post_id" value={{item.id}}>をかし</button>
                 {% csrf_token %}
                 </form>
             </td>
-            <td>{{item.ahare_set.all}}</td>
+            <td>{{ahare_sum}}</td>
             <td>
                 <form action="{% url 'ahare'%}" method="post">
-                    <button type="submit" value={{item.id}}>あはれ</button>
+                    <button type="submit" name="post_id" value={{item.id}}>あはれ</button>
                 {% csrf_token %}
                 </form>
             </td>
