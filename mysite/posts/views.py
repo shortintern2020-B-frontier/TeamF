@@ -219,7 +219,7 @@ def bookmark(request):
         "title": "ポスト一覧",
         "post": zipped_post,
     }
-    return render(request, "posts/bookmark.html", params)
+    return render(request, "posts/index.html", params)
 
 
 @transaction.atomic
