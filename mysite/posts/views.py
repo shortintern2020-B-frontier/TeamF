@@ -176,8 +176,11 @@ def edit(request, num):
         user = User.objects.get(id=request.user.id)
         if user.has_perm('change_delete_content', post):
             cover_path = get_book_cover_path(title, author)
-            book = Book(title=title, author=author, cover_path=cover_path)
-            book.save()
+            if Book.objects.filter(title=title, author=author).exists():
+                book = Book.objects.filter(title=title, author=author).first()
+            else:
+                book = Book(title=title, author=author, cover_path=cover_path)
+                book.save()
             post.content = content
             post.book_id = book
             post.save()
@@ -210,6 +213,28 @@ def delete(request, num):
     params = {"title": "ポスト削除", "id": num, "post": post}
     return render(request, "posts/delete.html", params)
 
+# Takahashi Shunichi
+def bookmark(request):
+    bookmark = Bookmark.objects.filter(user_id=request.user.id).all()
+    posts = [
+        Post.objects.filter(id=b.post_id.id).first() for b in bookmark
+    ]
+    wokashi_sum = [
+        p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
+    ]
+    ahare_sum = [
+        p.ahare_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
+    ]
+    books = [Book.objects.get(pk=post.book_id.id) for post in posts]
+    bookmark_flag = [
+        p.bookmark_set.filter(user_id=request.user.id).exists() for p in posts
+    ]
+    zipped_post = zip(posts, wokashi_sum, ahare_sum, books, bookmark_flag)
+    params = {
+        "title": "ポスト一覧",
+        "zipped_post": zipped_post,
+    }
+    return render(request, "posts/index.html", params)
 
 @transaction.atomic
 def comment_create(request, num):
