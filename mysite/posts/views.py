@@ -242,6 +242,30 @@ def comment_edit(request, num):
         raise PermissionDenied
 
 
+@transaction.atomic
+def comment_delete(request, num):
+    """Deleting comment function.
+
+    TODO:
+        handle
+            * Not logged in user
+            * Not post request
+
+    Author:
+        Masato Umakoshi
+    """
+    if request.method != "POST":
+        raise Http404("Hogehoge")
+
+    user = User.objects.get(id=request.user.id)
+    comment = Comment.objects.get(id=num)
+    if user.has_perm('change_delete_content', comment):
+        comment.delete()
+        # TODO: redirect to post/id
+        return redirect(to="/posts")
+    else:
+        raise PermissionDenied
+
 
 @transaction.atomic
 def nice_create(request):
