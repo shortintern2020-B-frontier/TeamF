@@ -18,8 +18,9 @@
             <th>is_deleted</th>
             <th>をかし</th><th></th>
             <th>あはれ</th><th></th>
+            <th>しおり</th><th></th>
         </tr>
-    {% for item, wokashi_sum, ahare_sum in post %}
+    {% for item, wokashi_sum, ahare_sum, bookmark_flag in post %}
         <tr>
             <td>{{item.id}}</td>
             <td>{{item.user_id}}</td>
@@ -45,6 +46,17 @@
             <td>
                 <form action="{% url 'ahare'%}" method="post">
                     <button type="submit" name="post_id" value={{item.id}}>あはれ</button>
+                {% csrf_token %}
+                </form>
+            </td>
+            <td>
+                {{bookmark_flag}}
+                <!-- {% if item.bookmark is None %}{{item.bookmark}}{% endif %} -->
+                <!-- {% if not ahare_sum is None %}{{ahare_sum}}{% endif %} -->
+            </td>
+            <td>
+                <form action="{% url 'bookmark'%}" method="post">
+                    <button type="submit" name="post_id" value={{item.id}}>しおり</button>
                 {% csrf_token %}
                 </form>
             </td>

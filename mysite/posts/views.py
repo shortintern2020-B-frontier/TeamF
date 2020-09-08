@@ -43,12 +43,13 @@ def index(request):
     ahare_sum = [
         p.ahare_set.all().aggregate(Sum('count'))['count__sum'] for p in post
     ]
-    zipped_post = zip(post, wokashi_sum, ahare_sum)
-
+    bookmark_flag = [
+        p.bookmark_set.filter(user_id=request.user.id).exists() for p in post
+    ]
+    zipped_post = zip(post, wokashi_sum, ahare_sum, bookmark_flag)
     params = {
         "title": "ポスト一覧",
         "post": zipped_post,
-        "wokashi_sum": wokashi_sum,
     }
     return render(request, "posts/index.html", params)
 
@@ -80,6 +81,19 @@ def ahare_create(request):
         except ObjectDoesNotExist as e:
             ahare = Ahare(user_id=user, post_id=post)
         ahare.save()
+        return redirect(to="/posts")
+
+#Takahashi Shunichi
+def bookmark_create(request):
+    if request.method == "POST":
+        user = User.objects.get(id=request.user.id)
+        post = Post.objects.get(id=request.POST["post_id"])
+        try:
+            bookmark = Bookmark.objects.get(user_id=user, post_id=post)
+            bookmark.delete()
+        except ObjectDoesNotExist as e:
+            bookmark = Bookmark(user_id=user, post_id=post)
+            bookmark.save()
         return redirect(to="/posts")
 
 
