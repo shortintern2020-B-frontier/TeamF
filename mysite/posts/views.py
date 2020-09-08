@@ -91,16 +91,21 @@ def ahare_create(request):
 # Takahashi Shunichi
 # Umakoshi Masato
 def detail(request, num):
+    user = User.objects.get(id=request.user.id)
     post = Post.objects.get(id=num)
     comments = Comment.objects.filter(post_id=num)
     num_nices = [
         len(Nice.objects.filter(comment_id=comment.id)) for comment in comments
     ]
-    comments_num_nices = zip(comments, num_nices)
+    comment_perms = [
+        user.has_perm('change_delete_content', comment) for comment in comments
+    ]
+
+    zipped_comments = zip(comments, num_nices, comment_perms)
     params = {
         "title": "ポスト詳細",
         "post": post,
-        "comments_num_nices": comments_num_nices,
+        "zipped_comments": zipped_comments,
         "form": CommentForm(),
     }
     return render(request, "posts/detail.html", params)
