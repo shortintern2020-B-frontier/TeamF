@@ -47,9 +47,11 @@ def index(request):
         p.ahare_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
     ]
 
-    # TODO Fix naming: book_id.id is too wierd.
     books = [Book.objects.get(pk=post.book_id.id) for post in posts]
-    zipped_post = zip(posts, wokashi_sum, ahare_sum, books)
+    bookmark_flag = [
+        p.bookmark_set.filter(user_id=request.user.id).exists() for p in posts
+    ]
+    zipped_post = zip(posts, wokashi_sum, ahare_sum, books, bookmark_flag)
 
     params = {
         "title": "ポスト一覧",
@@ -85,6 +87,19 @@ def ahare_create(request):
         except ObjectDoesNotExist as e:
             ahare = Ahare(user_id=user, post_id=post)
         ahare.save()
+        return redirect(to="/posts")
+
+#Takahashi Shunichi
+def bookmark_create(request):
+    if request.method == "POST":
+        user = User.objects.get(id=request.user.id)
+        post = Post.objects.get(id=request.POST["post_id"])
+        try:
+            bookmark = Bookmark.objects.get(user_id=user, post_id=post)
+            bookmark.delete()
+        except ObjectDoesNotExist as e:
+            bookmark = Bookmark(user_id=user, post_id=post)
+            bookmark.save()
         return redirect(to="/posts")
 
 
@@ -160,10 +175,11 @@ def edit(request, num):
 
         user = User.objects.get(id=request.user.id)
         if user.has_perm('change_delete_content', post):
-            book.title = title
-            book.author = author
+            cover_path = get_book_cover_path(title, author)
+            book = Book(title=title, author=author, cover_path=cover_path)
             book.save()
             post.content = content
+            post.book_id = book
             post.save()
             return redirect(to="/posts")
         else:
