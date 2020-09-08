@@ -12,11 +12,8 @@ from django.urls import reverse
 import urllib.parse
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Sum
-
 from guardian.shortcuts import assign_perm
-# from site.app.exceptions import Http403
 from django.core.exceptions import PermissionDenied
-# from guardian.models import UserObjectPermission
 
 import requests
 import time
