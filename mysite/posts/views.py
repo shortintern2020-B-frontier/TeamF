@@ -14,6 +14,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Sum
 from guardian.shortcuts import assign_perm
 from django.core.exceptions import PermissionDenied
+from django.http.response import JsonResponse
 
 import requests
 import time
@@ -345,3 +346,42 @@ def nice_create(request):
     # post_id may be post.id??
     # return HttpResponseRedirect(reverse("posts:show", args=(num, )))
     return redirect(to="/posts")
+
+
+# Created by Naoki Hirabayashi
+def post_api(request):
+    posts = Post.objects.filter(is_deleted=False)
+
+    wokashi_sum = [
+        p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
+    ]
+    ahare_sum = [
+        p.ahare_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
+    ]
+
+    books = [Book.objects.get(pk=post.book_id.id) for post in posts]
+    bookmark_flag = [
+        p.bookmark_set.filter(user_id=request.user.id).exists() for p in posts
+    ]
+    # zipped_post = zip(posts, wokashi_sum, ahare_sum, books, bookmark_flag)
+
+    jsonDict = {}
+
+    for post in posts:
+        elm = {}
+        elm['post_id'] = post.id
+        elm['post_content'] = post.content
+        elm['wokashi_sum'] = post.wokashi_set.all().aggregate(Sum('count'))['count__sum']
+        elm['ahare_sum'] = post.ahare_set.all().aggregate(Sum('count'))['count__sum']
+        book = Book.objects.get(pk=post.book_id.id)
+        elm['book_author'] = book.author
+        elm['book_title'] = book.title
+        elm['bookmark_flag'] = elm['bookmark_flag'] = post.bookmark_set.filter(user_id=request.user.id).exists()
+        jsonDict[str(post.id)] = elm
+
+    # params = {
+    #     "title": "ポスト一覧",
+    #     "zipped_post": zipped_post,
+    # }
+
+    return JsonResponse(jsonDict)

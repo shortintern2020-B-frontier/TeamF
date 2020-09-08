@@ -18,5 +18,6 @@ urlpatterns = [
     path("comment_delete/<int:num>",
          views.comment_delete,
          name="comment_delete"),
-    path("fuga", views.bookmark, name="fuga")
+    path("fuga", views.bookmark, name="fuga"),
+    path("post_api", views.post_api, name="post_api")
 ]
