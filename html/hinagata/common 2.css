@@ -1,0 +1,79 @@
+@charset "utf-8";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header, footer, main, aside {
+  display: block;
+}
+
+#wrapper {
+  min-width: 320px;
+}
+
+header {
+  padding: 10px;
+  background: #000;
+  color: #fff;
+}
+
+li {
+  list-style: none;
+}
+
+#logo-img {
+}
+
+#signup-btn, #signin-btn, #menu-btn {
+}
+
+#drawer-checkbox {
+  display: none;
+}
+
+#drawer-icon {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  background: #f00;
+}
+
+#drawer-content {
+  display: none;
+  overflow: auto;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 250px;
+  max-width: 90%;
+  height: 100%;
+  background: #333;
+  color: #fff;
+}
+
+#drawer-checkbox:checked ~ #drawer-content {
+  display: block;
+  overflow: auto;
+}
+
+.menu-item {
+}
+
+#content {
+  width: 100%;
+  min-width: 320px;
+  margin: 2em 0;
+  padding: 0 0.5em;
+}
+
+
+/* Desktop */
+@media (min-width: 768px) {
+  #content {
+    max-width: 1200px;
+    margin: 2em auto;
+  }
+}
