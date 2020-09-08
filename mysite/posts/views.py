@@ -14,7 +14,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Sum
 from guardian.shortcuts import assign_perm
 from django.core.exceptions import PermissionDenied
-from django.db import IntegrityError
 
 import requests
 import time
