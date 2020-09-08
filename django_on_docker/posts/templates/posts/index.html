@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>{{title}}</title>
+</head>
+<body>
+    <h1>{{title}}</h1>
+    <h2>{{info}}</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>user_id</th>
+            <th>content</th>
+            <th>book_id</th>
+            <th>created_at</th>
+            <th>updated_at</th>
+            <th>is_deleted</th>
+            <th>をかし</th><th></th>
+            <th>あはれ</th><th></th>
+        </tr>
+    {% for item in post %}
+        <tr>
+            <td>{{item.id}}</td>
+            <td>{{item.user_id}}</td>
+            <td>{{item.content}}</td>
+            <td>{{item.book_id}}</td>
+            <td>{{item.created_at}}</td>
+            <td>{{item.updated_at}}</td>
+            <td>{{item.is_deleted}}</td>
+            <td>{{item.wokashi_set.all}}</td>
+            <td>
+                <form action="{% url 'wokashi'%}" method="post">
+                    <button type="submit" value={{item.id}}>をかし</button>
+                {% csrf_token %}
+                </form>
+            </td>
+            <td>{{item.ahare_set.all}}</td>
+            <td>
+                <form action="{% url 'ahare'%}" method="post">
+                    <button type="submit" value={{item.id}}>あはれ</button>
+                {% csrf_token %}
+                </form>
+            </td>
+
+        </tr>
+    {% endfor %}
+</body>
+</html>
