@@ -216,6 +216,51 @@ def comment_create(request, num):
 
 
 @transaction.atomic
+def comment_edit(request, num):
+    """Editting comment function.
+
+    TODO:
+        handle
+            * Not logged in user
+            * Not post request
+
+    Author:
+        Masato Umakoshi
+    """
+    post = Post.objects.get(id=num)
+    book_id = post.book_id.id
+    book = Book.objects.get(id=book_id)
+    initial_dict = {
+        "content": post.content,
+        "title": book.title,
+        "author": book.author
+    }
+
+    if request.method == "POST":
+        content = request.POST["content"]
+        title = request.POST["title"]
+        author = request.POST["author"]
+
+        user = User.objects.get(id=request.user.id)
+        if user.has_perm('change_delete_content', post):
+            book.title = title
+            book.author = author
+            book.save()
+            post.content = content
+            post.save()
+            return redirect(to="/posts")
+        else:
+            raise PermissionDenied
+
+    params = {
+        "title": "ポスト編集",
+        "id": num,
+        "form": PostForm(initial=initial_dict)
+    }
+    return render(request, "posts/edit.html", params)
+
+
+@transaction.atomic
 def nice_create(request):
     """Posting nice function.
 
