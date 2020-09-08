@@ -210,22 +210,23 @@ def delete(request, num):
 # Takahashi Shunichi
 def bookmark(request):
     bookmark = Bookmark.objects.filter(user_id=request.user.id).all()
-    post = [
+    posts = [
         Post.objects.filter(id=b.post_id.id).first() for b in bookmark
     ]
     wokashi_sum = [
-        p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in post
+        p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
     ]
     ahare_sum = [
-        p.ahare_set.all().aggregate(Sum('count'))['count__sum'] for p in post
+        p.ahare_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
     ]
+    books = [Book.objects.get(pk=post.book_id.id) for post in posts]
     bookmark_flag = [
-        p.bookmark_set.filter(user_id=request.user.id).exists() for p in post
+        p.bookmark_set.filter(user_id=request.user.id).exists() for p in posts
     ]
-    zipped_post = zip(post, wokashi_sum, ahare_sum, bookmark_flag)
+    zipped_post = zip(posts, wokashi_sum, ahare_sum, books, bookmark_flag)
     params = {
         "title": "ポスト一覧",
-        "post": zipped_post,
+        "zipped_post": zipped_post,
     }
     return render(request, "posts/index.html", params)
 
