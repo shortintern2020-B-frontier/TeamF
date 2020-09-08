@@ -1,3 +1,5 @@
+/* Created by Hirabayashi Naoki */
+/* design updated by Yamamoto Sota */
 @charset "utf-8";
 
 * {
@@ -16,7 +18,7 @@ header, footer, main, aside {
 
 header {
   padding: 10px;
-  background: #000;
+  background: #00081A; /* 檳榔子黒（Binroujikuro）*/
   color: #fff;
 }
 
@@ -37,8 +39,36 @@ li {
 #drawer-icon {
   cursor: pointer;
   display: inline-block;
-  position: relative;
-  background: #f00;
+  position: fixed;
+  right: 1.5rem;
+  top: 2.0rem;
+  background: #FCF5F7; /* 薄桜（Usuzakura） */
+  color: #00081A; /* 檳榔子黒（Binroujikuro）*/
+  font-size: 1.5rem;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+
+}
+
+#drawer-icon:hover {
+  opacity: 0.8;
+}
+
+ul {
+  margin: 1.5rem;
+  padding-top: 2.4rem;
+  padding-left: 0;
+}
+ 
+li {
+  list-style: none;
+  margin: 1.0rem;
+}
+ 
+a {
+  text-decoration: none;
+  color: #fff;
 }
 
 #drawer-content {
@@ -50,8 +80,8 @@ li {
   width: 250px;
   max-width: 90%;
   height: 100%;
-  background: #333;
-  color: #fff;
+  background: #433D3C; /* 檳榔子染（Binroujizome） */
+  color: #FCF5F7; /* 薄桜（Usuzakura） */
 }
 
 #drawer-checkbox:checked ~ #drawer-content {

@@ -18,18 +18,22 @@ Masato Umakoshi: Modify for backend.
 <body>
   <div id="wrapper">
     <header>
-      <div id="logo-img">サービス名</div>
+      <h1><div id="logo-img">サービス名</div></h1>
 
       <button id="signup-btn">サインアップ</button>
       <button id="signin-btn">サインイン</button>
 
       <input id="drawer-checkbox" type="checkbox">
-      <label id="drawer-icon" for="drawer-checkbox">メニュー</label>
+      <button id="drawer-icon"><label for="drawer-checkbox"> Menu </label></button>
       <div id="drawer-content">
-        <div class="menu-item">メニュー</div>
-        <div class="menu-item">しおり</div>
-        <div class="menu-item">週間をかしランキング</div>
-        <div class="menu-item">週間あはれランキング</div>
+        <nav>
+          <button id="drawer-icon"><label for="drawer-checkbox">　×　</label></button>
+          <ul>
+            <li><div><a href="#" class="menu-item">しおり</a></div></li>
+            <li><div><a href="#" class="menu-item">週間をかしランキング</a></div></li>
+            <li><div><a href="#" class="menu-item">週間あはれランキング</a></div></li>
+          </ul>
+        </nav>
       </div>
     </header>
 
@@ -42,7 +46,7 @@ Masato Umakoshi: Modify for backend.
           <div class="post-box">
             <div class="box-primary">
               <div class="cover-img">
-                <img src="{% static 'posts/img/book.png' %}">
+                <img src="{{book.cover_path}}">
               </div>
               <div class="sentence">
                 <p>{{ post.content }}</p>
