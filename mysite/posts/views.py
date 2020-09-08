@@ -46,11 +46,13 @@ def index(request):
     ahare_sum = [
         p.ahare_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
     ]
+
     books = [Book.objects.get(pk=post.book_id.id) for post in posts]
     bookmark_flag = [
         p.bookmark_set.filter(user_id=request.user.id).exists() for p in posts
     ]
     zipped_post = zip(posts, wokashi_sum, ahare_sum, books, bookmark_flag)
+
     params = {
         "title": "ポスト一覧",
         "zipped_post": zipped_post,
@@ -104,16 +106,21 @@ def bookmark_create(request):
 # Takahashi Shunichi
 # Umakoshi Masato
 def detail(request, num):
+    user = User.objects.get(id=request.user.id)
     post = Post.objects.get(id=num)
     comments = Comment.objects.filter(post_id=num)
     num_nices = [
         len(Nice.objects.filter(comment_id=comment.id)) for comment in comments
     ]
-    comments_num_nices = zip(comments, num_nices)
+    comment_perms = [
+        user.has_perm('change_delete_content', comment) for comment in comments
+    ]
+
+    zipped_comments = zip(comments, num_nices, comment_perms)
     params = {
         "title": "ポスト詳細",
         "post": post,
-        "comments_num_nices": comments_num_nices,
+        "zipped_comments": zipped_comments,
         "form": CommentForm(),
     }
     return render(request, "posts/detail.html", params)
@@ -257,6 +264,58 @@ def comment_create(request, num):
     # post_id may be post.id??
     # return HttpResponseRedirect(reverse("posts:show", args=(num, )))
     return redirect(to="/posts")
+
+
+@transaction.atomic
+def comment_edit(request, num):
+    """Editting comment function.
+
+    TODO:
+        handle
+            * Not logged in user
+            * Not post request
+
+    Author:
+        Masato Umakoshi
+    """
+    if request.method != "POST":
+        raise Http404("Hogehoge")
+
+    comment = Comment.objects.get(id=num)
+    content = request.POST["comment"]
+    user = User.objects.get(id=request.user.id)
+    if user.has_perm('change_delete_content', comment):
+        comment.comment = content
+        comment.save()
+        # TODO: redirect to post/id
+        return redirect(to="/posts")
+    else:
+        raise PermissionDenied
+
+
+@transaction.atomic
+def comment_delete(request, num):
+    """Deleting comment function.
+
+    TODO:
+        handle
+            * Not logged in user
+            * Not post request
+
+    Author:
+        Masato Umakoshi
+    """
+    if request.method != "POST":
+        raise Http404("Hogehoge")
+
+    user = User.objects.get(id=request.user.id)
+    comment = Comment.objects.get(id=num)
+    if user.has_perm('change_delete_content', comment):
+        comment.delete()
+        # TODO: redirect to post/id
+        return redirect(to="/posts")
+    else:
+        raise PermissionDenied
 
 
 @transaction.atomic
