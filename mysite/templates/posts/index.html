@@ -22,7 +22,6 @@ design updated and Made a templates extends by Yamamoto Sota
       <main>
         <div class="scroll-list">
           {% for post, wokashi_sum, ahare_sum, book, bookmark_flag in zipped_post %}
-
           <div class="post-box">
             <div class="box-primary">
               <div class="cover-img">
@@ -73,9 +72,8 @@ design updated and Made a templates extends by Yamamoto Sota
               </td>
             </div>
           </div>
-
-          {% endfor %}
-        </div>
+        {% endfor %}
+      </div>
 
         <input type="checkbox" class="fixed-btn" name="show-popup">
         <div id="popup">
