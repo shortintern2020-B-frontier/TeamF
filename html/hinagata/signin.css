@@ -6,4 +6,30 @@
 main {
   padding: 0.5em;
   background: #fff;
+  font-family: sans-serif;
+}
+
+#login-wrapper {
+  margin: auto 0;
+  text-align: center;
+}
+
+#login-wrapper h2 {
+  margin: 20px;
+  font-size: 40px;
+}
+
+#login-wrapper .text-field {
+  margin: 20px;
+  width: 300px;
+  height: 30px;
+  border: solid 2px black;
+  border-radius: 1em;
+}
+
+#login-wrapper .enter-btn {
+  margin: 20px;
+  padding: 10px 20px;
+  border: solid 2px black;
+  border-radius: 1em;
 }
