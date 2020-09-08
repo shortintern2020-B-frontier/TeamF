@@ -10,6 +10,8 @@ from django.shortcuts import redirect, render
 from django.template import loader
 from django.urls import reverse
 import urllib.parse
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Sum
 
 # from .models import User
 
@@ -32,19 +34,40 @@ def get_book_cover_path(title, author):
     return cover_path
 
 # Takahashi Shunichi
+# Umakoshi Masato
 def index(request):
-    post = Post.objects.filter(is_deleted=False)
+    # TODO Fix naming: book_id.id is too wierd.
+    posts = Post.objects.filter(is_deleted=False)
 
-    params = {"title": "ポスト一覧", "post": post}
+    wokashi_sum = [
+        p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
+    ]
+    ahare_sum = [
+        p.ahare_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
+    ]
+
+    # TODO Fix naming: book_id.id is too wierd.
+    books = [Book.objects.get(pk=post.book_id.id) for post in posts]
+    zipped_post = zip(posts, wokashi_sum, ahare_sum, books)
+
+    params = {
+        "title": "ポスト一覧",
+        "zipped_post": zipped_post,
+    }
     return render(request, "posts/index.html", params)
 
 
 #Takahashi Shunichi
 def wokashi_create(request):
     if request.method == "POST":
-        user_id = request.user.id
-        post_id = request.POST["post_id"]
-        wokashi = Wokashi(user_id=user_id, post_id=post_id, count=1)
+        user = User.objects.get(id=request.user.id)
+        post = Post.objects.get(id=request.POST["post_id"])
+        try:
+            wokashi = Wokashi.objects.get(user_id=user, post_id=post)
+            if wokashi.count < 10:
+                wokashi.count += 1
+        except ObjectDoesNotExist as e:
+            wokashi = Wokashi(user_id=user, post_id=post)
         wokashi.save()
         return redirect(to="/posts")
 
@@ -52,10 +75,15 @@ def wokashi_create(request):
 #Takahashi Shunichi
 def ahare_create(request):
     if request.method == "POST":
-        user_id = request.user.id
-        post_id = request.POST["post_id"]
-        wokashi = Ahare(user_id=user_id, post_id=post_id, count=1)
-        wokashi.save()
+        user = User.objects.get(id=request.user.id)
+        post = Post.objects.get(id=request.POST["post_id"])
+        try:
+            ahare = Ahare.objects.get(user_id=user, post_id=post)
+            if ahare.count < 10:
+                ahare.count += 1
+        except ObjectDoesNotExist as e:
+            ahare = Ahare(user_id=user, post_id=post)
+        ahare.save()
         return redirect(to="/posts")
 
 
@@ -167,11 +195,11 @@ def comment_create(request, num):
 
     # This may be too naive
     user_id = request.user.id
-    content = request.POST["content"]
+    comment = request.POST["comment"]
     comment = Comment(
         user_id=User.objects.get(pk=user_id),
         post_id=Post.objects.get(pk=num),
-        content=content,
+        comment=comment,
     )
     comment.save()
     # post_id may be post.id??
