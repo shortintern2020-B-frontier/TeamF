@@ -41,7 +41,8 @@
             <td>
                 {% if ahare_sum is None %}0{% endif %}
                 {% if not ahare_sum is None %}{{ahare_sum}}{% endif %}
-            </td>            <td>
+            </td>
+            <td>
                 <form action="{% url 'ahare'%}" method="post">
                     <button type="submit" name="post_id" value={{item.id}}>あはれ</button>
                 {% csrf_token %}
