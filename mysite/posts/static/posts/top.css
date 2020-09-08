@@ -19,81 +19,160 @@ main {
 
 .post-box {
   display: inline-block;
-  margin-right: 10px;
+  margin-right: 1.5rem;
   padding: 10px;
-  min-width: 120px;
+  min-width: 13rem;
   max-width: 1000px;
-  height: 600px;
+  height: 45rem;
   background: #ddd;
   white-space: nowrap;
-
+  border-radius: 1rem;
+  position: relative;
 }
 
 .post-box .box-primary {
   display: inline-block;
   vertical-align: top;
-  height: 100%;
+  position: absolute;
+  width: 35%;
+  right: 10%;
+  bottom: 0;
+  top: 0;
 }
 
 .post-box .box-secondary {
   display: inline-block;
   vertical-align: top;
-  height: 100%;
+  position: absolute;
+  width: 35%;
+  height: 70%;
+  left: 10%;
+  bottom: 0;
+  color: #666;
 }
 
 .post-box .cover-img {
   vertical-align: top;
-  width: 60px;
-  height: 60px;
-  background: #f00;
+  position: absolute;
+  top: 1rem;
+  width: 4.5rem;
+  height: 4.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  border-radius: 50%;
 }
 
 .cover-img img {
-  width: 60px;
-  height: 60px;
+  width: 4.5rem;
+  height: 4.5rem;
+  object-fit:cover;
+  border-radius: 50%;
 }
 
 .post-box .sentence {
   vertical-align: top;
-  height: 500px;
   direction: ltr;
-  text-align: left;
   white-space: normal;
   writing-mode: vertical-rl;
+  position: absolute;
+  top: 8rem;
+  width: auto;
+  height: 78%;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
 }
 
-.post-box .bookmark-btn {
+.post-box .bookmark-btn { 
   vertical-align: top;
-  width: 60px;
-  height: 60px;
+  position: absolute;
+  top: 0;
+  width: 3rem;
+  height: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
 }
 
 .post-box .wokashi {
   vertical-align: top;
-  width: 60px;
-  height: 30px;
+  position: absolute;
+  top: 4rem;
+  width: 4rem;
+  height: 2.5rem;
+  left: 0;
   direction: ltr;
+  background: #888;
+}
+
+.wokashi .wokashi-btn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+}
+
+.wokashi .wokashi-count {
+  position: absolute;
+  top: 50%;
+  right: 0%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
 }
 
 .post-box .ahare {
   vertical-align: top;
-  width: 60px;
-  height: 30px;
+  position: absolute;
+  top: 7rem;
+  width: 4rem;
+  height: 2.5rem;
+  left: 0;
   direction: ltr;
+  background: #888;
 }
 
+.ahare .ahare-btn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+}
+
+.ahare .ahare-count {
+  position: absolute;
+  top: 50%;
+  right: 0%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+}
 .post-box .source {
-  height: 400px;
+  position: absolute;
+  height: 60%;
+  width: 100%;
+  bottom: 1rem;
 }
 
 .post-box .author-name {
   display: inline-block;
   vertical-align: top;
-  height: 80%;
   direction: ltr;
   text-align: left;
   white-space: normal;
   writing-mode: vertical-rl;
+  position: absolute;
+  height: 100%;
+  right: 7%;
+  top: 0;
 }
 
 .post-box .book-name {
@@ -104,6 +183,10 @@ main {
   text-align: left;
   white-space: normal;
   writing-mode: vertical-rl;
+  position: absolute;
+  height: 100%;
+  left: 7%;
+  top: 0;
 }
 
 .fixed-btn {
