@@ -203,6 +203,27 @@ def delete(request, num):
     params = {"title": "ポスト削除", "id": num, "post": post}
     return render(request, "posts/delete.html", params)
 
+# Takahashi Shunichi
+def bookmark(request):
+    bookmark = Bookmark.objects.filter(user_id=request.user.id).all()
+    post = [
+        Post.objects.filter(id=b.post_id.id).first() for b in bookmark
+    ]
+    wokashi_sum = [
+        p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in post
+    ]
+    ahare_sum = [
+        p.ahare_set.all().aggregate(Sum('count'))['count__sum'] for p in post
+    ]
+    bookmark_flag = [
+        p.bookmark_set.filter(user_id=request.user.id).exists() for p in post
+    ]
+    zipped_post = zip(post, wokashi_sum, ahare_sum, bookmark_flag)
+    params = {
+        "title": "ポスト一覧",
+        "post": zipped_post,
+    }
+    return render(request, "posts/index.html", params)
 
 @transaction.atomic
 def comment_create(request, num):
