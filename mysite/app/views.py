@@ -15,11 +15,11 @@ class SignUpView(CreateView):
             user = authenticate(username=username, email=email, password=password)
             login(request, user)
             return redirect('/')
-        return render(request, 'signup.html', {'form': form})
+        return render(request, 'app/signup.html', {'form': form})
 
     def get(self, request, *args, **kwargs):
         form = SignUpForm(request.POST)
-        return render(request, 'signup.html', {'form': form})
+        return render(request, 'app/signup.html', {'form': form})
 
     def form_valid(self, form):
         user = form.save()
