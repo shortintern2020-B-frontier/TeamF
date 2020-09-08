@@ -6,6 +6,32 @@
 main {
   padding: 0.5em;
   background: #fff;
+  font-family: sans-serif;
+}
+
+#form-wrapper {
+  margin: auto 0;
+  text-align: center;
+}
+
+#form-wrapper h2 {
+  margin: 20px;
+  font-size: 40px;
+}
+
+#form-wrapper .text-field {
+  margin: 20px;
+  width: 300px;
+  height: 30px;
+  border: solid 2px black;
+  border-radius: 1em;
+}
+
+#form-wrapper .enter-btn {
+  margin: 20px;
+  padding: 10px 20px;
+  border: solid 2px black;
+  border-radius: 1em;
 }
 
 .img-selection input[type="radio"] {
@@ -13,12 +39,12 @@ main {
 }
 
 .img-selection img {
-  margin: 3px;
+  margin: 10px;
   padding: 3px;
   width: 60px;
   height: 60px;
 }
 
 .img-selection input[type="radio"]:checked + label img {
-  background: blue;
+  background: gray;
 }
