@@ -45,9 +45,9 @@
                     <p class = "username">Yamamoto Sota</p>
                     <p class = "time">{{ post.updated_at }}</p>
                 </div>
-            {% if comments_num_nices %}
+            {% if zipped_comments %}
               <ul>
-                {% for comment, num_nice in comments_num_nices %}
+                {% for comment, num_nice, comment_perm in zipped_comments %}
                   <p>
                       <p class = "id">1：</p>
                       <p class = "comment">{{ comment.comment }}</p>
@@ -58,6 +58,9 @@
                   <input type="submit" value="いいね！">
                   {{ num_nice }}
                   </form>
+                  {% if comment_perm %}
+                    hoge
+                  {% endif %}
                 {% endfor %}
               </ul>
             {% else %}
