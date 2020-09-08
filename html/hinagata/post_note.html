@@ -1,15 +1,11 @@
 <!doctype html>
-<!-- Created by Yamamoto Sota
-Masato Umakoshi: Modify for backend.
--->
-
-{% load static %}
+<!-- Created by Yamamoto Sota -->
 <html>
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="{% static 'posts/common.css' %}">
+  <link rel="stylesheet" href="common.css">
   <title>一文投稿画面</title>
 </head>
 
@@ -34,22 +30,19 @@ Masato Umakoshi: Modify for backend.
     <div id="content">
 
         <main>
-            <form action="{% url 'create' %}" method="post">
-                {% csrf_token %}
+            <form method="POST" action="#">
                 <p class="username">
-                <img src="{% static 'posts/img/bookusagi.png' %}" class="icon" alt="icon" align="middle">
+                    <img src="img/bookusagi.png" class="icon" alt="icon" align="middle">
                     Username
                 </p>
-                <textarea name="content" rows="8" cols="100">
+                <textarea name="contents" rows="8" cols="100">
                 </textarea>
                 <p>著者</p>
                 <input type="text" name="author">
                 <p>書名</p>
-                <input type="text" name="title">
+                <input type="text" name="booktitle">
                 <br><br>
-                {# <input type="button" name="btn1" value="投稿する"> #}
-                <!-- TODO: Fix this submit -> button -->
-                <input type="submit" name="btn1" value="投稿する">
+                <input type="button" name="btn1" value="投稿する">
             </form>
         </main>
     </div>

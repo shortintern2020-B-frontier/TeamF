@@ -1,0 +1,147 @@
+@charset "utf-8";
+
+/* Main */
+main {
+  padding: 0.5em;
+  background: #fff;
+}
+
+.scroll-list {
+  margin: 0 auto;
+  padding: 0;
+  width: 90%;
+  direction: rtl;
+  overflow-x: auto;
+  white-space: nowrap;
+  overflow-scrolling: touch;
+  -webkit-overflow-scrolling: touch;
+}
+
+.post-box {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 10px;
+  min-width: 120px;
+  max-width: 1000px;
+  height: 600px;
+  background: #ddd;
+  white-space: nowrap;
+
+}
+
+.post-box .box-primary {
+  display: inline-block;
+  vertical-align: top;
+  height: 100%;
+}
+
+.post-box .box-secondary {
+  display: inline-block;
+  vertical-align: top;
+  height: 100%;
+}
+
+.post-box .cover-img {
+  vertical-align: top;
+  width: 60px;
+  height: 60px;
+  background: #f00;
+}
+
+.cover-img img {
+  width: 60px;
+  height: 60px;
+}
+
+.post-box .sentence {
+  vertical-align: top;
+  height: 500px;
+  direction: ltr;
+  text-align: left;
+  white-space: normal;
+  writing-mode: vertical-rl;
+}
+
+.post-box .bookmark-btn {
+  vertical-align: top;
+  width: 60px;
+  height: 60px;
+}
+
+.post-box .wokashi {
+  vertical-align: top;
+  width: 60px;
+  height: 30px;
+  direction: ltr;
+}
+
+.post-box .ahare {
+  vertical-align: top;
+  width: 60px;
+  height: 30px;
+  direction: ltr;
+}
+
+.post-box .source {
+  height: 400px;
+}
+
+.post-box .author-name {
+  display: inline-block;
+  vertical-align: top;
+  height: 80%;
+  direction: ltr;
+  text-align: left;
+  white-space: normal;
+  writing-mode: vertical-rl;
+}
+
+.post-box .book-name {
+  display: inline-block;
+  vertical-align: top;
+  height: 80%;
+  direction: ltr;
+  text-align: left;
+  white-space: normal;
+  writing-mode: vertical-rl;
+}
+
+.fixed-btn {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  width: 60px;
+  height: 60px;
+}
+
+/* popup style */
+#show-popup {
+  display: none;
+}
+
+#popup {
+  display: none;
+  display:none;
+  position:fixed;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  padding: 10px;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  background: #666;
+}
+
+input[type="checkbox"]:checked + #popup {
+  display:block;
+  transition:.2s;
+}
+
+#popup textarea {
+  width: 80%;
+  height: 100px;
+}
+
+#popup input[type="text"] {
+  width: 80%;
+}

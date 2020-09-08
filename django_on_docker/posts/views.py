@@ -10,15 +10,12 @@ from django.shortcuts import redirect, render
 from django.template import loader
 from django.urls import reverse
 import urllib.parse
-from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Sum
-from guardian.shortcuts import assign_perm
-from django.core.exceptions import PermissionDenied
+
+# from .models import User
 
 import requests
 import time
 
-# Takahashi Shunichi
 RAKUTEN_BOOKS_API_URL = "https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404"
 RAKUTEN_APP_ID = "1065776451953533134"
 def get_book_cover_path(title, author):
@@ -35,40 +32,19 @@ def get_book_cover_path(title, author):
     return cover_path
 
 # Takahashi Shunichi
-# Umakoshi Masato
 def index(request):
-    # TODO Fix naming: book_id.id is too wierd.
-    posts = Post.objects.filter(is_deleted=False)
+    post = Post.objects.filter(is_deleted=False)
 
-    wokashi_sum = [
-        p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
-    ]
-    ahare_sum = [
-        p.ahare_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
-    ]
-
-    # TODO Fix naming: book_id.id is too wierd.
-    books = [Book.objects.get(pk=post.book_id.id) for post in posts]
-    zipped_post = zip(posts, wokashi_sum, ahare_sum, books)
-
-    params = {
-        "title": "ポスト一覧",
-        "zipped_post": zipped_post,
-    }
+    params = {"title": "ポスト一覧", "post": post}
     return render(request, "posts/index.html", params)
 
 
 #Takahashi Shunichi
 def wokashi_create(request):
     if request.method == "POST":
-        user = User.objects.get(id=request.user.id)
-        post = Post.objects.get(id=request.POST["post_id"])
-        try:
-            wokashi = Wokashi.objects.get(user_id=user, post_id=post)
-            if wokashi.count < 10:
-                wokashi.count += 1
-        except ObjectDoesNotExist as e:
-            wokashi = Wokashi(user_id=user, post_id=post)
+        user_id = request.user.id
+        post_id = request.POST["post_id"]
+        wokashi = Wokashi(user_id=user_id, post_id=post_id, count=1)
         wokashi.save()
         return redirect(to="/posts")
 
@@ -76,15 +52,10 @@ def wokashi_create(request):
 #Takahashi Shunichi
 def ahare_create(request):
     if request.method == "POST":
-        user = User.objects.get(id=request.user.id)
-        post = Post.objects.get(id=request.POST["post_id"])
-        try:
-            ahare = Ahare.objects.get(user_id=user, post_id=post)
-            if ahare.count < 10:
-                ahare.count += 1
-        except ObjectDoesNotExist as e:
-            ahare = Ahare(user_id=user, post_id=post)
-        ahare.save()
+        user_id = request.user.id
+        post_id = request.POST["post_id"]
+        wokashi = Ahare(user_id=user_id, post_id=post_id, count=1)
+        wokashi.save()
         return redirect(to="/posts")
 
 
@@ -92,6 +63,7 @@ def ahare_create(request):
 # Umakoshi Masato
 def detail(request, num):
     post = Post.objects.get(id=num)
+    # comments = post.comment_set.all()
     comments = Comment.objects.filter(post_id=num)
     num_nices = [
         len(Nice.objects.filter(comment_id=comment.id)) for comment in comments
@@ -110,27 +82,23 @@ def detail(request, num):
 @transaction.atomic
 def create(request):
     if request.method == "POST":
-        content = request.POST["content"]
-        title = request.POST["title"]
-        author = request.POST["author"]
+        content = (request.POST["content"], )
+        title = (request.POST["title"], )
+        author = (request.POST["author"], )
 
-        try:
-            book = Book.objects.get(title=title, author=author)
-        except ObjectDoesNotExist as e:
-            cover_path = get_book_cover_path(title, author)
-            time.sleep(1)
-            if cover_path != 'No book found':
-                book = Book(title=title, author=author, cover_path=cover_path)
-                book.save()
-            else:
-                NOCOVERPATH = 'temp' #表紙がなかった場合に表示する画像のパス
-                book = Book(title=title, author=author, cover_path=NOCOVERPATH)
-                book.save()
+        # cover_path = ''
+        cover_path = get_book_cover_path(title, author)
+        time.sleep(1)
 
+        if cover_path == 'No book found':
+            book = Book(title=title, author=author) #すでに存在するなら追加しない
+        else:
+            book = Book(title=title, author=author, cover_path=cover_path) #すでに存在するなら追加しない
+        book.save()
         user = User.objects.get(id=request.user.id)
         post = Post(user_id=user, content=content, book_id=book)
         post.save()
-        assign_perm('change_delete_content', user, post)
+
         return redirect(to="/posts")
     params = {"title": "ポスト投稿", "form": PostForm()}
     return render(request, "posts/create.html", params)
@@ -140,7 +108,7 @@ def create(request):
 @transaction.atomic
 def edit(request, num):
     post = Post.objects.get(id=num)
-    book_id = post.book_id.id
+    book_id = post.id
     book = Book.objects.get(id=book_id)
     initial_dict = {
         "content": post.content,
@@ -149,20 +117,16 @@ def edit(request, num):
     }
 
     if request.method == "POST":
-        content = request.POST["content"]
-        title = request.POST["title"]
-        author = request.POST["author"]
+        content = (request.POST["content"], )
+        title = (request.POST["title"], )
+        author = (request.POST["author"], )
 
-        user = User.objects.get(id=request.user.id)
-        if user.has_perm('change_delete_content', post):
-            book.title = title
-            book.author = author
-            book.save()
-            post.content = content
-            post.save()
-            return redirect(to="/posts")
-        else:
-            raise PermissionDenied
+        book.title = title
+        book.author = author
+        book.save()
+        post.content = content
+        post.save()
+        return redirect(to="/posts")
 
     params = {
         "title": "ポスト編集",
@@ -176,15 +140,10 @@ def edit(request, num):
 @transaction.atomic
 def delete(request, num):
     post = Post.objects.get(id=num)
-
     if request.method == "POST":
-        user = User.objects.get(id=request.user.id)
-        if user.has_perm('change_delete_content', post):
-            post.is_deleted = True
-            post.save()
-            return redirect(to="/posts")
-        else:
-            raise PermissionDenied
+        post.is_deleted = True
+        post.save()
+        return redirect(to="/posts")
 
     params = {"title": "ポスト削除", "id": num, "post": post}
     return render(request, "posts/delete.html", params)
@@ -208,68 +167,16 @@ def comment_create(request, num):
 
     # This may be too naive
     user_id = request.user.id
-    comment = request.POST["comment"]
+    content = request.POST["content"]
     comment = Comment(
         user_id=User.objects.get(pk=user_id),
         post_id=Post.objects.get(pk=num),
-        comment=comment,
+        content=content,
     )
     comment.save()
     # post_id may be post.id??
     # return HttpResponseRedirect(reverse("posts:show", args=(num, )))
     return redirect(to="/posts")
-
-
-@transaction.atomic
-def comment_edit(request, num):
-    """Editting comment function.
-
-    TODO:
-        handle
-            * Not logged in user
-            * Not post request
-
-    Author:
-        Masato Umakoshi
-    """
-    if request.method != "POST":
-        raise Http404("Hogehoge")
-
-    comment = Comment.objects.get(id=num)
-    content = request.POST["comment"]
-    user = User.objects.get(id=request.user.id)
-    if user.has_perm('change_delete_content', comment):
-        comment.comemnt = content
-        comment.save()
-        # TODO: redirect to post/id
-        return redirect(to="/posts")
-    else:
-        raise PermissionDenied
-
-
-@transaction.atomic
-def comment_delete(request, num):
-    """Deleting comment function.
-
-    TODO:
-        handle
-            * Not logged in user
-            * Not post request
-
-    Author:
-        Masato Umakoshi
-    """
-    if request.method != "POST":
-        raise Http404("Hogehoge")
-
-    user = User.objects.get(id=request.user.id)
-    comment = Comment.objects.get(id=num)
-    if user.has_perm('change_delete_content', comment):
-        comment.delete()
-        # TODO: redirect to post/id
-        return redirect(to="/posts")
-    else:
-        raise PermissionDenied
 
 
 @transaction.atomic

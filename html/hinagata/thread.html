@@ -1,13 +1,11 @@
 <!-- Created by Yamamoto Sota -->
 
-{% load static %}
-
 <!DOCTYPE html>
 <html kang="ja">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" type="text/css" href="{% static 'posts/common.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'posts/thread.css' %}">
+        <link rel="stylesheet" href="common.css">
+        <link rel="stylesheet" href="thread.css">
 		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />
         <title>スレッド画面</title>
     </head>
@@ -30,10 +28,9 @@
         <div class = "post">
             <P class = "post">
                 <img src="img/book.png" class="bookicon" alt="bookicon" align="middle">
-                {{ post.content }}
+                その空飛ぶ物体は、実は子どもたちめいめいの網膜にうつった太陽の残像であった。
             </P>
             <div class = "bookinfo">
-              <!-- TODO: Get book information-->
                 <p class = "author">- 朝永信一郎 </p>
                 <p class = "booktitle">「見える光、見えない光」</p>
             </div>
@@ -43,39 +40,25 @@
             <div class = "comment">
                 <div class = "userinfo">
                     <p class = "username">Yamamoto Sota</p>
-                    <p class = "time">{{ post.updated_at }}</p>
+                    <p class = "time">yyyy-mm-dd-hh-mm-ss</p>
                 </div>
-            {% if comments_num_nices %}
-              <ul>
-                {% for comment, num_nice in comments_num_nices %}
-                  <p>
-                      <p class = "id">1：</p>
-                      <p class = "comment">{{ comment.comment }}</p>
-                  </p>
-                  <form action="{% url 'nice' %}" method="post">
-                  {% csrf_token %}
-                  <input type="hidden", name='comment_id', value={{ comment.id }}>
-                  <input type="submit" value="いいね！">
-                  {{ num_nice }}
-                  </form>
-                {% endfor %}
-              </ul>
-            {% else %}
-              <p>No comments are available.</p>
-            {% endif %}
+                <p>
+                    <p class = "id">1：</p>
+                    <p class = "comment">これあれですね。さすがって感じの文章であれですね。</p>
+                </p>
+            </div>
             </div>
         </div>
         <div class = "post_comment">
-          <form method="POST" action="{% url 'hoge' post.id %}">
+            <form method="POST" action="#">
                 <p class="username">
                 <img src="img/bookusagi.png" width="55px" class="icon" alt="icon" align="middle">
                 Username
                 </p>
-                <textarea name="comment" rows="8" cols="100">
+                <textarea name="contents" rows="8" cols="100">
                 </textarea>
-                {% csrf_token %}
                 <br><br>
-                <input type="submit" name="btn1" value="投稿する">
+                <input type="button" name="btn1" value="投稿する">
             </form>
         </div>
         <button class="fixed-btn">投稿</button>
