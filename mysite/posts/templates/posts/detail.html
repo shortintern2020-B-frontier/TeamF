@@ -59,13 +59,17 @@
                   {{ num_nice }}
                   </form>
                   {% if comment_perm %}
-                    <p> Delete comment </p>
+                    <p> Post comment </p>
                     <form action="{% url 'comment_edit' comment.id %}" method="post">
                       {% csrf_token %}
                       <textarea name="comment" rows="8" cols="100">
                       </textarea>
                       <input type="submit" value="編集">
-                      {{ num_nice }}
+                    </form>
+                    <p> Delete comment </p>
+                    <form action="{% url 'comment_delete' comment.id %}" method="post">
+                      {% csrf_token %}
+                      <input type="submit" value="削除">
                     </form>
                   {% endif %}
                 {% endfor %}
