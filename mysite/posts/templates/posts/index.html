@@ -37,7 +37,7 @@ Masato Umakoshi: Modify for backend.
 
       <main>
         <div class="scroll-list">
-          {% for post, wokashi_sum, ahare_sum, book in zipped_post %}
+          {% for post, wokashi_sum, ahare_sum, book, bookmark_flag in zipped_post %}
 
           <div class="post-box">
             <div class="box-primary">
@@ -67,7 +67,6 @@ Masato Umakoshi: Modify for backend.
                   {% if ahare_sum is None %}0{% endif %}
                   {% if not ahare_sum is None %}{{ahare_sum}}{% endif %}
                   </span>
-                  <span>{{ ahare_sum }}</span>
                 {% csrf_token %}
                 </form>
               </div>
@@ -79,10 +78,17 @@ Masato Umakoshi: Modify for backend.
                   <p>{{ book.title }}</p>
                 </div>
               </div>
+              <td>
+                  {{bookmark_flag}}
+              </td>
+              <td>
+                  <form action="{% url 'bookmark'%}" method="post">
+                      <button type="submit" name="post_id" value={{post.id}}>しおり</button>
+                  {% csrf_token %}
+                  </form>
+              </td>
             </div>
           </div>
-          {% endfor %}
-
         </div>
 
         <input type="checkbox" class="fixed-btn" name="show-popup">
