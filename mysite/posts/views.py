@@ -255,7 +255,7 @@ def comment_edit(request, num):
     content = request.POST["comment"]
     user = User.objects.get(id=request.user.id)
     if user.has_perm('change_delete_content', comment):
-        comment.comemnt = content
+        comment.comment = content
         comment.save()
         # TODO: redirect to post/id
         return redirect(to="/posts")
