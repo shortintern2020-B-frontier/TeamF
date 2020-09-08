@@ -4,8 +4,8 @@
     "pk": 3, 
     "fields": 
     {
-      "title": "('aaa',)", 
-      "author": "('aaa',)", 
+      "title": "aaa", 
+      "author": "aaa", 
       "cover_path": "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/3286/9784391153286.jpg?_ex=200x200"
     }
   }, 
@@ -14,8 +14,8 @@
     "pk": 4,
     "fields": 
     {
-      "title": "('見える光、見えない光',)", 
-      "author": "('朝永信一郎',)",
+      "title": "見える光、見えない光", 
+      "author": "朝永信一郎",
       "cover_path": ""
     }
   }, 
@@ -45,7 +45,7 @@
     "fields": 
     {
       "user_id": 1, 
-      "content": "('aaa',)", 
+      "content": "aaa", 
       "book_id": 3, 
       "created_at": "2020-09-07T08:06:26.361Z", 
       "updated_at": "2020-09-07T08:06:26.361Z", 
@@ -58,7 +58,7 @@
     "fields": 
     {
       "user_id": 1, 
-      "content": "('その空飛ぶ物体は、実は子どもたちめいめいの網膜にうつった太陽の残像であった。',)",
+      "content": "その空飛ぶ物体は、実は子どもたちめいめいの網膜にうつった太陽の残像であった。",
       "book_id": 4, 
       "created_at": "2020-09-07T08:31:05.970Z", "updated_at": "2020-09-07T08:31:05.970Z", "is_deleted": false
     }
