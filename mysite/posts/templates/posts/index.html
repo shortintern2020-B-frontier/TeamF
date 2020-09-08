@@ -16,6 +16,7 @@ Masato Umakoshi: Modify for backend.
 </head>
 
 <body>
+<<<<<<< HEAD
   <div id="wrapper">
     <header>
       <div id="logo-img">サービス名</div>
@@ -37,7 +38,7 @@ Masato Umakoshi: Modify for backend.
 
       <main>
         <div class="scroll-list">
-          {% for post, wokashi_sum, ahare_sum, book in zipped_post %}
+          {% for post, wokashi_sum, ahare_sum, book, bookmark_flag in zipped_post %}
 
           <div class="post-box">
             <div class="box-primary">
@@ -52,15 +53,21 @@ Masato Umakoshi: Modify for backend.
               <button class="bookmark-btn">しおり</button>
               <div class="wokashi">
                 <form action="{% url 'wokashi'%}" method="post">
-                    <button type="submit" value={{item.id}}>をかし</button>
-                    <span>{{ wokashi_sum }}</span>
+                    <button type="submit" name='post_id' value={{post.id}}>をかし</button>
+                    <span>
+                      {% if wokashi_sum is None %}0{% endif %}
+                      {% if not wokashi_sum is None %}{{wokashi_sum}}{% endif %}
+                    </span>
                 {% csrf_token %}
                 </form>
               </div>
               <div class="ahare">
                 <form action="{% url 'ahare'%}" method="post">
-                  <button type="submit" value={{item.id}}>あはれ</button>
-                  <span>{{ ahare_sum }}</span>
+                  <button type="submit" name='post_id' value={{post.id}}>あはれ</button>
+                  <span>
+                  {% if ahare_sum is None %}0{% endif %}
+                  {% if not ahare_sum is None %}{{ahare_sum}}{% endif %}
+                  </span>
                 {% csrf_token %}
                 </form>
               </div>
@@ -72,10 +79,17 @@ Masato Umakoshi: Modify for backend.
                   <p>{{ book.title }}</p>
                 </div>
               </div>
+              <td>
+                  {{bookmark_flag}}
+              </td>
+              <td>
+                  <form action="{% url 'bookmark'%}" method="post">
+                      <button type="submit" name="post_id" value={{post.id}}>しおり</button>
+                  {% csrf_token %}
+                  </form>
+              </td>
             </div>
           </div>
-          {% endfor %}
-
         </div>
 
         <input type="checkbox" class="fixed-btn" name="show-popup">

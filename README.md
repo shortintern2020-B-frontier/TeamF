@@ -13,10 +13,11 @@
 | \
 |-- /posts : 投稿一覧 \
 |　　|-- /{post_id} : 投稿詳細 \
-|　　|　　|-- /delete : 投稿削除 \
 |　　| \
 |　　|-- /create : 投稿 \
 |　　| \
 |　　|-- /edit/{post_id} : 投稿編集 \
+|　　| \
+|　　|-- /delete/{post_id} : 投稿削除 \
 |　　| \
 |　　|-- /hoge/{post_id} : コメント作成

@@ -12,12 +12,13 @@ from django.urls import reverse
 import urllib.parse
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Sum
-
-# from .models import User
+from guardian.shortcuts import assign_perm
+from django.core.exceptions import PermissionDenied
 
 import requests
 import time
 
+# Takahashi Shunichi
 RAKUTEN_BOOKS_API_URL = "https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404"
 RAKUTEN_APP_ID = "1065776451953533134"
 def get_book_cover_path(title, author):
@@ -45,11 +46,11 @@ def index(request):
     ahare_sum = [
         p.ahare_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
     ]
-
-    # TODO Fix naming: book_id.id is too wierd.
     books = [Book.objects.get(pk=post.book_id.id) for post in posts]
-    zipped_post = zip(posts, wokashi_sum, ahare_sum, books)
-
+    bookmark_flag = [
+        p.bookmark_set.filter(user_id=request.user.id).exists() for p in posts
+    ]
+    zipped_post = zip(posts, wokashi_sum, ahare_sum, books, bookmark_flag)
     params = {
         "title": "ポスト一覧",
         "zipped_post": zipped_post,
@@ -86,12 +87,24 @@ def ahare_create(request):
         ahare.save()
         return redirect(to="/posts")
 
+#Takahashi Shunichi
+def bookmark_create(request):
+    if request.method == "POST":
+        user = User.objects.get(id=request.user.id)
+        post = Post.objects.get(id=request.POST["post_id"])
+        try:
+            bookmark = Bookmark.objects.get(user_id=user, post_id=post)
+            bookmark.delete()
+        except ObjectDoesNotExist as e:
+            bookmark = Bookmark(user_id=user, post_id=post)
+            bookmark.save()
+        return redirect(to="/posts")
+
 
 # Takahashi Shunichi
 # Umakoshi Masato
 def detail(request, num):
     post = Post.objects.get(id=num)
-    # comments = post.comment_set.all()
     comments = Comment.objects.filter(post_id=num)
     num_nices = [
         len(Nice.objects.filter(comment_id=comment.id)) for comment in comments
@@ -110,23 +123,27 @@ def detail(request, num):
 @transaction.atomic
 def create(request):
     if request.method == "POST":
-        content = (request.POST["content"], )
-        title = (request.POST["title"], )
-        author = (request.POST["author"], )
+        content = request.POST["content"]
+        title = request.POST["title"]
+        author = request.POST["author"]
 
-        # cover_path = ''
-        cover_path = get_book_cover_path(title, author)
-        time.sleep(1)
+        try:
+            book = Book.objects.get(title=title, author=author)
+        except ObjectDoesNotExist as e:
+            cover_path = get_book_cover_path(title, author)
+            time.sleep(1)
+            if cover_path != 'No book found':
+                book = Book(title=title, author=author, cover_path=cover_path)
+                book.save()
+            else:
+                NOCOVERPATH = 'temp' #表紙がなかった場合に表示する画像のパス
+                book = Book(title=title, author=author, cover_path=NOCOVERPATH)
+                book.save()
 
-        if cover_path == 'No book found':
-            book = Book(title=title, author=author) #すでに存在するなら追加しない
-        else:
-            book = Book(title=title, author=author, cover_path=cover_path) #すでに存在するなら追加しない
-        book.save()
         user = User.objects.get(id=request.user.id)
         post = Post(user_id=user, content=content, book_id=book)
         post.save()
-
+        assign_perm('change_delete_content', user, post)
         return redirect(to="/posts")
     params = {"title": "ポスト投稿", "form": PostForm()}
     return render(request, "posts/create.html", params)
@@ -136,7 +153,7 @@ def create(request):
 @transaction.atomic
 def edit(request, num):
     post = Post.objects.get(id=num)
-    book_id = post.id
+    book_id = post.book_id.id
     book = Book.objects.get(id=book_id)
     initial_dict = {
         "content": post.content,
@@ -145,16 +162,21 @@ def edit(request, num):
     }
 
     if request.method == "POST":
-        content = (request.POST["content"], )
-        title = (request.POST["title"], )
-        author = (request.POST["author"], )
+        content = request.POST["content"]
+        title = request.POST["title"]
+        author = request.POST["author"]
 
-        book.title = title
-        book.author = author
-        book.save()
-        post.content = content
-        post.save()
-        return redirect(to="/posts")
+        user = User.objects.get(id=request.user.id)
+        if user.has_perm('change_delete_content', post):
+            cover_path = get_book_cover_path(title, author)
+            book = Book(title=title, author=author, cover_path=cover_path)
+            book.save()
+            post.content = content
+            post.book_id = book
+            post.save()
+            return redirect(to="/posts")
+        else:
+            raise PermissionDenied
 
     params = {
         "title": "ポスト編集",
@@ -168,10 +190,15 @@ def edit(request, num):
 @transaction.atomic
 def delete(request, num):
     post = Post.objects.get(id=num)
+
     if request.method == "POST":
-        post.is_deleted = True
-        post.save()
-        return redirect(to="/posts")
+        user = User.objects.get(id=request.user.id)
+        if user.has_perm('change_delete_content', post):
+            post.is_deleted = True
+            post.save()
+            return redirect(to="/posts")
+        else:
+            raise PermissionDenied
 
     params = {"title": "ポスト削除", "id": num, "post": post}
     return render(request, "posts/delete.html", params)
