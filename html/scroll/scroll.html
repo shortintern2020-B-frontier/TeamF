@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>縦書き横スクロールの実験</title>
+</head>
+
+<body>
+  <div id="wrapper">
+    <header>縦書き横スクロール</header>
+
+    <div id="content">
+      <main>
+        <h1>概要</h1>
+        <p>これは縦書き横スクロールコンテンツを表示するための実験です．</p>
+
+        <h2>横スクロール付き</h2>
+        <div class="scroll_list" id="scroll_list">
+          <div class="post_box"><p>一つ目の文章がここに来ます</p></div>
+          <div class="post_box"><p>二つ目の文章がここに来ます</p></div>
+          <div class="post_box">
+            <p>エリンギは、原産地域ではもともと人気のある食用キノコで、フランス料理やイタリア料理などの定番食材のひとつである。日本においては、1993年に愛知県林業センターで初めて人工栽培が行われ、日本では太くて大きいエリンギが開発された。その後、栽培技術が普及するにともなって各地で大量の商業栽培がおこなわれるようになった。</p>
+          </div>
+          <div class="post_box"><p>他の文章がここに来ます</p></div>
+          <div class="post_box"><p>他の文章がここに来ます</p></div>
+          <div class="post_box"><p>他の文章がここに来ます</p></div>
+          <div class="post_box"><p>他の文章がここに来ます</p></div>
+          <div class="post_box"><p>他の文章がここに来ます</p></div>
+          <div class="post_box"><p>他の文章がここに来ます</p></div>
+          <div class="post_box"><p>他の文章がここに来ます</p></div>
+          <div class="post_box"><p>他の文章がここに来ます</p></div>
+          <div class="post_box"><p>他の文章がここに来ます</p></div>
+          <div class="post_box"><p>他の文章がここに来ます</p></div>
+          <div class="post_box"><p>他の文章がここに来ます</p></div>
+          <div class="post_box"><p>他の文章がここに来ます</p></div>
+          <div class="post_box"><p>他の文章がここに来ます</p></div>
+          <div class="post_box"><p>他の文章がここに来ます</p></div>
+          <div class="post_box"><p>他の文章がここに来ます</p></div>
+          <div class="post_box"><p>他の文章がここに来ます</p></div>
+          <div class="post_box"><p>他の文章がここに来ます</p></div>
+        </div>
+        <script>
+        const timeline = document.getElementById('scroll_list');
+        document.getElementById('scroll_list').onscroll = () => {
+          const scrollLeft = timeline.scrollLeft;
+          const scrollWidth = timeline.scrollWidth;
+          const clientWidth = timeline.clientWidth;
+          console.log(scrollWidth + ' ' + scrollLeft + ' ' + clientWidth);
+
+          if (scrollWidth - Math.abs(scrollLeft) - 1 <= clientWidth) {
+            for (let i = 0; i < 5; i++) {
+              console.log("append");
+              const div = document.createElement("div");
+              div.setAttribute('class', 'post_box');
+              const p = document.createElement("p");
+              const txt = document.createTextNode("これは新しく追加された文章です " + i);
+              p.appendChild(txt);
+              div.appendChild(p);
+              timeline.appendChild(div);
+            }
+          }
+        };
+        </script>
+      </main>
+    </div>
+
+    <footer>フッター</footer>
+  </div>
+</body>
+</html>
