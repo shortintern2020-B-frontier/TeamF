@@ -20,6 +20,11 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
 
+    class Meta:
+        permissions = (
+            ('change_delete_content', 'Change Delete content'),
+        )
+
 
 # Takahashi Shunichi
 class Wokashi(models.Model):
@@ -77,6 +82,11 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
+
+    class Meta:
+        permissions = (
+            ('change_delete_comment', 'Change Delete comment'),
+        )
 
     def __str__(self):
         return self.comment
