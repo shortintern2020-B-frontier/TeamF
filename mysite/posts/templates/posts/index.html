@@ -3,7 +3,6 @@ Masato Umakoshi: Modify for backend.
 design updated and Made a template extends by Yamamoto Sota
 -->
 
-{% extends "base_header.html" %}
 {% load static %}
 
 <!doctype html>
@@ -12,57 +11,74 @@ design updated and Made a template extends by Yamamoto Sota
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  {% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'common.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static 'posts/top.css' %}">
   <title>タイムライン画面</title>
-  {% endblock head %}
 </head>
 
 <body>
-  {% block contents %}
-  <div id="content">
+  <div id="wrapper">
+    <header>
+        <h1><div id="logo-img">サービス名</div></h1>
 
-    <main>
-      <div class="scroll-list">
-        {% for post, wokashi_sum, ahare_sum, book in zipped_post %}
+        <button id="signup-btn">サインアップ</button>
+        <button id="signin-btn">サインイン</button>
 
-        <div class="post-box">
-          <div class="box-primary">
-            <div class="cover-img">
-              <img src="{{book.cover_path}}">
-            </div>
-            <div class="sentence">
-              <p>{{ post.content }}</p>
-            </div>
-          </div>
-          <div class="box-secondary">
-            <button class="bookmark-btn">しおり</button>
-            <div class="wokashi">
-              <form action="{% url 'wokashi'%}" method="post">
-                  <button type="submit" value={{item.id}}>をかし</button>
-                  <span>{{ wokashi_sum }}</span>
-              {% csrf_token %}
-              </form>
-            </div>
-            <div class="ahare">
-              <form action="{% url 'ahare'%}" method="post">
-                <button type="submit" value={{item.id}}>あはれ</button>
-                <span>{{ ahare_sum }}</span>
-              {% csrf_token %}
-              </form>
-            </div>
-            <div class="source">
-              <div class="author-name">
-                <p>{{ book.author }}</p>
-              </div>
-              <div class="book-name">
-                <p>{{ book.title }}</p>
-              </div>
-            </div>
-          </div>
+        <input id="drawer-checkbox" type="checkbox">
+        <button id="drawer-icon"><label for="drawer-checkbox"> Menu </label></button>
+        <div id="drawer-content">
+        <nav>
+            <button id="drawer-icon"><label for="drawer-checkbox">　×　</label></button>
+            <ul>
+            <li><div><a href="#" class="menu-item">しおり</a></div></li>
+            <li><div><a href="#" class="menu-item">週間をかしランキング</a></div></li>
+            <li><div><a href="#" class="menu-item">週間あはれランキング</a></div></li>
+            </ul>
+        </nav>
         </div>
-        {% endfor %}
+    </header>
+    <div id="content">
 
+      <main>
+        <div class="scroll-list">
+          {% for post, wokashi_sum, ahare_sum, book in zipped_post %}
+
+          <div class="post-box">
+            <div class="box-primary">
+              <div class="cover-img">
+                <img src="{{book.cover_path}}">
+              </div>
+              <div class="sentence">
+                <p>{{ post.content }}</p>
+              </div>
+            </div>
+            <div class="box-secondary">
+              <button class="bookmark-btn">しおり</button>
+              <div class="wokashi">
+                <form action="{% url 'wokashi'%}" method="post">
+                    <button type="submit" value={{item.id}}>をかし</button>
+                    <span>{{ wokashi_sum }}</span>
+                {% csrf_token %}
+                </form>
+              </div>
+              <div class="ahare">
+                <form action="{% url 'ahare'%}" method="post">
+                  <button type="submit" value={{item.id}}>あはれ</button>
+                  <span>{{ ahare_sum }}</span>
+                {% csrf_token %}
+                </form>
+              </div>
+              <div class="source">
+                <div class="author-name">
+                  <p>{{ book.author }}</p>
+                </div>
+                <div class="book-name">
+                  <p>{{ book.title }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>  
       </div>
 
       <input type="checkbox" class="fixed-btn" name="show-popup">
