@@ -14,6 +14,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Sum
 from guardian.shortcuts import assign_perm
 from django.core.exceptions import PermissionDenied
+from django.db import IntegrityError
 
 import requests
 import time
@@ -169,8 +170,11 @@ def edit(request, num):
         user = User.objects.get(id=request.user.id)
         if user.has_perm('change_delete_content', post):
             cover_path = get_book_cover_path(title, author)
-            book = Book(title=title, author=author, cover_path=cover_path)
-            book.save()
+            if Book.objects.filter(title=title, author=author).exists():
+                book = Book.objects.filter(title=title, author=author).first()
+            else:
+                book = Book(title=title, author=author, cover_path=cover_path)
+                book.save()
             post.content = content
             post.book_id = book
             post.save()
