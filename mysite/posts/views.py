@@ -143,7 +143,7 @@ def create(request):
                 book = Book(title=title, author=author, cover_path=cover_path)
                 book.save()
             else:
-                NOCOVERPATH = 'temp' #表紙がなかった場合に表示する画像のパス
+                NOCOVERPATH = 'posts/img/book.png' #表紙がなかった場合に表示する画像のパス
                 book = Book(title=title, author=author, cover_path=NOCOVERPATH)
                 book.save()
 

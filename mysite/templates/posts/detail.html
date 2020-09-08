@@ -45,9 +45,9 @@
                     <p class = "username">Yamamoto Sota</p>
                     <p class = "time">{{ post.updated_at }}</p>
                 </div>
-            {% if comments_num_nices %}
+            {% if zipped_comments %}
               <ul>
-                {% for comment, num_nice in comments_num_nices %}
+                {% for comment, num_nice, comment_perm in zipped_comments %}
                   <p>
                       <p class = "id">1：</p>
                       <p class = "comment">{{ comment.comment }}</p>
@@ -58,6 +58,20 @@
                   <input type="submit" value="いいね！">
                   {{ num_nice }}
                   </form>
+                  {% if comment_perm %}
+                    <p> Post comment </p>
+                    <form action="{% url 'comment_edit' comment.id %}" method="post">
+                      {% csrf_token %}
+                      <textarea name="comment" rows="8" cols="100">
+                      </textarea>
+                      <input type="submit" value="編集">
+                    </form>
+                    <p> Delete comment </p>
+                    <form action="{% url 'comment_delete' comment.id %}" method="post">
+                      {% csrf_token %}
+                      <input type="submit" value="削除">
+                    </form>
+                  {% endif %}
                 {% endfor %}
               </ul>
             {% else %}
