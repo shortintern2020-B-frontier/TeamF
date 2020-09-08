@@ -60,7 +60,7 @@
                   </form>
                   {% if comment_perm %}
                     <p> Delete comment </p>
-                    <form action="{% url 'comment/edit' comment.id %}" method="post">
+                    <form action="{% url 'comment_edit' comment.id %}" method="post">
                       {% csrf_token %}
                       <textarea name="comment" rows="8" cols="100">
                       </textarea>

@@ -14,8 +14,8 @@ urlpatterns = [
     path("wokashi", views.wokashi_create, name="wokashi"),
     path("ahare", views.ahare_create, name="ahare"),
     path('bookmark', views.bookmark_create, name='bookmark'),
-    path("comment/edit/<int:num>", views.comment_edit, name="comment_edit"),
-    path("comment/delete/<int:num>",
+    path("comment_edit/<int:num>", views.comment_edit, name="comment_edit"),
+    path("comment_delete/<int:num>",
          views.comment_delete,
          name="comment_delete"),
 ]
