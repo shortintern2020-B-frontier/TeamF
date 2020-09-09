@@ -113,35 +113,3 @@ main {
   width: 60px;
   height: 60px;
 }
-
-/* popup style */
-#show-popup {
-  display: none;
-}
-
-#popup {
-  display: none;
-  display:none;
-  position:fixed;
-  top: 50%;
-  left: 50%;
-  width: 50%;
-  padding: 10px;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  background: #666;
-}
-
-input[type="checkbox"]:checked + #popup {
-  display:block;
-  transition:.2s;
-}
-
-#popup textarea {
-  width: 80%;
-  height: 100px;
-}
-
-#popup input[type="text"] {
-  width: 80%;
-}

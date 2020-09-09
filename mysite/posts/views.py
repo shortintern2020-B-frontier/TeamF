@@ -118,7 +118,9 @@ def bookmark_create(request):
 def detail(request, num):
     user = User.objects.get(id=request.user.id)
     post = Post.objects.get(id=num)
+    book = Book.objects.get(pk=post.book_id.id)
     comments = Comment.objects.filter(post_id=num)
+    user_per_comment = [User.objects.get(pk=comment.user_id.id) for comment in comments]
     num_nices = [
         len(Nice.objects.filter(comment_id=comment.id)) for comment in comments
     ]
@@ -126,10 +128,11 @@ def detail(request, num):
         user.has_perm('change_delete_content', comment) for comment in comments
     ]
 
-    zipped_comments = zip(comments, num_nices, comment_perms)
+    zipped_comments = zip(comments, user_per_comment, num_nices, comment_perms)
     params = {
         "title": "ポスト詳細",
         "post": post,
+        "book": book,
         "zipped_comments": zipped_comments,
         "form": CommentForm(),
     }
@@ -153,7 +156,7 @@ def create(request):
                 book = Book(title=title, author=author, cover_path=cover_path)
                 book.save()
             else:
-                NOCOVERPATH = 'temp' #表紙がなかった場合に表示する画像のパス
+                NOCOVERPATH = 'posts/img/book.png' #表紙がなかった場合に表示する画像のパス
                 book = Book(title=title, author=author, cover_path=NOCOVERPATH)
                 book.save()
 
@@ -273,7 +276,7 @@ def comment_create(request, num):
     comment.save()
     # post_id may be post.id??
     # return HttpResponseRedirect(reverse("posts:show", args=(num, )))
-    return redirect(to="/posts")
+    return redirect(to=f"/posts/{num}")
 
 
 @transaction.atomic
@@ -297,8 +300,7 @@ def comment_edit(request, num):
     if user.has_perm('change_delete_content', comment):
         comment.comment = content
         comment.save()
-        # TODO: redirect to post/id
-        return redirect(to="/posts")
+        return redirect(to=f"/posts/{comment.post_id.id}")
     else:
         raise PermissionDenied
 
@@ -323,7 +325,7 @@ def comment_delete(request, num):
     if user.has_perm('change_delete_content', comment):
         comment.delete()
         # TODO: redirect to post/id
-        return redirect(to="/posts")
+        return redirect(to=f"/posts/{comment.post_id.id}")
     else:
         raise PermissionDenied
 
@@ -345,13 +347,16 @@ def nice_create(request):
         raise Http404("Hogehoge")
 
     # This may be too naive
-    user_id = request.user.id
+    user = request.user
     comment_id = request.POST["comment_id"]
-    nice = Nice(
-        user_id=User.objects.get(pk=user_id),
-        comment_id=Comment.objects.get(pk=comment_id),
-    )
-    nice.save()
-    # post_id may be post.id??
-    # return HttpResponseRedirect(reverse("posts:show", args=(num, )))
-    return redirect(to="/posts")
+    comment = Comment.objects.get(pk=comment_id)
+
+    try:
+        nice = Nice.objects.get(user_id=user, comment_id=comment)
+        nice.delete()
+    except ObjectDoesNotExist:
+        nice = Nice(
+                user_id=user,
+                comment_id=comment)
+        nice.save()
+    return redirect(to=f"/posts/{comment.post_id.id}")
