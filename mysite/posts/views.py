@@ -349,8 +349,16 @@ def nice_create(request):
 
 
 # Created by Naoki Hirabayashi
-def post_api(request):
+def post_api(request, num):
+    # num 番目から (num + 9) 番目の投稿の情報を返す
     posts = Post.objects.filter(is_deleted=False)
+
+    if (num > len(posts)):
+        posts = []
+    elif (len(posts) - num < 10):
+        posts = posts[num:]
+    else:
+        posts = posts[num:num+10]
 
     wokashi_sum = [
         p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
@@ -363,7 +371,6 @@ def post_api(request):
     bookmark_flag = [
         p.bookmark_set.filter(user_id=request.user.id).exists() for p in posts
     ]
-    # zipped_post = zip(posts, wokashi_sum, ahare_sum, books, bookmark_flag)
 
     jsonDict = {}
 
@@ -378,10 +385,5 @@ def post_api(request):
         elm['book_title'] = book.title
         elm['bookmark_flag'] = elm['bookmark_flag'] = post.bookmark_set.filter(user_id=request.user.id).exists()
         jsonDict[str(post.id)] = elm
-
-    # params = {
-    #     "title": "ポスト一覧",
-    #     "zipped_post": zipped_post,
-    # }
 
     return JsonResponse(jsonDict)
