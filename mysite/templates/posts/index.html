@@ -48,7 +48,7 @@ Made a templates extends by Yamamoto Sota
 -->
 <!--              <div class="wokashi">
 -->
-              <form action="{% url 'wokashi'%}" method="post" class="wokashi">
+              <form action="{% url 'wokashi' post.id %}" method="post" class="wokashi">
                 {% if wokashi_sum is None %}
                   <button type="submit" name='post_id' value={{post.id}} class="wokashi-btn-base">
                     <img class="wokashi-btn0" src="{% static 'posts/img/wokashi_0.svg' %}">
@@ -65,7 +65,7 @@ Made a templates extends by Yamamoto Sota
 <!--              </div>
               <div class="ahare">
 -->
-              <form action="{% url 'ahare'%}" method="post" class="ahare">
+              <form action="{% url 'ahare' post.id %}" method="post" class="ahare">
                 {% if ahare_sum is None %}
                   <button type="submit" name='post_id' value={{post.id}} class="">
                     <img class="ahare-btn0" src="{% static 'posts/img/ahare_0.svg' %}">
@@ -123,7 +123,7 @@ Made a templates extends by Yamamoto Sota
               {% csrf_token %}
             </form>
 
-            <form action="{% url 'wokashi'%}" method="post" class="wokashi">
+            <form action="#" method="post" class="wokashi">
               <button type="submit" name='post_id' value="" class="wokashi-btn-base">
                 <img src="" class="">
               </button>
@@ -131,7 +131,7 @@ Made a templates extends by Yamamoto Sota
               {% csrf_token %}
             </form>
 
-            <form action="{% url 'ahare'%}" method="post" class="ahare">
+            <form action="#" method="post" class="ahare">
               <button type="submit" name='post_id' value="" class="ahare-btn-base">
                 <img src="" class="">
               </button>

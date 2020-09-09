@@ -71,8 +71,9 @@ def index(request):
     return render(request, "posts/index.html", params)
 
 
-#Takahashi Shunichi
-def wokashi_create(request):
+# Takahashi Shunichi
+# Naoki Hirabayashi
+def wokashi_create(request, num):
     if request.method == "POST":
         user = User.objects.get(id=request.user.id)
         post = Post.objects.get(id=request.POST["post_id"])
@@ -86,8 +87,9 @@ def wokashi_create(request):
         return redirect(to="/posts")
 
 
-#Takahashi Shunichi
-def ahare_create(request):
+# Takahashi Shunichi
+# Naoki Hirabayashi
+def ahare_create(request, num):
     if request.method == "POST":
         user = User.objects.get(id=request.user.id)
         post = Post.objects.get(id=request.POST["post_id"])
