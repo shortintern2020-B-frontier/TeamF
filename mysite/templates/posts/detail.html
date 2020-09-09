@@ -1,41 +1,27 @@
 <!-- Created by Yamamoto Sota -->
 
+{% extends "base_header.html" %}
 {% load static %}
 
 <!DOCTYPE html>
 <html kang="ja">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" type="text/css" href="{% static 'posts/common.css' %}">
+        {% block head %}
         <link rel="stylesheet" type="text/css" href="{% static 'posts/thread.css' %}">
-		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />
+		    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />
         <title>スレッド画面</title>
+        {% endblock head %}
     </head>
     <body>
-        <header>
-            <div id="logo-img">サービス名</div>
-      
-            <button id="signup-btn" onclick="location.href=''">サインアップ</button>
-            <button id="signin-btn">サインイン</button>
-      
-            <input id="drawer-checkbox" type="checkbox">
-            <label id="drawer-icon" for="drawer-checkbox">メニュー</label>
-            <div id="drawer-content">
-              <div class="menu-item">メニュー</div>
-              <div class="menu-item">しおり</div>
-              <div class="menu-item">週間をかしランキング</div>
-              <div class="menu-item">週間あはれランキング</div>
-            </div>
-        </header>
+      {% block contents %}
         <div class = "post">
             <P class = "post">
-                <img src="img/book.png" class="bookicon" alt="bookicon" align="middle">
+                <img src="{{ book.cover_path }}" class="bookicon" alt="bookicon" align="middle">
                 {{ post.content }}
             </P>
             <div class = "bookinfo">
-              <!-- TODO: Get book information-->
               <p class = "author">- {{ book.author }} </p>
-              <p class = "booktitle"> {{book.title}} </p>
+              <p class = "booktitle">{{ book.title }}</p>
             </div>
         </div>
         <div class = "contents">
@@ -93,5 +79,6 @@
             </form>
         </div>
         <button class="fixed-btn">投稿</button>
+      {% endblock contents %}
     </body>
 </html>
