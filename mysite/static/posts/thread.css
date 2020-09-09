@@ -1,7 +1,7 @@
 /* Created by Yamamoto Sota */
 
 body {
-    background-color: rgb(219, 201, 177);
+    background-color: #FDFCF5 /* 白百合色（Shirayuri-iro） */
 }
 
 img {
@@ -26,7 +26,7 @@ div.contents {
 }
 
 div.comment {
-    background-color: #e6ecf0;
+    background-color: #F7EFE3; /* 生成色（Kinari-iro） */
 }
 
 div.userinfo p {
