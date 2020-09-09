@@ -12,7 +12,6 @@ class SignUpView(CreateView):
             username = form.cleaned_data.get('username')
             email = form.cleaned_data.get('email')
             password = form.cleaned_data.get('password1')
-            icon=form.cleaned_data.get('icon')
             user = authenticate(username=username, email=email, password=password,icon=icon)
             login(request, user)
             return redirect('/')
