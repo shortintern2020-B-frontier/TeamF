@@ -23,6 +23,10 @@
               <p class = "author">- {{ book.author }} </p>
               <p class = "booktitle">{{ book.title }}</p>
             </div>
+            <form action="{% url 'bookmark'%}" method="post">
+              <button type="submit" name="pose_id" value={{post.id}} class="bookmark-btn">しおり</button>
+              {% csrf_token %}
+            </form>
         </div>
         <div class = "contents">
           {% if zipped_comments %}
