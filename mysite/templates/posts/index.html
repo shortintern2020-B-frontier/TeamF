@@ -1,6 +1,7 @@
 <!-- Created by Naoki Hirabayashi.
 Masato Umakoshi: Modify for backend.
-design updated and Made a templates extends by Yamamoto Sota
+design updated by Yamamoto Sota & Misawa Momoha
+Made a templates extends by Yamamoto Sota
 -->
 
 {% extends "base_header.html" %}
@@ -40,47 +41,47 @@ design updated and Made a templates extends by Yamamoto Sota
             <div class="box-secondary">
               {% if bookmark_flag  %}
               {% else %} 
-	      <form action="{% url 'bookmark'%}" method="post">
-	      	<button type="submit" name="pose_id" value={{post.id}} class="bookmark-btn">しおり</button>
-	        {% csrf_token %}
-	      </form>
+                <form action="{% url 'bookmark'%}" method="post">
+                  <button type="submit" name="pose_id" value={{post.id}} class="bookmark-btn">しおり</button>
+                  {% csrf_token %}
+                </form>
               {% endif %}
 
 <!--             <button class="bookmark-btn">しおり</button>
 -->  
 <!--              <div class="wokashi">
 -->
-                <form action="{% url 'wokashi'%}" method="post" class="wokashi">
-                  {% if wokashi_sum is None %}
-                    <button type="submit" name='post_id' value={{post.id}} >
-                      <img class="wokashi-btn" src="{% static 'posts/img/book.png' %}">
-                    </button>
-                    <span class="wokashi-count">0</span>
-                  {% else %}
-                    <button type="submit" name='post_id' value={{post.id}} >
-                      <img class="wokashi-btn" src="{% static 'posts/img/book.png' %}">
-                    </button>
-                    <span class="wokashi-count"> {{ wokashi_sum }} </span>
-                  {% endif %}  
-                  {% csrf_token %}
-                </form>
+              <form action="{% url 'wokashi'%}" method="post" class="wokashi">
+                {% if wokashi_sum is None %}
+                  <button type="submit" name='post_id' value={{post.id}} >
+                    <img class="wokashi-btn0" src="{% static 'posts/img/wokashi_0.svg' %}">
+                  </button>
+                  <span class="wokashi-count">0</span>
+                {% else %}
+                  <button type="submit" name='post_id' value={{post.id}} >
+                    <img class="wokashi-btn" src="{% static 'posts/img/wokashi_1.svg' %}">
+                  </button>
+                  <span class="wokashi-count"> {{ wokashi_sum }} </span>
+                {% endif %}  
+                {% csrf_token %}
+              </form>
 <!--              </div>
               <div class="ahare">
 -->
-                <form action="{% url 'ahare'%}" method="post" class="ahare">
-                  {% if ahare_sum is None %}
-                    <button type="submit" name='post_id' value={{post.id}} >
-                      <img class="ahare-btn" src="{% static 'posts/img/book.png' %}">
-                    </button>
-                    <span class="ahare-count">0</span>
-                  {% else %}
-                    <button type="submit" name='post_id' value={{post.id}} >
-                      <img class="ahare-btn" src="{% static 'posts/img/book.png' %}">
-                    </button>
-                    <span class="ahare-count"> {{ ahare_sum }} </span>
-                  {% endif %}                
-                  {% csrf_token %}
-                </form>
+              <form action="{% url 'ahare'%}" method="post" class="ahare">
+                {% if ahare_sum is None %}
+                  <button type="submit" name='post_id' value={{post.id}} >
+                    <img class="ahare-btn0" src="{% static 'posts/img/ahare_0.svg' %}">
+                  </button>
+                  <span class="ahare-count">0</span>
+                {% else %}
+                  <button type="submit" name='post_id' value={{post.id}} >
+                    <img class="ahare-btn" src="{% static 'posts/img/ahare_1.svg' %}">
+                  </button>
+                  <span class="ahare-count"> {{ ahare_sum }} </span>
+                {% endif %}                
+                {% csrf_token %}
+              </form>
 <!--              </div>
 -->
               <div class="source">
