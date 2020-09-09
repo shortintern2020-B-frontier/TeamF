@@ -187,7 +187,7 @@ def create(request):
         content = request.POST["content"]
         title = request.POST["title"]
         author = request.POST["author"]
-        category_id_list = request.POST.getlist('tags')
+        category_id_list = request.POST.getlist('tag')
 
         try:
             book = Book.objects.get(title=title, author=author)
@@ -230,7 +230,7 @@ def edit(request, num):
         content = request.POST["content"]
         title = request.POST["title"]
         author = request.POST["author"]
-        new_category_id_list = request.POST.getlist('tags')
+        new_category_id_list = request.POST.getlist('tag')
         old_category_id_list = [tag.category_id.id for tag in post.tag_set.all()]
 
         create_category_id_set = set(new_category_id_list + old_category_id_list) - set(old_category_id_list)
@@ -307,6 +307,7 @@ def bookmark(request):
         "zipped_post": zipped_post,
     }
     return render(request, "posts/index.html", params)
+
 
 @transaction.atomic
 def comment_create(request, num):
