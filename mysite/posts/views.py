@@ -347,13 +347,16 @@ def nice_create(request):
         raise Http404("Hogehoge")
 
     # This may be too naive
-    user_id = request.user.id
+    user = request.user
     comment_id = request.POST["comment_id"]
-    nice = Nice(
-        user_id=User.objects.get(pk=user_id),
-        comment_id=Comment.objects.get(pk=comment_id),
-    )
-    nice.save()
-    # post_id may be post.id??
-    # return HttpResponseRedirect(reverse("posts:show", args=(num, )))
-    return redirect(to="/posts")
+    comment = Comment.objects.get(pk=comment_id)
+
+    try:
+        nice = Nice.objects.get(user_id=user, comment_id=comment)
+        nice.delete()
+    except ObjectDoesNotExist:
+        nice = Nice(
+                user_id=user,
+                comment_id=comment)
+        nice.save()
+    return redirect(to=f"/posts/{comment.post_id.id}")
