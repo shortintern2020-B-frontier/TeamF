@@ -222,12 +222,12 @@ Made a templates extends by Yamamoto Sota
 
                 clone.querySelector(".wokashi-btn-base").setAttribute("value", info['post_id']);
                 if (info['wokashi_sum'] == null) {
-                  clone.querySelector(".wokashi-count").appendChild(document.createTextNode('0'));
+                  clone.querySelector(".wokashi-count").innerHTML = 0;
                   const img = clone.querySelector(".wokashi-btn-base").querySelector('img');
                   img.setAttribute("class", "wokashi-btn0");
                   img.setAttribute("src", "{% static 'posts/img/wokashi_0.svg' %}");
                 } else {
-                  clone.querySelector(".wokashi-count").appendChild(document.createTextNode(info['wokashi_sum']));
+                  clone.querySelector(".wokashi-count").innerHTML = info['wokashi_sum'];
                   const img = clone.querySelector(".wokashi-btn-base").querySelector('img');
                   img.setAttribute("class", "wokashi-btn");
                   img.setAttribute("src", "{% static 'posts/img/wokashi_1.svg' %}");
@@ -235,12 +235,12 @@ Made a templates extends by Yamamoto Sota
 
                 clone.querySelector(".ahare-btn-base").setAttribute("value", info['post_id']);
                 if (info['ahare_sum'] == null) {
-                  clone.querySelector(".ahare-count").appendChild(document.createTextNode('0'));
+                  clone.querySelector(".ahare-count").innerHTML = 0;
                   const img = clone.querySelector(".ahare-btn-base").querySelector('img');
                   img.setAttribute("class", "ahare-btn0");
                   img.setAttribute("src", "{% static 'posts/img/ahare_0.svg' %}");
                 } else {
-                  clone.querySelector(".ahare-count").appendChild(document.createTextNode(info['ahare_sum']));
+                  clone.querySelector(".ahare-count").innerHTML = info['ahare_sum'];
                   const img = clone.querySelector(".ahare-btn-base").querySelector('img');
                   img.setAttribute("class", "ahare-btn");
                   img.setAttribute("src", "{% static 'posts/img/ahare_1.svg' %}");
