@@ -18,8 +18,14 @@
         <header>
             <h1><div id="logo-img">サービス名</div></h1>
 
-            <button id="signup-btn">サインアップ</button>
-            <button id="signin-btn">サインイン</button>
+            <!--Created by Kyohei Yasunaga-->
+            {% if user.is_authenticated %}
+                <button id="signup-btn"><a href="{% url 'logout' %}">ログアウト</a></button>
+            {% else %}
+                <button id="signin-btn"><a href="{% url 'login' %}">サインイン</a></button>
+                <button id="signin-btn"><a href="{% url 'create_account' %}">サインアップ</a></button>
+            {% endif %}
+            <!--finish Created by Kyohei Yasunaga-->
 
             <input id="drawer-checkbox" type="checkbox">
             <button id="drawer-icon"><label for="drawer-checkbox"> Menu </label></button>
