@@ -1,0 +1,57 @@
+<!-- Created by Naoki Hirabayashi -->
+<!-- Made a templates extends by Yamamoto Sota -->
+
+{% extends "base_header.html" %}
+{% load static %}
+
+<!doctype html>
+<html>
+
+<head>
+{% block head %}
+  <link rel="stylesheet" href="{% static 'app/css/signin.css' %}">
+  <title>ログイン画面</title>
+{% endblock head %}
+</head>
+
+<body>
+{% block contents %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-4 col-md-6 col-sm-8">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Log in</h3>
+                    {% csrf_token %}
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger alert-text" role="alert">
+                            {% for error in form.non_field_errors %}
+                                <p{% if forloop.last %} class="mb-0"{% endif %}>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <form method="post" action="{% url 'login' %}" class="auth-form" novalidate>
+                        {% csrf_token %}
+                        {% for field in form %}
+                        <div>
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="login-error-text">
+                                    {{ field.errors }}
+                                </div>
+                            {% else %}
+                                <div class="login-text-div"></div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                        <input type="submit" value="ログイン" class="form-control btn-primary auth-button" />
+                        <input type="hidden" name="next" value="{{ next }}" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock contents %}
+</body>
+</html>
