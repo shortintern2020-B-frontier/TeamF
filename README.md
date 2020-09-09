@@ -9,11 +9,11 @@
 ## ルーティング
 |-- /admin : 管理者ページ \
 | \
-|-- /accounts
+|-- /accounts  
 |    |-- /login : サインインページ  
 |    |-- /logout : サインアウトページ  
 |  
-|-- /create_account : サインアップページ
+|-- /create_account : サインアップページ  
 |-- /posts : 投稿一覧 \
 |　　|-- /{post_id} : 投稿詳細 \
 |　　| \
