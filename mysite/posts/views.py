@@ -40,6 +40,16 @@ def index(request):
     # TODO Fix naming: book_id.id is too wierd.
     posts = Post.objects.filter(is_deleted=False)
 
+    posts_comments_updated_at = []
+    for p in posts:
+        is_comment = p.comment_set.exists()
+        if is_comment:
+            posts_comments_updated_at.append([p, p.comment_set.all().order_by('updated_at').reverse().first().updated_at])
+        else:
+            posts_comments_updated_at.append([p, p.updated_at])
+    sorted_data = sorted(posts_comments_updated_at, key=lambda x: x[1], reverse=True)
+    posts = list(map(lambda x: x[0], sorted_data))
+
     wokashi_sum = [
         p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
     ]
@@ -218,9 +228,9 @@ def delete(request, num):
 
 # Takahashi Shunichi
 def bookmark(request):
-    bookmark = Bookmark.objects.filter(user_id=request.user.id).all()
+    bookmark = Bookmark.objects.filter(user_id=request.user.id).all().order_by('updated_at').reverse()
     posts = [
-        Post.objects.filter(id=b.post_id.id).first() for b in bookmark
+        Post.objects.filter(is_deleted=False).filter(id=b.post_id.id).first() for b in bookmark
     ]
     wokashi_sum = [
         p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
