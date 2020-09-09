@@ -10,8 +10,8 @@
 |-- /admin : 管理者ページ \
 | \
 |-- /accounts  
-|    |-- /login : サインインページ  
-|    |-- /logout : サインアウトページ  
+|　　|-- /login : サインインページ  
+|　　|-- /logout : サインアウトページ  
 |  
 |-- /create_account : サインアップページ  
 |-- /posts : 投稿一覧 \
