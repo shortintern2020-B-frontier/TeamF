@@ -21,6 +21,7 @@ import time
 # Takahashi Shunichi
 RAKUTEN_BOOKS_API_URL = "https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404"
 RAKUTEN_APP_ID = "1065776451953533134"
+NOCOVERPATH = 'posts/img/book.png' #表紙がなかった場合に表示する画像のパス
 def get_book_cover_path(title, author):
     encoded_title = urllib.parse.quote(str(title))
     encoded_author = urllib.parse.quote(str(author))
@@ -29,7 +30,7 @@ def get_book_cover_path(title, author):
     if response.status_code != requests.codes.ok:
         cover_path = 'Requests failed'
     elif response.json()["count"] == 0:
-        cover_path = 'No book found'
+        cover_path = NOCOVERPATH
     else:
         cover_path = response.json()["Items"][0]["Item"]["largeImageUrl"]
     return cover_path
@@ -152,13 +153,8 @@ def create(request):
         except ObjectDoesNotExist as e:
             cover_path = get_book_cover_path(title, author)
             time.sleep(1)
-            if cover_path != 'No book found':
-                book = Book(title=title, author=author, cover_path=cover_path)
-                book.save()
-            else:
-                NOCOVERPATH = 'posts/img/book.png' #表紙がなかった場合に表示する画像のパス
-                book = Book(title=title, author=author, cover_path=NOCOVERPATH)
-                book.save()
+            book = Book(title=title, author=author, cover_path=cover_path)
+            book.save()
 
         user = User.objects.get(id=request.user.id)
         post = Post(user_id=user, content=content, book_id=book)
