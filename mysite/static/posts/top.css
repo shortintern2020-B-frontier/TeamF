@@ -1,9 +1,12 @@
+/* Created by Hirabayashi Naoki */
+/* design updated by Yamamoto Sota & Misawa Momoha */
+
 @charset "utf-8";
 
 /* Main */
 main {
   padding: 0.5em;
-  background: #fff;
+  background-color: #FDFCF5; /* 白百合色（Shirayuri-iro） */
 }
 
 .scroll-list {
@@ -23,7 +26,7 @@ main {
   min-width: 13rem;
   max-width: 1000px;
   height: 45rem;
-  background: #ddd;
+  background: #F7EFE3; /* 生成色（Kinari-iro） */
   white-space: nowrap;
   border-radius: 1rem;
   position: relative;
@@ -106,13 +109,41 @@ main {
   direction: ltr;
 }
 
+.wokashi .wokashi-btn0 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  opacity: 0.6;
+  -webkit-transition: width 0.2s ease, height 0.2s ease;
+  -moz-transition: width 0.2s ease, height 0.2s ease;
+  -o-transition: width 0.2s ease, height 0.2s ease;
+  -ms-transition: width 2s ease, height 0.2s ease;
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+.wokashi .wokashi-btn0:active {
+  width: 4.0rem;
+  height: 4.0rem;
+}
+
 .wokashi .wokashi-btn {
   position: absolute;
   left: 0;
   top: 0;
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: 50%;
+  -webkit-transition: width 0.2s ease, height 0.2s ease;
+  -moz-transition: width 0.2s ease, height 0.2s ease;
+  -o-transition: width 0.2s ease, height 0.2s ease;
+  -ms-transition: width 2s ease, height 0.2s ease;
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+.wokashi .wokashi-btn:active {
+  width: 4.0rem;
+  height: 4.0rem;
 }
 
 .wokashi .wokashi-count {
@@ -134,13 +165,41 @@ main {
   direction: ltr;
 }
 
+.ahare .ahare-btn0 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  opacity: 0.6;
+  -webkit-transition: width 0.2s ease, height 0.2s ease;
+  -moz-transition: width 0.2s ease, height 0.2s ease;
+  -o-transition: width 0.2s ease, height 0.2s ease;
+  -ms-transition: width 2s ease, height 0.2s ease;
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+.ahare .ahare-btn0:active {
+  width: 4.0rem;
+  height: 4.0rem;
+}
+
 .ahare .ahare-btn {
   position: absolute;
   left: 0;
   top: 0;
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: 50%;
+  -webkit-transition: width 0.2s ease, height 0.2s ease;
+  -moz-transition: width 0.2s ease, height 0.2s ease;
+  -o-transition: width 0.2s ease, height 0.2s ease;
+  -ms-transition: width 2s ease, height 0.2s ease;
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+.ahare .ahare-btn:active {
+  width: 4.0rem;
+  height: 4.0rem;
 }
 
 .ahare .ahare-count {
