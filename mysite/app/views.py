@@ -6,13 +6,21 @@ from app.forms import SignUpForm
 
 class SignUpView(CreateView):
     def post(self, request, *args, **kwargs):
-        form = SignUpForm(data=request.POST)
+
+        all_data = request.POST
+        form_data = all_data
+        img_choice = all_data['user_img']
+        del form_data['user_img']
+
+        form = SignUpForm(data=form_data)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
             email = form.cleaned_data.get('email')
             password = form.cleaned_data.get('password1')
             user = authenticate(username=username, email=email, password=password,icon=icon)
+            img_choice = ImageChoice(user=user, image_choice=img_choice)
+            img_choice.save()
             login(request, user)
             return redirect('/')
         return render(request, 'app/signup.html', {'form': form})
