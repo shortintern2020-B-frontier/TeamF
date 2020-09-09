@@ -66,20 +66,22 @@
             <p>No comments are available.</p>
           {% endif %}
         </div>
-        <div class = "post_comment">
-          <form method="POST" action="{% url 'comment_create' post.id %}">
-                <p class="username">
-                <img src="{% static 'posts/img/bookusagi.png' %}" width="55px" class="icon" alt="icon" align="middle">
-                Username
-                </p>
-                <textarea name="comment" rows="8" cols="100">
-                </textarea>
-                {% csrf_token %}
-                <br><br>
-                <input type="submit" name="btn1" value="投稿する">
-            </form>
-        </div>
-        <button class="fixed-btn">投稿</button>
+        {% if user.is_authenticated %}
+          <div class = "post_comment">
+            <form method="POST" action="{% url 'comment_create' post.id %}">
+                  <p class="username">
+                  <img src="{% static 'posts/img/bookusagi.png' %}" width="55px" class="icon" alt="icon" align="middle">
+                  Username
+                  </p>
+                  <textarea name="comment" rows="8" cols="100">
+                  </textarea>
+                  {% csrf_token %}
+                  <br><br>
+                  <input type="submit" name="btn1" value="投稿する">
+              </form>
+          </div>
+          <button class="fixed-btn">投稿</button>
+        {% endif %}
       {% endblock contents %}
     </body>
 </html>
