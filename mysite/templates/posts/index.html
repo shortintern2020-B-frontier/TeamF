@@ -133,8 +133,6 @@ design updated and Made a templates extends by Yamamoto Sota
         let final_index = 10;
         let end_flag = false;
 
-        console.log("hogehoge");
-
         const timeline = document.getElementById('timeline');
         document.getElementById('timeline').onscroll = () => {
           const scrollLeft = timeline.scrollLeft;
@@ -161,7 +159,7 @@ design updated and Made a templates extends by Yamamoto Sota
               final_index += size;
 
               Object.values(res).forEach(info => {
-                console.log(info);
+                // console.log(info);
                 const template = document.getElementById("post-box-template");
                 const clone = template.content.cloneNode(true);
                 clone.querySelector(".sentence").appendChild(document.createTextNode(info['post_content']));
