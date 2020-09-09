@@ -14,6 +14,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Sum
 from guardian.shortcuts import assign_perm
 from django.core.exceptions import PermissionDenied
+from django.http.response import JsonResponse
 
 import requests
 import time
@@ -60,9 +61,23 @@ def index(request):
     return render(request, "posts/index.html", params)
 
 
-#Takahashi Shunichi
+# Created by Takahashi Shunichi
+# Updated by Naoki Hirabayashi
 def wokashi_create(request, num):
-    pass
+    user = User.objects.get(id=request.user.id)
+    post = Post.objects.get(id=num)
+    ret_val = 0
+    try:
+        wokashi = Wokashi.objects.get(user_id=user, post_id=post)
+        if wokashi.count < 10:
+            wokashi.count += 1
+        ret_val = wokashi.count
+    except ObjectDoesNotExist as e:
+        wokashi = Wokashi(user_id=user, post_id=post)
+        ret_val = 1
+    wokashi.save()
+    return JsonResponse({'wokashi_sum': ret_val})
+
     # if request.method == "POST":
     #     user = User.objects.get(id=request.user.id)
     #     post = Post.objects.get(id=request.POST["post_id"])
@@ -76,9 +91,23 @@ def wokashi_create(request, num):
     #     return redirect(to="/posts")
 
 
-#Takahashi Shunichi
+# Created by Takahashi Shunichi
+# Updated by Naoki Hirabayashi
 def ahare_create(request, num):
-    pass
+    user = User.objects.get(id=request.user.id)
+    post = Post.objects.get(id=num)
+    ret_val = 0
+    try:
+        ahare = Ahare.objects.get(user_id=user, post_id=post)
+        if ahare.count < 10:
+            ahare.count += 1
+        ret_val = ahare.count
+    except ObjectDoesNotExist as e:
+        ahare = Ahare(user_id=user, post_id=post)
+        ret_val = 1
+    ahare.save()
+    return JsonResponse({'ahare_sum': ret_val})
+
     # if request.method == "POST":
     #     user = User.objects.get(id=request.user.id)
     #     post = Post.objects.get(id=request.POST["post_id"])
@@ -90,6 +119,7 @@ def ahare_create(request, num):
     #         ahare = Ahare(user_id=user, post_id=post)
     #     ahare.save()
     #     return redirect(to="/posts")
+
 
 #Takahashi Shunichi
 def bookmark_create(request):
