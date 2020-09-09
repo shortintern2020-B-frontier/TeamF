@@ -24,7 +24,7 @@
               <p class = "booktitle">{{ book.title }}</p>
             </div>
             <form action="{% url 'bookmark'%}" method="post">
-              <button type="submit" name="pose_id" value={{post.id}} class="bookmark-btn">しおり</button>
+              <button type="submit" name="post_id" value={{post.id}} class="bookmark-btn">しおり</button>
               {% csrf_token %}
             </form>
         </div>
