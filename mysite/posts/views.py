@@ -61,33 +61,35 @@ def index(request):
 
 
 #Takahashi Shunichi
-def wokashi_create(request):
-    if request.method == "POST":
-        user = User.objects.get(id=request.user.id)
-        post = Post.objects.get(id=request.POST["post_id"])
-        try:
-            wokashi = Wokashi.objects.get(user_id=user, post_id=post)
-            if wokashi.count < 10:
-                wokashi.count += 1
-        except ObjectDoesNotExist as e:
-            wokashi = Wokashi(user_id=user, post_id=post)
-        wokashi.save()
-        return redirect(to="/posts")
+def wokashi_create(request, num):
+    pass
+    # if request.method == "POST":
+    #     user = User.objects.get(id=request.user.id)
+    #     post = Post.objects.get(id=request.POST["post_id"])
+    #     try:
+    #         wokashi = Wokashi.objects.get(user_id=user, post_id=post)
+    #         if wokashi.count < 10:
+    #             wokashi.count += 1
+    #     except ObjectDoesNotExist as e:
+    #         wokashi = Wokashi(user_id=user, post_id=post)
+    #     wokashi.save()
+    #     return redirect(to="/posts")
 
 
 #Takahashi Shunichi
-def ahare_create(request):
-    if request.method == "POST":
-        user = User.objects.get(id=request.user.id)
-        post = Post.objects.get(id=request.POST["post_id"])
-        try:
-            ahare = Ahare.objects.get(user_id=user, post_id=post)
-            if ahare.count < 10:
-                ahare.count += 1
-        except ObjectDoesNotExist as e:
-            ahare = Ahare(user_id=user, post_id=post)
-        ahare.save()
-        return redirect(to="/posts")
+def ahare_create(request, num):
+    pass
+    # if request.method == "POST":
+    #     user = User.objects.get(id=request.user.id)
+    #     post = Post.objects.get(id=request.POST["post_id"])
+    #     try:
+    #         ahare = Ahare.objects.get(user_id=user, post_id=post)
+    #         if ahare.count < 10:
+    #             ahare.count += 1
+    #     except ObjectDoesNotExist as e:
+    #         ahare = Ahare(user_id=user, post_id=post)
+    #     ahare.save()
+    #     return redirect(to="/posts")
 
 #Takahashi Shunichi
 def bookmark_create(request):

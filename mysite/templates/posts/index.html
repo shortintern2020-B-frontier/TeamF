@@ -34,7 +34,8 @@ design updated and Made a templates extends by Yamamoto Sota
             <div class="box-secondary">
               <button class="bookmark-btn">しおり</button>
               <div class="wokashi">
-                <form action="{% url 'wokashi'%}" method="post">
+                
+                <form action="{% url 'wokashi' post.id %}" method="post">
                   <button type="submit" name='post_id' value={{post.id}}>をかし</button>
                   <span>
                   {% if wokashi_sum is None %}0{% endif %}
@@ -44,7 +45,7 @@ design updated and Made a templates extends by Yamamoto Sota
                 </form>
               </div>
               <div class="ahare">
-                <form action="{% url 'ahare'%}" method="post">
+                <form action="{% url 'ahare' post.id %}" method="post">
                   <button type="submit" name='post_id' value={{post.id}}>あはれ</button>
                   <span>
                   {% if ahare_sum is None %}0{% endif %}
