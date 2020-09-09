@@ -88,15 +88,15 @@ design updated and Made a templates extends by Yamamoto Sota
       <!-- This script was written by Naoki Hirabayashi -->
       <script type="text/javascript">
       const wokashi_create = (url, span_id) => {
-        console.log(url);
-        console.log(span_id);
+        // console.log(url);
+        // console.log(span_id);
         const xhr = new XMLHttpRequest();
         xhr.open("GET", url);
         xhr.responseType = 'json';
         xhr.send();
         xhr.onload = () => {
           const res = xhr.response;
-          console.log(res);
+          // console.log(res);
           const wokashi_sum = res['wokashi_sum']
           const span = document.getElementById(span_id);
           span.innerHTML = wokashi_sum;
@@ -104,15 +104,15 @@ design updated and Made a templates extends by Yamamoto Sota
       };
 
       const ahare_create = (url, span_id) => {
-        console.log(url);
-        console.log(span_id);
+        // console.log(url);
+        // console.log(span_id);
         const xhr = new XMLHttpRequest();
         xhr.open("GET", url);
         xhr.responseType = 'json';
         xhr.send();
         xhr.onload = () => {
           const res = xhr.response;
-          console.log(res);
+          // console.log(res);
           const ahare_sum = res['ahare_sum'];
           const span = document.getElementById(span_id);
           span.innerHTML = ahare_sum;
