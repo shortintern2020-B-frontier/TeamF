@@ -61,8 +61,8 @@ def index(request):
     return render(request, "posts/index.html", params)
 
 
-# Created by Takahashi Shunichi
-# Updated by Naoki Hirabayashi
+# Takahashi Shunichi
+# Naoki Hirabayashi
 def wokashi_create(request, num):
     user = User.objects.get(id=request.user.id)
     post = Post.objects.get(id=num)
@@ -91,8 +91,8 @@ def wokashi_create(request, num):
     #     return redirect(to="/posts")
 
 
-# Created by Takahashi Shunichi
-# Updated by Naoki Hirabayashi
+# Takahashi Shunichi
+# Naoki Hirabayashi
 def ahare_create(request, num):
     user = User.objects.get(id=request.user.id)
     post = Post.objects.get(id=num)
