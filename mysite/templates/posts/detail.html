@@ -79,16 +79,21 @@
           {% endif %}
         </div>
         <div class = "post_comment">
-          <form method="POST" action="{% url 'comment_create' post.id %}">
+          <input type="checkbox" class="fixed-btn" name="show-popup">
+          <div id="popup">
+            <!-- Written by Naoki Hirabayashi -->
+            <!-- Updated by Yamamoto Sota -->
+            <form method="POST" action="{% url 'comment_create' post.id %}">
                 <p class="username">
-                <img src="posts/img/bookusagi.png" width="55px" class="icon" alt="icon" align="middle">
+                <img src="{% static 'posts/img/bookusagi.png' %}" width="55px" class="icon" alt="icon" align="middle">
                 {{ user.username }}
                 </p>
-                <textarea name="comment" rows="8" cols="100" placeholder="本についての感想を語り合おう。"></textarea>
+                <textarea name="content" rows="8" cols="100" placeholder="本についての感想を語り合おう。"></textarea>
                 {% csrf_token %}
                 <br><br>
                 <input type="submit" name="btn1" value="投稿する">
             </form>
+          </div>
         </div>
       {% endblock contents %}
     </body>

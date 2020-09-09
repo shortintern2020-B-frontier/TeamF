@@ -1,7 +1,7 @@
 /* Created by Yamamoto Sota */
 
 body {
-    background-color: #FDFCF5 /* 白百合色（Shirayuri-iro） */
+    background-color: #FDFCF5; /* 白百合色（Shirayuri-iro） */
 }
 
 img {
@@ -11,11 +11,13 @@ img {
 div.box {
     padding: 0.5em 1em;
     font-weight: bold;
-    background-color: white;
-    color: dimgray; 
-    border: solid 3px #6091d3;
+    background-color: #F7EFE3; /* 生成色（Kinari-iro） */
+    color: #00081A;  /* 檳榔子黒（Binroujikuro）*/
+    border: solid #83CCD2; /* 白藍（Shiraai） */
+    border-width: 1.5px 1.5px 3px 5px;
     border-radius: 10px;
 }
+
 div.box p {
     margin: 0; 
     padding: 0;
@@ -23,10 +25,6 @@ div.box p {
 
 div.contents {
     margin: 2.0rem;
-}
-
-div.comment {
-    background-color: #F7EFE3; /* 生成色（Kinari-iro） */
 }
 
 div.userinfo p {
@@ -47,20 +45,14 @@ div.post {
 }
 
 div.post_comment {
+    position: fixed;
+    bottom: 2.0rem;
     margin: 2.0rem;
     display: inline-block;
 }
 
 div.edit {
     display: inline-block;
-}
-
-.fixed-btn {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    width: 60px;
-    height: 60px;
 }
 
 .edit-checkbox {
@@ -142,4 +134,44 @@ overflow: auto;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
+}
+
+.fixed-btn {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 60px;
+    height: 60px;
+}
+
+/* popup style */
+#show-popup {
+    display: none;
+}
+
+#popup {
+    display: none;
+    display:none;
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    padding: 10px;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background: #666;
+}
+
+input[type="checkbox"]:checked + #popup {
+    display:block;
+    transition:.2s;
+}
+
+#popup textarea {
+    width: 80%;
+    height: 100px;
+}
+
+#popup input[type="text"] {
+    width: 80%;
 }
