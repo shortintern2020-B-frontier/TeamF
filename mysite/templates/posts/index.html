@@ -39,13 +39,10 @@ Made a templates extends by Yamamoto Sota
               </div>
             </div>
             <div class="box-secondary">
-              {% if bookmark_flag  %}
-              {% else %}
-                <form action="{% url 'bookmark'%}" method="post">
-                  <button type="submit" name="pose_id" value={{post.id}} class="bookmark-btn">しおり</button>
-                  {% csrf_token %}
-                </form>
-              {% endif %}
+              <form action="{% url 'bookmark'%}" method="post">
+                <button type="submit" name="post_id" value={{post.id}} class="bookmark-btn">しおり</button>
+                {% csrf_token %}
+              </form>
 
 <!--             <button class="bookmark-btn">しおり</button>
 -->
@@ -122,7 +119,7 @@ Made a templates extends by Yamamoto Sota
 
           <div class="box-secondary">
             <form action="{% url 'bookmark'%}" method="post">
-              <button type="submit" name="pose_id" value="" class="bookmark-btn">しおり</button>
+              <button type="submit" name="post_id" value="" class="bookmark-btn">しおり</button>
               {% csrf_token %}
             </form>
 
