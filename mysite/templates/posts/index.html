@@ -79,7 +79,7 @@ design updated and Made a templates extends by Yamamoto Sota
         <div class="post-box">
           <div class="box-primary">
             <div class="cover-img">
-              <img src="{% static 'posts/img/book.png' %}">
+              <img src="" class="book-img">
             </div>
             <div class="sentence">
               <!-- <p>{{ post.content }}</p> -->
@@ -183,6 +183,7 @@ design updated and Made a templates extends by Yamamoto Sota
 
                 clone.querySelector(".author-name").appendChild(document.createTextNode(info['book_author']));
                 clone.querySelector(".book-name").appendChild(document.createTextNode(info['book_title']));
+                clone.querySelector(".book-img").setAttribute("src", info['book_cover_path']);
                 clone.querySelector(".bookmark-bool").appendChild(document.createTextNode(info['bookmark_flag']));
                 clone.querySelector(".bookmark-btn").setAttribute("value", info['post_id']);
                 timeline.appendChild(clone);

@@ -398,6 +398,7 @@ def load_post_api(request, num):
         book = Book.objects.get(pk=post.book_id.id)
         elm['book_author'] = book.author
         elm['book_title'] = book.title
+        elm['book_cover_path'] = book.cover_path
         elm['bookmark_flag'] = elm['bookmark_flag'] = post.bookmark_set.filter(user_id=request.user.id).exists()
         jsonDict[str(post.id)] = elm
 
