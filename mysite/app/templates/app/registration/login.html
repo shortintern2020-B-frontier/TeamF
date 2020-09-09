@@ -1,0 +1,73 @@
+<!-- Created by Naoki Hirabayashi -->
+{% load static %}
+
+
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/common.css' %}">
+  <link rel="stylesheet" href="{% static 'css/signin.css' %}">
+  <title>ログイン画面</title>
+</head>
+
+<body>
+  <div id="wrapper">
+    <header>
+      <div id="logo-img">サービス名</div>
+
+      <button id="signup-btn"><a href="{% url 'create_account' %}">サインアップ</a></button>
+      <button id="signin-btn"><a href="{% url 'logout' %}">ログアウト</a></button>
+
+      <input id="drawer-checkbox" type="checkbox">
+      <label id="drawer-icon" for="drawer-checkbox">メニュー</label>
+      <div id="drawer-content">
+        <div class="menu-item">メニュー</div>
+        <div class="menu-item">しおり</div>
+        <div class="menu-item">週間をかしランキング</div>
+        <div class="menu-item">週間あはれランキング</div>
+      </div>
+    </header>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 col-sm-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Log in</h3>
+                        {% csrf_token %}
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger alert-text" role="alert">
+                                {% for error in form.non_field_errors %}
+                                    <p{% if forloop.last %} class="mb-0"{% endif %}>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <form method="post" action="{% url 'login' %}" class="auth-form" novalidate>
+                            {% csrf_token %}
+                            {% for field in form %}
+                            <div>
+                                {{ field.label_tag }}
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="login-error-text">
+                                        {{ field.errors }}
+                                    </div>
+                                {% else %}
+                                    <div class="login-text-div"></div>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                            <input type="submit" value="ログイン" class="form-control btn-primary auth-button" />
+                            <input type="hidden" name="next" value="{{ next }}" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
