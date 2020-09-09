@@ -76,16 +76,14 @@ def index(request):
 def wokashi_create(request, num):
     user = User.objects.get(id=request.user.id)
     post = Post.objects.get(id=num)
-    ret_val = 0
     try:
         wokashi = Wokashi.objects.get(user_id=user, post_id=post)
         if wokashi.count < 10:
             wokashi.count += 1
-        ret_val = wokashi.count
     except ObjectDoesNotExist as e:
         wokashi = Wokashi(user_id=user, post_id=post)
-        ret_val = 1
     wokashi.save()
+    ret_val = post.wokashi_set.all().aggregate(Sum('count'))['count__sum']
     return JsonResponse({'wokashi_sum': ret_val})
 
     # if request.method == "POST":
@@ -106,7 +104,6 @@ def wokashi_create(request, num):
 def ahare_create(request, num):
     user = User.objects.get(id=request.user.id)
     post = Post.objects.get(id=num)
-    ret_val = 0
     try:
         ahare = Ahare.objects.get(user_id=user, post_id=post)
         if ahare.count < 10:
@@ -116,6 +113,7 @@ def ahare_create(request, num):
         ahare = Ahare(user_id=user, post_id=post)
         ret_val = 1
     ahare.save()
+    ret_val = post.ahare_set.all().aggregate(Sum('count'))['count__sum']
     return JsonResponse({'ahare_sum': ret_val})
 
     # if request.method == "POST":
