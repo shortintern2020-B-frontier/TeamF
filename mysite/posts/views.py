@@ -276,7 +276,7 @@ def comment_create(request, num):
     comment.save()
     # post_id may be post.id??
     # return HttpResponseRedirect(reverse("posts:show", args=(num, )))
-    return redirect(to="/posts")
+    return redirect(to=f"/posts/{num}")
 
 
 @transaction.atomic
@@ -300,8 +300,7 @@ def comment_edit(request, num):
     if user.has_perm('change_delete_content', comment):
         comment.comment = content
         comment.save()
-        # TODO: redirect to post/id
-        return redirect(to="/posts")
+        return redirect(to=f"/posts/{comment.post_id.id}")
     else:
         raise PermissionDenied
 
@@ -326,7 +325,7 @@ def comment_delete(request, num):
     if user.has_perm('change_delete_content', comment):
         comment.delete()
         # TODO: redirect to post/id
-        return redirect(to="/posts")
+        return redirect(to=f"/posts/{comment.post_id.id}")
     else:
         raise PermissionDenied
 
