@@ -38,26 +38,38 @@
                         <p class = "id">1：</p>
                         <p class = "comment">{{ comment.comment }}</p>
                     </p>
+                    <div class="edit">
+                      {% if comment_perm %}
+                        {% csrf_token %}
+                        <input id="edit-checkbox" type="checkbox">
+                          <button id="edit-icon"><label for="edit-checkbox"> 編集 </label></button>
+                          <div id="editbox">
+                            <button id="cancel-icon"><label for="edit-checkbox">　×　</label></button>
+                            <form action="{% url 'comment_edit' comment.id %}" method="post">
+                              <textarea name="comment" rows="8" cols="150">{{ comment.comment }}</textarea>
+                              <br>
+                              <input type="submit" value="変更">
+                              <br>
+                            </form>
+                          </div>
+                        <input id="delete-checkbox" type="checkbox">
+                        <button id="delete-icon"><label for="delete-checkbox"> 削除 </label></button>
+                        <div id="deletebox">
+                          <button id="cancel-icon"><label for="delete-checkbox">　×　</label></button>
+                          <form action="{% url 'comment_delete' comment.id %}" method="post">
+                            {% csrf_token %}
+                            <p>削除しますか？<br><input type="submit" value="はい"></p>
+                          </form>
+                        </div>
+                      {% endif %}
+                    </div>
+                    <br><br>
                     <form action="{% url 'nice' %}" method="post">
                     {% csrf_token %}
                     <input type="hidden", name='comment_id', value={{ comment.id }}>
                     <input type="submit" value="いいね！">
                     {{ num_nice }}
                     </form>
-                    {% if comment_perm %}
-                      <p> Post comment </p>
-                      <form action="{% url 'comment_edit' comment.id %}" method="post">
-                        {% csrf_token %}
-                        <textarea name="comment" rows="8" cols="100">
-                        </textarea>
-                        <input type="submit" value="編集">
-                      </form>
-                      <p> Delete comment </p>
-                      <form action="{% url 'comment_delete' comment.id %}" method="post">
-                        {% csrf_token %}
-                        <input type="submit" value="削除">
-                      </form>
-                    {% endif %}
                   </div>
                 </div>
               {% endfor %}
@@ -69,17 +81,15 @@
         <div class = "post_comment">
           <form method="POST" action="{% url 'comment_create' post.id %}">
                 <p class="username">
-                <img src="img/bookusagi.png" width="55px" class="icon" alt="icon" align="middle">
-                Username
+                <img src="posts/img/bookusagi.png" width="55px" class="icon" alt="icon" align="middle">
+                {{ user.username }}
                 </p>
-                <textarea name="comment" rows="8" cols="100">
-                </textarea>
+                <textarea name="comment" rows="8" cols="100" placeholder="本についての感想を語り合おう。"></textarea>
                 {% csrf_token %}
                 <br><br>
                 <input type="submit" name="btn1" value="投稿する">
             </form>
         </div>
-        <button class="fixed-btn">投稿</button>
       {% endblock contents %}
     </body>
 </html>
