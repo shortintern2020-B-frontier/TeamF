@@ -116,7 +116,6 @@ def bookmark_create(request):
 # Takahashi Shunichi
 # Umakoshi Masato
 def detail(request, num):
-    user = User.objects.get(id=request.user.id)
     post = Post.objects.get(id=num)
     book = Book.objects.get(pk=post.book_id.id)
     comments = Comment.objects.filter(post_id=num)
@@ -124,9 +123,21 @@ def detail(request, num):
     num_nices = [
         len(Nice.objects.filter(comment_id=comment.id)) for comment in comments
     ]
-    comment_perms = [
-        user.has_perm('change_delete_content', comment) for comment in comments
-    ]
+
+    comment_perms = None
+    try:
+        user = User.objects.get(id=request.user.id)
+        if user.is_authenticated:
+            comment_perms = [
+                user.has_perm('change_delete_content', comment) for comment in comments
+            ]
+    # When not logged in
+    except ObjectDoesNotExist:
+        pass
+
+    # When comment_perms is not created.
+    if not comment_perms:
+        comment_perms = [False for comment in comments]
 
     zipped_comments = zip(comments, user_per_comment, num_nices, comment_perms)
     params = {
