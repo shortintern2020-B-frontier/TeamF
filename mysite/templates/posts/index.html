@@ -13,6 +13,7 @@ Made a templates extends by Yamamoto Sota
 <head>
   {% block head %}
   <link rel="stylesheet" type="text/css" href="{% static 'posts/top.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
   <title>タイムライン画面</title>
   {% endblock head %}
 </head>
@@ -35,7 +36,7 @@ Made a templates extends by Yamamoto Sota
               </div>
 -->
               <div class="sentence">
-                <span class="val-post-content">{{ post.content }}</span>
+                <p class="font"><span class="val-post-content">{{ post.content }}</span></p>
               </div>
             </div>
             <div class="box-secondary">
@@ -81,10 +82,10 @@ Made a templates extends by Yamamoto Sota
 -->
               <div class="source">
                 <div class="author-name">
-                  <span class="val-book-author">著者名: {{ book.author }}</span>
+                  <p class="font2"><span class="val-book-author">著者名: {{ book.author }}</span></p>
                 </div>
                 <div class="book-name">
-                  <span class="val-book-title">書名: {{ book.title }}</span>
+                  <p class="font2"><span class="val-book-title">書名: {{ book.title }}</span></p>
                 </div>
               </div>
 <!--
