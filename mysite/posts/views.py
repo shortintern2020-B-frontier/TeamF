@@ -39,7 +39,7 @@ def get_book_cover_path(title, author):
 # Umakoshi Masato
 def index(request):
     # TODO Fix naming: book_id.id is too wierd.
-    posts = Post.objects.filter(is_deleted=False)[:10]
+    posts = Post.objects.filter(is_deleted=False)
 
     posts_comments_updated_at = []
     for p in posts:
@@ -49,7 +49,7 @@ def index(request):
         else:
             posts_comments_updated_at.append([p, p.updated_at])
     sorted_data = sorted(posts_comments_updated_at, key=lambda x: x[1], reverse=True)
-    posts = list(map(lambda x: x[0], sorted_data))
+    posts = list(map(lambda x: x[0], sorted_data))[:10]
 
     wokashi_sum = [
         p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
@@ -402,17 +402,20 @@ def nice_create(request):
     return redirect(to=f"/posts/{comment.post_id.id}")
 
 
-# Created by Naoki Hirabayashi
+# Naoki Hirabayashi
 def load_post_api(request, num):
     # num 番目から (num + 9) 番目の投稿の情報を返す
     posts = Post.objects.filter(is_deleted=False)
 
-    if (num > len(posts)):
-        posts = []
-    elif (len(posts) - num < 10):
-        posts = posts[num:]
-    else:
-        posts = posts[num:num+10]
+    posts_comments_updated_at = []
+    for p in posts:
+        is_comment = p.comment_set.exists()
+        if is_comment:
+            posts_comments_updated_at.append([p, p.comment_set.all().order_by('updated_at').reverse().first().updated_at])
+        else:
+            posts_comments_updated_at.append([p, p.updated_at])
+    sorted_data = sorted(posts_comments_updated_at, key=lambda x: x[1], reverse=True)
+    posts = list(map(lambda x: x[0], sorted_data))[num:num+10]
 
     wokashi_sum = [
         p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
