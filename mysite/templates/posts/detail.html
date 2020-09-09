@@ -35,27 +35,27 @@
                         <p class = "time">{{ post.updated_at }}</p>
                     </div>
                     <p>
-                        <p class = "id">1：</p>
+                        <p class = "id">{{ comment.id }}：</p>
                         <p class = "comment">{{ comment.comment }}</p>
                     </p>
                     <div class="edit">
                       {% if comment_perm %}
-                        {% csrf_token %}
-                        <input id="edit-checkbox" type="checkbox">
-                          <button id="edit-icon"><label for="edit-checkbox"> 編集 </label></button>
+                        <input class="edit-checkbox" id="edit-checkbox-{{ comment.id }}" type="checkbox">
+                          <button id="edit-icon"><label for="edit-checkbox-{{ comment.id }}"> 編集 </label></button>
                           <div id="editbox">
-                            <button id="cancel-icon"><label for="edit-checkbox">　×　</label></button>
+                            <button class="cancel-icon" id="cancel-icon-{{ comment.id }}"><label for="edit-checkbox-{{ comment.id }}">　×　</label></button>
                             <form action="{% url 'comment_edit' comment.id %}" method="post">
+                              {% csrf_token %}
                               <textarea name="comment" rows="8" cols="150">{{ comment.comment }}</textarea>
                               <br>
                               <input type="submit" value="変更">
                               <br>
                             </form>
                           </div>
-                        <input id="delete-checkbox" type="checkbox">
-                        <button id="delete-icon"><label for="delete-checkbox"> 削除 </label></button>
+                        <input class="delete-checkbox" id="delete-checkbox-{{ comment.id }}" type="checkbox">
+                        <button id="delete-icon"><label for="delete-checkbox-{{ comment.id }}"> 削除 </label></button>
                         <div id="deletebox">
-                          <button id="cancel-icon"><label for="delete-checkbox">　×　</label></button>
+                          <button id="cancel-icon"><label for="delete-checkbox-{{ comment.id }}">　×　</label></button>
                           <form action="{% url 'comment_delete' comment.id %}" method="post">
                             {% csrf_token %}
                             <p>削除しますか？<br><input type="submit" value="はい"></p>

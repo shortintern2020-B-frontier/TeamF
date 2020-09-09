@@ -63,7 +63,7 @@ div.edit {
     height: 60px;
 }
 
-#edit-checkbox {
+.edit-checkbox {
     display: none;
 }
 
@@ -90,12 +90,12 @@ opacity: 0.8;
     color: #00081A; /* 檳榔子黒（Binroujikuro）*/
 }
   
-#edit-checkbox:checked ~ #editbox {
+.edit-checkbox:checked ~ #editbox {
 display: block;
 overflow: auto;
 }
 
-#delete-checkbox {
+.delete-checkbox {
     display: none;
 }
 
@@ -109,7 +109,6 @@ font-size: 1.0rem;
 -moz-border-radius: 5px;
 -webkit-border-radius: 5px;
 border-radius: 5px;
-
 }
 
 #delete-icon:hover {
@@ -125,7 +124,7 @@ opacity: 0.8;
     color: #00081A; /* 檳榔子黒（Binroujikuro）*/
 }
   
-#delete-checkbox:checked ~ #deletebox {
+.delete-checkbox:checked ~ #deletebox {
 display: block;
 overflow: auto;
 }
