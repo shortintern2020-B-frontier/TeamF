@@ -20,7 +20,7 @@ design updated and Made a templates extends by Yamamoto Sota
   {% block contents %}
     <div id="content">
       <main>
-        <div class="scroll-list">
+        <div class="scroll-list" id="timeline">
           {% for post, wokashi_sum, ahare_sum, book, bookmark_flag in zipped_post %}
           <div class="post-box">
             <div class="box-primary">
@@ -74,6 +74,123 @@ design updated and Made a templates extends by Yamamoto Sota
           </div>
         {% endfor %}
       </div>
+
+      <template id="post-box-template">
+        <div class="post-box">
+          <div class="box-primary">
+            <div class="cover-img">
+              <img src="" class="book-img">
+            </div>
+            <div class="sentence">
+              <!-- <p>{{ post.content }}</p> -->
+            </div>
+          </div>
+          <div class="box-secondary">
+            <button class="bookmark-btn">しおり</button>
+            <div class="wokashi">
+              <form action="{% url 'wokashi'%}" method="post">
+                <button type="submit" name='post_id' class="wokashi-btn">をかし</button>
+                <span class="wokashi-sum">
+                <!-- {% if wokashi_sum is None %}0{% endif %}
+                {% if not wokashi_sum is None %}{{wokashi_sum}}{% endif %} -->
+                </span>
+              {% csrf_token %}
+              </form>
+            </div>
+            <div class="ahare">
+              <form action="{% url 'ahare'%}" method="post">
+                <button type="submit" name='post_id' class="ahare-btn">あはれ</button>
+                <span class="ahare-sum">
+                <!-- {% if ahare_sum is None %}0{% endif %}
+                {% if not ahare_sum is None %}{{ahare_sum}}{% endif %} -->
+                </span>
+              {% csrf_token %}
+              </form>
+            </div>
+            <div class="source">
+              <div class="author-name">
+                <!-- <p>{{ book.author }}</p> -->
+              </div>
+              <div class="book-name">
+                <!-- <p>{{ book.title }}</p> -->
+              </div>
+            </div>
+            <div class="bookmark-bool">
+                <!-- {{bookmark_flag}} -->
+            </div>
+            <td>
+                <form action="{% url 'bookmark'%}" method="post">
+                    <button type="submit" name="post_id" class="bookmark-btn">しおり</button>
+                {% csrf_token %}
+                </form>
+            </td>
+          </div>
+      </template>
+
+
+      <!-- This script was written by Naoki Hirabayashi -->
+      <script type="text/javascript">
+        let final_index = 10;
+        let end_flag = false;
+
+        const timeline = document.getElementById('timeline');
+        document.getElementById('timeline').onscroll = () => {
+          const scrollLeft = timeline.scrollLeft;
+          const scrollWidth = timeline.scrollWidth;
+          const clientWidth = timeline.clientWidth;
+          // console.log(scrollWidth + ' ' + scrollLeft + ' ' + clientWidth);
+
+          if ((scrollLeft < 0 && scrollWidth - Math.abs(scrollLeft) - 1 <= clientWidth) || (scrollLeft > 10 && scrollLeft < 50)) {
+            // スクロールの量はブラウザによって仕様が異なるので
+            //   - 最初のスクロール値がゼロで左にスクロールするとスクロール値が負になる場合
+            //   - 最初のスクロール値が正で左にスクロールするとスクロール地がゼロになる場合
+            // それぞれを条件に入れた
+
+            // console.log("append")
+            const xhr = new XMLHttpRequest();
+            // xhr.open("GET", "/posts/load_post_api/0");
+            xhr.open("GET", "/posts/load_post_api/" + final_index);
+            xhr.responseType = 'json';
+            xhr.send();
+
+            xhr.onload = () => {
+              const res = xhr.response;
+              const size = Object.keys(res).length;
+              final_index += size;
+
+              Object.values(res).forEach(info => {
+                // console.log(info);
+                const template = document.getElementById("post-box-template");
+                const clone = template.content.cloneNode(true);
+                clone.querySelector(".sentence").appendChild(document.createTextNode(info['post_content']));
+                clone.querySelector(".wokashi-btn").setAttribute("value", info['post_id']);
+
+                if (info['wokashi_sum'] == null) {
+                  clone.querySelector(".wokashi-sum").appendChild(document.createTextNode('0'));
+                } else {
+                  clone.querySelector(".wokashi-sum").appendChild(document.createTextNode(info['wokashi_sum']));
+                }
+
+                clone.querySelector(".ahare-btn").setAttribute("value", info['post_id']);
+
+                if (info['ahare_sum'] == null) {
+                  clone.querySelector(".ahare-sum").appendChild(document.createTextNode('0'));
+                } else {
+                  clone.querySelector(".ahare-sum").appendChild(document.createTextNode(info['ahare_sum']));
+                }
+
+                clone.querySelector(".author-name").appendChild(document.createTextNode(info['book_author']));
+                clone.querySelector(".book-name").appendChild(document.createTextNode(info['book_title']));
+                clone.querySelector(".book-img").setAttribute("src", info['book_cover_path']);
+                clone.querySelector(".bookmark-bool").appendChild(document.createTextNode(info['bookmark_flag']));
+                clone.querySelector(".bookmark-btn").setAttribute("value", info['post_id']);
+                timeline.appendChild(clone);
+              });
+            };
+          }
+        };
+      </script>
+      <!-- End -->
 
         <input type="checkbox" class="fixed-btn" name="show-popup">
         <div id="popup">

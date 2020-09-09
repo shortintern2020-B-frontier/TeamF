@@ -14,6 +14,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Sum
 from guardian.shortcuts import assign_perm
 from django.core.exceptions import PermissionDenied
+from django.http.response import JsonResponse
 
 import requests
 import time
@@ -38,7 +39,7 @@ def get_book_cover_path(title, author):
 # Umakoshi Masato
 def index(request):
     # TODO Fix naming: book_id.id is too wierd.
-    posts = Post.objects.filter(is_deleted=False)
+    posts = Post.objects.filter(is_deleted=False)[:10]
 
     posts_comments_updated_at = []
     for p in posts:
@@ -116,7 +117,6 @@ def bookmark_create(request):
 # Takahashi Shunichi
 # Umakoshi Masato
 def detail(request, num):
-    user = User.objects.get(id=request.user.id)
     post = Post.objects.get(id=num)
     book = Book.objects.get(pk=post.book_id.id)
     comments = Comment.objects.filter(post_id=num)
@@ -124,9 +124,21 @@ def detail(request, num):
     num_nices = [
         len(Nice.objects.filter(comment_id=comment.id)) for comment in comments
     ]
-    comment_perms = [
-        user.has_perm('change_delete_content', comment) for comment in comments
-    ]
+
+    comment_perms = None
+    try:
+        user = User.objects.get(id=request.user.id)
+        if user.is_authenticated:
+            comment_perms = [
+                user.has_perm('change_delete_content', comment) for comment in comments
+            ]
+    # When not logged in
+    except ObjectDoesNotExist:
+        pass
+
+    # When comment_perms is not created.
+    if not comment_perms:
+        comment_perms = [False for comment in comments]
 
     zipped_comments = zip(comments, user_per_comment, num_nices, comment_perms)
     params = {
@@ -360,3 +372,45 @@ def nice_create(request):
                 comment_id=comment)
         nice.save()
     return redirect(to=f"/posts/{comment.post_id.id}")
+
+
+# Created by Naoki Hirabayashi
+def load_post_api(request, num):
+    # num 番目から (num + 9) 番目の投稿の情報を返す
+    posts = Post.objects.filter(is_deleted=False)
+
+    if (num > len(posts)):
+        posts = []
+    elif (len(posts) - num < 10):
+        posts = posts[num:]
+    else:
+        posts = posts[num:num+10]
+
+    wokashi_sum = [
+        p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
+    ]
+    ahare_sum = [
+        p.ahare_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
+    ]
+
+    books = [Book.objects.get(pk=post.book_id.id) for post in posts]
+    bookmark_flag = [
+        p.bookmark_set.filter(user_id=request.user.id).exists() for p in posts
+    ]
+
+    jsonDict = {}
+
+    for post in posts:
+        elm = {}
+        elm['post_id'] = post.id
+        elm['post_content'] = post.content
+        elm['wokashi_sum'] = post.wokashi_set.all().aggregate(Sum('count'))['count__sum']
+        elm['ahare_sum'] = post.ahare_set.all().aggregate(Sum('count'))['count__sum']
+        book = Book.objects.get(pk=post.book_id.id)
+        elm['book_author'] = book.author
+        elm['book_title'] = book.title
+        elm['book_cover_path'] = book.cover_path
+        elm['bookmark_flag'] = elm['bookmark_flag'] = post.bookmark_set.filter(user_id=request.user.id).exists()
+        jsonDict[str(post.id)] = elm
+
+    return JsonResponse(jsonDict)

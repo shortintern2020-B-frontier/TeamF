@@ -85,8 +85,8 @@
           <div id="popup">
             <form method="POST" action="{% url 'comment_create' post.id %}">
                 <p class="username">
-                <img src="" width="55px" class="icon" alt="icon" align="middle">
-                {{ user.username }}
+                  <img src="{% static 'posts/img/bookusagi.png' %}" width="55px" class="icon" alt="icon" align="middle">
+                  {{ user.username }}
                 </p>
                 <textarea name="comment" rows="8" cols="100" placeholder="本についての感想を語り合おう。"></textarea>
                 {% csrf_token %}
