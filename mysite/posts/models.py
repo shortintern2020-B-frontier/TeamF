@@ -101,3 +101,14 @@ class Nice(models.Model):
 
     class Meta:
         unique_together = ('user_id', 'comment_id')
+
+
+# Takahashi Shunichi
+class Category(models.Model):
+    category = models.CharField(max_length=255)
+
+
+# Takahashi Shunichi
+class Tag(models.Model):
+    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
+    category_id =  models.ForeignKey(Category, on_delete=models.CASCADE)
