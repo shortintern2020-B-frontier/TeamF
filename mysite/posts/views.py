@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from .models import Book, Post, Wokashi, Ahare, Bookmark, Comment, Nice
+from .models import Book, Post, Wokashi, Ahare, Bookmark, Comment, Nice, Category, Tag
 from django.contrib.auth.models import User
-from .forms import CommentForm, PostForm
+from .forms import CommentForm, PostForm, TagForm
 from django.db import transaction
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
@@ -21,7 +21,7 @@ import time
 # Takahashi Shunichi
 RAKUTEN_BOOKS_API_URL = "https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404"
 RAKUTEN_APP_ID = "1065776451953533134"
-NOCOVERPATH = 'posts/img/book.png' #表紙がなかった場合に表示する画像のパス
+NOCOVERPATH = '../static/img/book.png' #表紙がなかった場合に表示する画像のパス
 def get_book_cover_path(title, author):
     encoded_title = urllib.parse.quote(str(title))
     encoded_author = urllib.parse.quote(str(author))
@@ -147,6 +147,7 @@ def create(request):
         content = request.POST["content"]
         title = request.POST["title"]
         author = request.POST["author"]
+        category_id_list = request.POST.getlist('tags')
 
         try:
             book = Book.objects.get(title=title, author=author)
@@ -159,9 +160,14 @@ def create(request):
         user = User.objects.get(id=request.user.id)
         post = Post(user_id=user, content=content, book_id=book)
         post.save()
+        if len(category_id_list) != 0:
+            for category_id in category_id_list:
+                category = Category.objects.get(id=category_id)
+                tag = Tag(post_id=post, category_id=category)
+                tag.save()
         assign_perm('change_delete_content', user, post)
         return redirect(to="/posts")
-    params = {"title": "ポスト投稿", "form": PostForm()}
+    params = {"title": "ポスト投稿", "form": PostForm(), "tag": TagForm()}
     return render(request, "posts/create.html", params)
 
 
@@ -176,11 +182,19 @@ def edit(request, num):
         "title": book.title,
         "author": book.author
     }
+    # tag = Tag.objects.filter(post_id=post.id)
+    tags = post.tag_set.all()
+    category = [tag.category_id.id for tag in tags]
 
     if request.method == "POST":
         content = request.POST["content"]
         title = request.POST["title"]
         author = request.POST["author"]
+        new_category_id_list = request.POST.getlist('tags')
+        old_category_id_list = [tag.category_id.id for tag in post.tag_set.all()]
+
+        create_category_id_set = set(new_category_id_list + old_category_id_list) - set(old_category_id_list)
+        delete_category_id_set = set(new_category_id_list + old_category_id_list) - set(new_category_id_list)
 
         user = User.objects.get(id=request.user.id)
         if user.has_perm('change_delete_content', post):
@@ -193,6 +207,14 @@ def edit(request, num):
             post.content = content
             post.book_id = book
             post.save()
+            if len(create_category_id_set) != 0:
+                for category_id in create_category_id_set:
+                    tag = Tag(post_id=post, category_id=Category.objects.get(id=category_id))
+                    tag.save()
+            if len(delete_category_id_set) != 0:
+                for category_id in delete_category_id_set:
+                    tag = Tag.objects.filter(post_id=post, category_id=Category.objects.get(id=category_id))
+                    tag.delete()
             return redirect(to="/posts")
         else:
             raise PermissionDenied
@@ -200,7 +222,8 @@ def edit(request, num):
     params = {
         "title": "ポスト編集",
         "id": num,
-        "form": PostForm(initial=initial_dict)
+        "form": PostForm(initial=initial_dict),
+        "tag": TagForm(initial={'tag':category}),
     }
     return render(request, "posts/edit.html", params)
 
