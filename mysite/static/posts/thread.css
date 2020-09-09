@@ -18,6 +18,18 @@ div.box {
     border-radius: 10px;
 }
 
+div.post button.bookmark-btn {
+  vertical-align: top;
+  position: absolute;
+  top: 0;
+  width: 3rem;
+  height: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+}
+
 div.box p {
     margin: 0; 
     padding: 0;
