@@ -1,86 +1,73 @@
 <!-- Created by Yamamoto Sota -->
 
+{% extends "base_header.html" %}
 {% load static %}
 
 <!DOCTYPE html>
 <html kang="ja">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" type="text/css" href="{% static 'posts/common.css' %}">
+        {% block head %}
         <link rel="stylesheet" type="text/css" href="{% static 'posts/thread.css' %}">
-		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />
+		    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet" />
         <title>スレッド画面</title>
+        {% endblock head %}
     </head>
     <body>
-        <header>
-            <div id="logo-img">サービス名</div>
-      
-            <button id="signup-btn" onclick="location.href=''">サインアップ</button>
-            <button id="signin-btn">サインイン</button>
-      
-            <input id="drawer-checkbox" type="checkbox">
-            <label id="drawer-icon" for="drawer-checkbox">メニュー</label>
-            <div id="drawer-content">
-              <div class="menu-item">メニュー</div>
-              <div class="menu-item">しおり</div>
-              <div class="menu-item">週間をかしランキング</div>
-              <div class="menu-item">週間あはれランキング</div>
-            </div>
-        </header>
+      {% block contents %}
         <div class = "post">
             <P class = "post">
-                <img src="img/book.png" class="bookicon" alt="bookicon" align="middle">
+                <img src="{{ book.cover_path }}" class="bookicon" alt="bookicon" align="middle">
                 {{ post.content }}
             </P>
             <div class = "bookinfo">
-              <!-- TODO: Get book information-->
-                <p class = "author">- 朝永信一郎 </p>
-                <p class = "booktitle">「見える光、見えない光」</p>
+              <p class = "author">- {{ book.author }} </p>
+              <p class = "booktitle">{{ book.title }}</p>
             </div>
         </div>
         <div class = "contents">
-            <div class = "box">
-            <div class = "comment">
-                <div class = "userinfo">
-                    <p class = "username">Yamamoto Sota</p>
-                    <p class = "time">{{ post.updated_at }}</p>
+          {% if zipped_comments %}
+            <ul>
+              {% for comment, user, num_nice, comment_perm in zipped_comments %}
+                <div class = "box">
+                  <div class = "comment">
+                    <div class = "userinfo">
+                        <p class = "username">{{ user.username }}</p>
+                        <p class = "time">{{ post.updated_at }}</p>
+                    </div>
+                    <p>
+                        <p class = "id">1：</p>
+                        <p class = "comment">{{ comment.comment }}</p>
+                    </p>
+                    <form action="{% url 'nice' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden", name='comment_id', value={{ comment.id }}>
+                    <input type="submit" value="いいね！">
+                    {{ num_nice }}
+                    </form>
+                    {% if comment_perm %}
+                      <p> Post comment </p>
+                      <form action="{% url 'comment_edit' comment.id %}" method="post">
+                        {% csrf_token %}
+                        <textarea name="comment" rows="8" cols="100">
+                        </textarea>
+                        <input type="submit" value="編集">
+                      </form>
+                      <p> Delete comment </p>
+                      <form action="{% url 'comment_delete' comment.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="削除">
+                      </form>
+                    {% endif %}
+                  </div>
                 </div>
-            {% if zipped_comments %}
-              <ul>
-                {% for comment, num_nice, comment_perm in zipped_comments %}
-                  <p>
-                      <p class = "id">1：</p>
-                      <p class = "comment">{{ comment.comment }}</p>
-                  </p>
-                  <form action="{% url 'nice' %}" method="post">
-                  {% csrf_token %}
-                  <input type="hidden", name='comment_id', value={{ comment.id }}>
-                  <input type="submit" value="いいね！">
-                  {{ num_nice }}
-                  </form>
-                  {% if comment_perm %}
-                    <p> Post comment </p>
-                    <form action="{% url 'comment_edit' comment.id %}" method="post">
-                      {% csrf_token %}
-                      <textarea name="comment" rows="8" cols="100">
-                      </textarea>
-                      <input type="submit" value="編集">
-                    </form>
-                    <p> Delete comment </p>
-                    <form action="{% url 'comment_delete' comment.id %}" method="post">
-                      {% csrf_token %}
-                      <input type="submit" value="削除">
-                    </form>
-                  {% endif %}
-                {% endfor %}
-              </ul>
-            {% else %}
-              <p>No comments are available.</p>
-            {% endif %}
-            </div>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p>No comments are available.</p>
+          {% endif %}
         </div>
         <div class = "post_comment">
-          <form method="POST" action="{% url 'hoge' post.id %}">
+          <form method="POST" action="{% url 'comment_create' post.id %}">
                 <p class="username">
                 <img src="img/bookusagi.png" width="55px" class="icon" alt="icon" align="middle">
                 Username
@@ -93,5 +80,6 @@
             </form>
         </div>
         <button class="fixed-btn">投稿</button>
+      {% endblock contents %}
     </body>
 </html>

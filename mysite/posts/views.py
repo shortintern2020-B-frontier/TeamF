@@ -41,6 +41,16 @@ def index(request):
     # TODO Fix naming: book_id.id is too wierd.
     posts = Post.objects.filter(is_deleted=False)[:10]
 
+    posts_comments_updated_at = []
+    for p in posts:
+        is_comment = p.comment_set.exists()
+        if is_comment:
+            posts_comments_updated_at.append([p, p.comment_set.all().order_by('updated_at').reverse().first().updated_at])
+        else:
+            posts_comments_updated_at.append([p, p.updated_at])
+    sorted_data = sorted(posts_comments_updated_at, key=lambda x: x[1], reverse=True)
+    posts = list(map(lambda x: x[0], sorted_data))
+
     wokashi_sum = [
         p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
     ]
@@ -109,7 +119,9 @@ def bookmark_create(request):
 def detail(request, num):
     user = User.objects.get(id=request.user.id)
     post = Post.objects.get(id=num)
+    book = Book.objects.get(pk=post.book_id.id)
     comments = Comment.objects.filter(post_id=num)
+    user_per_comment = [User.objects.get(pk=comment.user_id.id) for comment in comments]
     num_nices = [
         len(Nice.objects.filter(comment_id=comment.id)) for comment in comments
     ]
@@ -117,10 +129,11 @@ def detail(request, num):
         user.has_perm('change_delete_content', comment) for comment in comments
     ]
 
-    zipped_comments = zip(comments, num_nices, comment_perms)
+    zipped_comments = zip(comments, user_per_comment, num_nices, comment_perms)
     params = {
         "title": "ポスト詳細",
         "post": post,
+        "book": book,
         "zipped_comments": zipped_comments,
         "form": CommentForm(),
     }
@@ -216,9 +229,9 @@ def delete(request, num):
 
 # Takahashi Shunichi
 def bookmark(request):
-    bookmark = Bookmark.objects.filter(user_id=request.user.id).all()
+    bookmark = Bookmark.objects.filter(user_id=request.user.id).all().order_by('updated_at').reverse()
     posts = [
-        Post.objects.filter(id=b.post_id.id).first() for b in bookmark
+        Post.objects.filter(is_deleted=False).filter(id=b.post_id.id).first() for b in bookmark
     ]
     wokashi_sum = [
         p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
@@ -264,7 +277,7 @@ def comment_create(request, num):
     comment.save()
     # post_id may be post.id??
     # return HttpResponseRedirect(reverse("posts:show", args=(num, )))
-    return redirect(to="/posts")
+    return redirect(to=f"/posts/{num}")
 
 
 @transaction.atomic
@@ -288,8 +301,7 @@ def comment_edit(request, num):
     if user.has_perm('change_delete_content', comment):
         comment.comment = content
         comment.save()
-        # TODO: redirect to post/id
-        return redirect(to="/posts")
+        return redirect(to=f"/posts/{comment.post_id.id}")
     else:
         raise PermissionDenied
 
@@ -314,7 +326,7 @@ def comment_delete(request, num):
     if user.has_perm('change_delete_content', comment):
         comment.delete()
         # TODO: redirect to post/id
-        return redirect(to="/posts")
+        return redirect(to=f"/posts/{comment.post_id.id}")
     else:
         raise PermissionDenied
 
@@ -336,16 +348,19 @@ def nice_create(request):
         raise Http404("Hogehoge")
 
     # This may be too naive
-    user_id = request.user.id
+    user = request.user
     comment_id = request.POST["comment_id"]
-    nice = Nice(
-        user_id=User.objects.get(pk=user_id),
-        comment_id=Comment.objects.get(pk=comment_id),
-    )
-    nice.save()
-    # post_id may be post.id??
-    # return HttpResponseRedirect(reverse("posts:show", args=(num, )))
-    return redirect(to="/posts")
+    comment = Comment.objects.get(pk=comment_id)
+
+    try:
+        nice = Nice.objects.get(user_id=user, comment_id=comment)
+        nice.delete()
+    except ObjectDoesNotExist:
+        nice = Nice(
+                user_id=user,
+                comment_id=comment)
+        nice.save()
+    return redirect(to=f"/posts/{comment.post_id.id}")
 
 
 # Created by Naoki Hirabayashi
