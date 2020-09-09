@@ -43,14 +43,14 @@ div.post {
     margin: 1.5rem;
     text-align: center;
 }
-
+/*
 div.post_comment {
     position: fixed;
     bottom: 2.0rem;
     margin: 2.0rem;
     display: inline-block;
 }
-
+*/
 div.edit {
     display: inline-block;
 }
@@ -60,15 +60,15 @@ div.edit {
 }
 
 #edit-icon {
-cursor: pointer;
-display: inline-block;
-top: 1.0rem;
-background: #FCF5F7; /* 薄桜（Usuzakura） */
-color: #00081A; /* 檳榔子黒（Binroujikuro）*/
-font-size: 1.0rem;
--moz-border-radius: 5px;
--webkit-border-radius: 5px;
-border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    top: 1.0rem;
+    background: #FCF5F7; /* 薄桜（Usuzakura） */
+    color: #00081A; /* 檳榔子黒（Binroujikuro）*/
+    font-size: 1.0rem;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
 }
 
 #edit-icon:hover {
@@ -83,8 +83,8 @@ opacity: 0.8;
 }
   
 .edit-checkbox:checked ~ #editbox {
-display: block;
-overflow: auto;
+    display: block;
+    overflow: auto;
 }
 
 .delete-checkbox {
@@ -92,19 +92,19 @@ overflow: auto;
 }
 
 #delete-icon {
-cursor: pointer;
-display: inline-block;
-top: 1.0rem;
-background: #FCF5F7; /* 薄桜（Usuzakura） */
-color: #00081A; /* 檳榔子黒（Binroujikuro）*/
-font-size: 1.0rem;
--moz-border-radius: 5px;
--webkit-border-radius: 5px;
-border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    top: 1.0rem;
+    background: #FCF5F7; /* 薄桜（Usuzakura） */
+    color: #00081A; /* 檳榔子黒（Binroujikuro）*/
+    font-size: 1.0rem;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
 }
 
 #delete-icon:hover {
-opacity: 0.8;
+    opacity: 0.8;
 }
 
 #deletebox {
@@ -117,8 +117,8 @@ opacity: 0.8;
 }
   
 .delete-checkbox:checked ~ #deletebox {
-display: block;
-overflow: auto;
+    display: block;
+    overflow: auto;
 }
 
 #cancel-icon {
@@ -153,7 +153,7 @@ overflow: auto;
     display: none;
     display:none;
     position:fixed;
-    top: 50%;
+    bottom: -10%;
     left: 50%;
     width: 50%;
     padding: 10px;

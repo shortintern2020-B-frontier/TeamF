@@ -35,7 +35,7 @@
                         <p class = "time">{{ post.updated_at }}</p>
                     </div>
                     <p>
-                        <p class = "id">{{ comment.id }}：</p>
+                        <p class = "id">{{ comment.id }}</p>
                         <p class = "comment">{{ comment.comment }}</p>
                     </p>
                     <div class="edit">
@@ -85,10 +85,10 @@
             <!-- Updated by Yamamoto Sota -->
             <form method="POST" action="{% url 'comment_create' post.id %}">
                 <p class="username">
-                <img src="{% static 'posts/img/bookusagi.png' %}" width="55px" class="icon" alt="icon" align="middle">
+                <img src="" width="55px" class="icon" alt="icon" align="middle">
                 {{ user.username }}
                 </p>
-                <textarea name="content" rows="8" cols="100" placeholder="本についての感想を語り合おう。"></textarea>
+                <textarea name="comment" rows="8" cols="100" placeholder="本についての感想を語り合おう。"></textarea>
                 {% csrf_token %}
                 <br><br>
                 <input type="submit" name="btn1" value="投稿する">
