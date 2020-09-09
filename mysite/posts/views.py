@@ -108,6 +108,7 @@ def bookmark_create(request):
 def detail(request, num):
     user = User.objects.get(id=request.user.id)
     post = Post.objects.get(id=num)
+    book = Book.objects.get(pk=post.book_id.id)
     comments = Comment.objects.filter(post_id=num)
     num_nices = [
         len(Nice.objects.filter(comment_id=comment.id)) for comment in comments
@@ -120,6 +121,7 @@ def detail(request, num):
     params = {
         "title": "ポスト詳細",
         "post": post,
+        "book": book,
         "zipped_comments": zipped_comments,
         "form": CommentForm(),
     }

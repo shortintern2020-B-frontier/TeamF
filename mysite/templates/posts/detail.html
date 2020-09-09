@@ -34,8 +34,8 @@
             </P>
             <div class = "bookinfo">
               <!-- TODO: Get book information-->
-                <p class = "author">- 朝永信一郎 </p>
-                <p class = "booktitle">「見える光、見えない光」</p>
+              <p class = "author">- {{ book.author }} </p>
+              <p class = "booktitle"> {{book.title}} </p>
             </div>
         </div>
         <div class = "contents">
@@ -80,7 +80,7 @@
             </div>
         </div>
         <div class = "post_comment">
-          <form method="POST" action="{% url 'hoge' post.id %}">
+          <form method="POST" action="{% url 'comment_create' post.id %}">
                 <p class="username">
                 <img src="img/bookusagi.png" width="55px" class="icon" alt="icon" align="middle">
                 Username
