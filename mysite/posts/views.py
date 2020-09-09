@@ -110,6 +110,7 @@ def detail(request, num):
     post = Post.objects.get(id=num)
     book = Book.objects.get(pk=post.book_id.id)
     comments = Comment.objects.filter(post_id=num)
+    user_per_comment = [User.objects.get(pk=comment.user_id.id) for comment in comments]
     num_nices = [
         len(Nice.objects.filter(comment_id=comment.id)) for comment in comments
     ]
@@ -117,7 +118,7 @@ def detail(request, num):
         user.has_perm('change_delete_content', comment) for comment in comments
     ]
 
-    zipped_comments = zip(comments, num_nices, comment_perms)
+    zipped_comments = zip(comments, user_per_comment, num_nices, comment_perms)
     params = {
         "title": "ポスト詳細",
         "post": post,
