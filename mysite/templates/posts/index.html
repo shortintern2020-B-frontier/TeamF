@@ -34,7 +34,11 @@ design updated and Made a templates extends by Yamamoto Sota
             <div class="box-secondary">
               <button class="bookmark-btn">しおり</button>
               <div class="wokashi">
-
+                <button onclick="wokashi_create('{% url 'wokashi' post.id %}', 'wokashi_sum{{ post.id }}')">をかし</button>
+                <span id="wokashi_sum{{ post.id }}">
+                  {% if wokashi_sum is None %}0{% endif %}
+                  {% if not wokashi_sum is None %}{{wokashi_sum}}{% endif %}
+                </span>
                 <!-- <form action="{% url 'wokashi' post.id %}" method="post">
                   <button type="submit" name='post_id' value={{post.id}}>をかし</button>
                   <span>
@@ -45,7 +49,11 @@ design updated and Made a templates extends by Yamamoto Sota
                 </form> -->
               </div>
               <div class="ahare">
-
+                <button onclick="ahare_create('{% url 'ahare' post.id %}', 'ahare_sum{{ post.id }}')">あはれ</button>
+                <span id="ahare_sum{{ post.id }}">
+                {% if ahare_sum is None %}0{% endif %}
+                {% if not ahare_sum is None %}{{ahare_sum}}{% endif %}
+                </span>
                 <!-- <form action="{% url 'ahare' post.id %}" method="post">
                   <button type="submit" name='post_id' value={{post.id}}>あはれ</button>
                   <span>
@@ -76,6 +84,42 @@ design updated and Made a templates extends by Yamamoto Sota
           </div>
         {% endfor %}
       </div>
+
+      <!-- This script was written by Naoki Hirabayashi -->
+      <script type="text/javascript">
+      const wokashi_create = (url, span_id) => {
+        console.log(url);
+        console.log(span_id);
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url);
+        xhr.responseType = 'json';
+        xhr.send();
+        xhr.onload = () => {
+          const res = xhr.response;
+          console.log(res);
+          const wokashi_sum = res['wokashi_sum']
+          const span = document.getElementById(span_id);
+          span.innerHTML = wokashi_sum;
+        };
+      };
+
+      const ahare_create = (url, span_id) => {
+        console.log(url);
+        console.log(span_id);
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url);
+        xhr.responseType = 'json';
+        xhr.send();
+        xhr.onload = () => {
+          const res = xhr.response;
+          console.log(res);
+          const ahare_sum = res['ahare_sum'];
+          const span = document.getElementById(span_id);
+          span.innerHTML = ahare_sum;
+        };
+      };
+      </script>
+      <!--  -->
 
         <input type="checkbox" class="fixed-btn" name="show-popup">
         <div id="popup">
