@@ -1,100 +1,85 @@
 <!-- Created by Naoki Hirabayashi -->
+<!-- design updated and Made a templates extends by Yamamoto Sota -->
+
+{% extends "base_header.html" %}
 {% load static %}
 <!doctype html>
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="{% static 'common.css' %}">
+  {% block head %}
   <link rel="stylesheet" href="{% static 'app/css/signup.css' %}">
   <title>サインアップ画面</title>
+  {% endblock head %}
 </head>
 
 <body>
-  <div id="wrapper">
-    <header>
-      <div id="logo-img">サービス名</div>
-
-      <button id="signup-btn"><a href="{% url 'login' %}">サインイン</a></button>
-    　<button id="signin-btn"><a href="{% url 'logout' %}">ログアウト</a></button>
-
-      <input id="drawer-checkbox" type="checkbox">
-      <label id="drawer-icon" for="drawer-checkbox">メニュー</label>
-      <div id="drawer-content">
-        <div class="menu-item">メニュー</div>
-        <div class="menu-item">しおり</div>
-        <div class="menu-item">週間をかしランキング</div>
-        <div class="menu-item">週間あはれランキング</div>
-      </div>
-    </header>
-
-    <div class="container">
-      <div class="row justify-content-center">
-          <div class="col-lg-5 col-md-7 col-sm-9">
-              <div class="card">
-                  <div class="card-body">
-                      <h3 class="card-title">Sign up</h3>
-                      {% if form.non_field_errors %}
-                          <div class="alert alert-danger alert-text" role="alert">
-                              {% for error in form.non_field_errors %}
-                                  <p{% if forloop.last %} class="mb-0"{% endif %}>{{ error }}</p>
-                              {% endfor %}
+  {% block contents %}
+  <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-7 col-sm-9">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Sign up</h3>
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger alert-text" role="alert">
+                            {% for error in form.non_field_errors %}
+                                <p{% if forloop.last %} class="mb-0"{% endif %}>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <form method="POST" action="{% url 'create_account' %}" class="auth-form" novalidate>
+                        {% csrf_token %}
+                        {% for field in form %}
+                        <div>
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.errors %}
+                                <div class="login-error-text">
+                                    {{ field.errors }}
+                                </div>
+                            {% else %}
+                                <div class="login-text-div"></div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                        <li>
+                          <div class="img-selection">
+                            <input id="img-choice1" type="radio" name="user_img" value="1">
+                            <label for="img-choice1">
+                              <img src="{% static 'app/img/bookusagi.png'%}" width="100" height="100">
+                            </label>
+            
+                            <input id="img-choice2" type="radio" name="user_img" value="2">
+                            <label for="img-choice2">
+                              <img src="{% static 'app/img/bookusagi.png'%}" width="100" height="100">
+                            </label>
+            
+                            <input id="img-choice3" type="radio" name="user_img" value="3">
+                            <label for="img-choice3">
+                              <img src="{% static 'app/img/bookusagi.png'%}" width="100" height="100">
+                            </label>
+            
+                            <input id="img-choice4" type="radio" name="user_img" value="4">
+                            <label for="img-choice4">
+                              <img src="{% static 'app/img/bookusagi.png'%}" width="100" height="100">
+                            </label>
+            
+                            <input id="img-choice5" type="radio" name="user_img" value="5">
+                            <label for="img-choice5">
+                              <img src="{% static 'app/img/bookusagi.png'%}" width="100" height="100">
+                            </label>
                           </div>
-                      {% endif %}
-                      <form method="POST" action="{% url 'create_account' %}" class="auth-form" novalidate>
-                          {% csrf_token %}
-                          {% for field in form %}
-                          <div>
-                              {{ field.label_tag }}
-                              {{ field }}
-                              {% if field.errors %}
-                                  <div class="login-error-text">
-                                      {{ field.errors }}
-                                  </div>
-                              {% else %}
-                                  <div class="login-text-div"></div>
-                              {% endif %}
-                          </div>
-                          {% endfor %}
-                          <li>
-                            <div class="img-selection">
-                              <input id="img-choice1" type="radio" name="user_img" value="1">
-                              <label for="img-choice1">
-                                <img src="{% static 'app/img/bookusagi.png'%}" width="100" height="100">
-                              </label>
-              
-                              <input id="img-choice2" type="radio" name="user_img" value="2">
-                              <label for="img-choice2">
-                                <img src="{% static 'app/img/bookusagi.png'%}" width="100" height="100">
-                              </label>
-              
-                              <input id="img-choice3" type="radio" name="user_img" value="3">
-                              <label for="img-choice3">
-                                <img src="{% static 'app/img/bookusagi.png'%}" width="100" height="100">
-                              </label>
-              
-                              <input id="img-choice4" type="radio" name="user_img" value="4">
-                              <label for="img-choice4">
-                                <img src="{% static 'app/img/bookusagi.png'%}" width="100" height="100">
-                              </label>
-              
-                              <input id="img-choice5" type="radio" name="user_img" value="5">
-                              <label for="img-choice5">
-                                <img src="{% static 'app/img/bookusagi.png'%}" width="100" height="100">
-                              </label>
-                            </div>
-                          </li>
+                        </li>
 
-                          <button type="submit" class="form-control btn-primary auth-button">サインアップ</button>
-                          
-                      </form>
-                  </div>
-              </div>
-          </div>
-      </div>
-  　</div>　
-  </div>
+                        <button type="submit" class="form-control btn-primary auth-button">サインアップ</button>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+　</div>
+  {% endblock contents %}
 </body>
-
 </html>
