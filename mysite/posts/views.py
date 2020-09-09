@@ -39,7 +39,7 @@ def get_book_cover_path(title, author):
 # Umakoshi Masato
 def index(request):
     # TODO Fix naming: book_id.id is too wierd.
-    posts = Post.objects.filter(is_deleted=False)
+    posts = Post.objects.filter(is_deleted=False)[:10]
 
     wokashi_sum = [
         p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
