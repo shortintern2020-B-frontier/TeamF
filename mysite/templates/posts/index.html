@@ -23,44 +23,75 @@ design updated and Made a templates extends by Yamamoto Sota
         <div class="scroll-list">
           {% for post, wokashi_sum, ahare_sum, book, bookmark_flag in zipped_post %}
           <div class="post-box">
-            <div class="box-primary">
+
               <div class="cover-img">
                 <img src="{% static 'posts/img/book.png' %}">
               </div>
+
+            <div class="box-primary">
+<!--              <div class="cover-img">
+                <img src="{% static 'posts/img/book.png' %}">
+              </div>
+--!>
               <div class="sentence">
                 <p>{{ post.content }}</p>
               </div>
             </div>
             <div class="box-secondary">
-              <button class="bookmark-btn">しおり</button>
-              <div class="wokashi">
-                <form action="{% url 'wokashi'%}" method="post">
-                  <button type="submit" name='post_id' value={{post.id}}>をかし</button>
-                  <span>
-                  {% if wokashi_sum is None %}0{% endif %}
-                  {% if not wokashi_sum is None %}{{wokashi_sum}}{% endif %}
-                  </span>
-                {% csrf_token %}
+              {% if bookmark_flag  %}
+              {% else %} 
+	      <form action="{% url 'bookmark'%}" method="post">
+	      	<button type="submit" name="pose_id" value={{post.id}} class="bookmark-btn">しおり</button>
+	        {% csrf_token %}
+	      </form>
+              {% endif %}
+
+<!--             <button class="bookmark-btn">しおり</button>
+--!>  
+<!--              <div class="wokashi">
+--!>
+                <form action="{% url 'wokashi'%}" method="post" class="wokashi">
+                  {% if wokashi_sum is None %}
+                    <button type="submit" name='post_id' value={{post.id}} >
+                      <img class="wokashi-btn" src="{% static 'posts/img/book.png' %}">
+                    </button>
+                    <span class="wokashi-count">0</span>
+                  {% else %}
+                    <button type="submit" name='post_id' value={{post.id}} >
+                      <img class="wokashi-btn" src="{% static 'posts/img/book.png' %}">
+                    </button>
+                    <span class="wokashi-count"> {{ wokashi_sum }} </span>
+                  {% endif %}  
+                  {% csrf_token %}
                 </form>
-              </div>
+<!--              </div>
               <div class="ahare">
-                <form action="{% url 'ahare'%}" method="post">
-                  <button type="submit" name='post_id' value={{post.id}}>あはれ</button>
-                  <span>
-                  {% if ahare_sum is None %}0{% endif %}
-                  {% if not ahare_sum is None %}{{ahare_sum}}{% endif %}
-                  </span>
-                {% csrf_token %}
+--!>
+                <form action="{% url 'ahare'%}" method="post" class="ahare">
+                  {% if ahare_sum is None %}
+                    <button type="submit" name='post_id' value={{post.id}} >
+                      <img class="ahare-btn" src="{% static 'posts/img/book.png' %}">
+                    </button>
+                    <span class="ahare-count">0</span>
+                  {% else %}
+                    <button type="submit" name='post_id' value={{post.id}} >
+                      <img class="ahare-btn" src="{% static 'posts/img/book.png' %}">
+                    </button>
+                    <span class="ahare-count"> {{ ahare_sum }} </span>
+                  {% endif %}                
+                  {% csrf_token %}
                 </form>
-              </div>
+<!--              </div>
+--!>
               <div class="source">
                 <div class="author-name">
-                  <p>{{ book.author }}</p>
+                  <p>著者名: {{ book.author }}</p>
                 </div>
                 <div class="book-name">
-                  <p>{{ book.title }}</p>
+                  <p>署名: {{ book.title }}</p>
                 </div>
               </div>
+<!--
               <td>
                   {{bookmark_flag}}
               </td>
@@ -70,6 +101,7 @@ design updated and Made a templates extends by Yamamoto Sota
                   {% csrf_token %}
                   </form>
               </td>
+--!>
             </div>
           </div>
         {% endfor %}
