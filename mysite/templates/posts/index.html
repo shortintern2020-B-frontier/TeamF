@@ -55,7 +55,7 @@ Made a templates extends by Yamamoto Sota
                   </button>
                   <span class="wokashi-count">0</span>
                 {% else %}
-                  <button type="submit" name='post_id' value={{post.id}} class="ahare-btn-base">
+                  <button type="submit" name='post_id' value={{post.id}} class="wokashi-btn-base">
                     <img class="wokashi-btn" src="{% static 'posts/img/wokashi_1.svg' %}">
                   </button>
                   <span class="wokashi-count"> {{ wokashi_sum }} </span>
@@ -67,12 +67,12 @@ Made a templates extends by Yamamoto Sota
 -->
               <form action="{% url 'ahare'%}" method="post" class="ahare">
                 {% if ahare_sum is None %}
-                  <button type="submit" name='post_id' value={{post.id}} class="">
+                  <button type="submit" name='post_id' value={{post.id}} class="ahare-btn-base">
                     <img class="ahare-btn0" src="{% static 'posts/img/ahare_0.svg' %}">
                   </button>
                   <span class="ahare-count">0</span>
                 {% else %}
-                  <button type="submit" name='post_id' value={{post.id}} class="">
+                  <button type="submit" name='post_id' value={{post.id}} class="ahare-btn-base">
                     <img class="ahare-btn" src="{% static 'posts/img/ahare_1.svg' %}">
                   </button>
                   <span class="ahare-count"> {{ ahare_sum }} </span>
