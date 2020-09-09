@@ -71,34 +71,62 @@ def index(request):
     return render(request, "posts/index.html", params)
 
 
-#Takahashi Shunichi
-def wokashi_create(request):
-    if request.method == "POST":
-        user = User.objects.get(id=request.user.id)
-        post = Post.objects.get(id=request.POST["post_id"])
-        try:
-            wokashi = Wokashi.objects.get(user_id=user, post_id=post)
-            if wokashi.count < 10:
-                wokashi.count += 1
-        except ObjectDoesNotExist as e:
-            wokashi = Wokashi(user_id=user, post_id=post)
-        wokashi.save()
-        return redirect(to="/posts")
+# Takahashi Shunichi
+# Naoki Hirabayashi
+def wokashi_create(request, num):
+    user = User.objects.get(id=request.user.id)
+    post = Post.objects.get(id=num)
+    try:
+        wokashi = Wokashi.objects.get(user_id=user, post_id=post)
+        if wokashi.count < 10:
+            wokashi.count += 1
+    except ObjectDoesNotExist as e:
+        wokashi = Wokashi(user_id=user, post_id=post)
+    wokashi.save()
+    ret_val = post.wokashi_set.all().aggregate(Sum('count'))['count__sum']
+    return JsonResponse({'wokashi_sum': ret_val})
+
+    # if request.method == "POST":
+    #     user = User.objects.get(id=request.user.id)
+    #     post = Post.objects.get(id=request.POST["post_id"])
+    #     try:
+    #         wokashi = Wokashi.objects.get(user_id=user, post_id=post)
+    #         if wokashi.count < 10:
+    #             wokashi.count += 1
+    #     except ObjectDoesNotExist as e:
+    #         wokashi = Wokashi(user_id=user, post_id=post)
+    #     wokashi.save()
+    #     return redirect(to="/posts")
 
 
-#Takahashi Shunichi
-def ahare_create(request):
-    if request.method == "POST":
-        user = User.objects.get(id=request.user.id)
-        post = Post.objects.get(id=request.POST["post_id"])
-        try:
-            ahare = Ahare.objects.get(user_id=user, post_id=post)
-            if ahare.count < 10:
-                ahare.count += 1
-        except ObjectDoesNotExist as e:
-            ahare = Ahare(user_id=user, post_id=post)
-        ahare.save()
-        return redirect(to="/posts")
+# Takahashi Shunichi
+# Naoki Hirabayashi
+def ahare_create(request, num):
+    user = User.objects.get(id=request.user.id)
+    post = Post.objects.get(id=num)
+    try:
+        ahare = Ahare.objects.get(user_id=user, post_id=post)
+        if ahare.count < 10:
+            ahare.count += 1
+        ret_val = ahare.count
+    except ObjectDoesNotExist as e:
+        ahare = Ahare(user_id=user, post_id=post)
+        ret_val = 1
+    ahare.save()
+    ret_val = post.ahare_set.all().aggregate(Sum('count'))['count__sum']
+    return JsonResponse({'ahare_sum': ret_val})
+
+    # if request.method == "POST":
+    #     user = User.objects.get(id=request.user.id)
+    #     post = Post.objects.get(id=request.POST["post_id"])
+    #     try:
+    #         ahare = Ahare.objects.get(user_id=user, post_id=post)
+    #         if ahare.count < 10:
+    #             ahare.count += 1
+    #     except ObjectDoesNotExist as e:
+    #         ahare = Ahare(user_id=user, post_id=post)
+    #     ahare.save()
+    #     return redirect(to="/posts")
 
 #Takahashi Shunichi
 def bookmark_create(request):
