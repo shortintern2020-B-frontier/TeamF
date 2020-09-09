@@ -159,6 +159,30 @@ design updated and Made a templates extends by Yamamoto Sota
           </div>
       </template>
 
+      <!-- Post form -->
+      {% if user.is_authenticated %}
+          <input type="checkbox" class="fixed-btn" name="show-popup">
+          <div id="popup">
+            <!-- Written by Yamamoto Sota -->
+            <!-- Updated by Naoki Hirabayashi -->
+            <form action="{% url 'create' %}" method="post">
+                {% csrf_token %}
+                <p class="username">
+                <img src="{% static 'posts/img/bookusagi.png' %}" class="icon" alt="icon" align="middle">
+                    Username
+                </p>
+                <textarea name="content" rows="8" cols="100" placeholder="気に入った一文を投稿しよう"></textarea>
+                <p>著者名</p>
+                <input type="text" name="author">
+                <p>書名</p>
+                <input type="text" name="title">
+                <br><br>
+                <input type="submit" name="btn1" value="投稿する">
+                <!--  -->
+            </form>
+          </div>
+      {% endif %}
+
 
       <!-- This script was written by Naoki Hirabayashi -->
       <script type="text/javascript">
@@ -224,26 +248,6 @@ design updated and Made a templates extends by Yamamoto Sota
       </script>
       <!-- End -->
 
-        <input type="checkbox" class="fixed-btn" name="show-popup">
-        <div id="popup">
-          <!-- Written by Yamamoto Sota -->
-          <!-- Updated by Naoki Hirabayashi -->
-          <form action="{% url 'create' %}" method="post">
-              {% csrf_token %}
-              <p class="username">
-              <img src="{% static 'posts/img/bookusagi.png' %}" class="icon" alt="icon" align="middle">
-                  Username
-              </p>
-              <textarea name="content" rows="8" cols="100" placeholder="気に入った一文を投稿しよう"></textarea>
-              <p>著者名</p>
-              <input type="text" name="author">
-              <p>書名</p>
-              <input type="text" name="title">
-              <br><br>
-              <input type="submit" name="btn1" value="投稿する">
-              <!--  -->
-          </form>
-        </div>
       </main>
     </div>
   {% endblock contents %}
