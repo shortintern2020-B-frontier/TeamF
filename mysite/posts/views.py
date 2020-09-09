@@ -349,7 +349,7 @@ def nice_create(request):
 
 
 # Created by Naoki Hirabayashi
-def post_api(request, num):
+def load_post_api(request, num):
     # num 番目から (num + 9) 番目の投稿の情報を返す
     posts = Post.objects.filter(is_deleted=False)
 

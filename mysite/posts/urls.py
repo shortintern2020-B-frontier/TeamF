@@ -19,5 +19,5 @@ urlpatterns = [
          views.comment_delete,
          name="comment_delete"),
     path("fuga", views.bookmark, name="fuga"),
-    path("post_api/<int:num>", views.load_post_api, name="post_api")
+    path("load_post_api/<int:num>", views.load_post_api, name="post_api")
 ]
