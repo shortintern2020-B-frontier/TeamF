@@ -69,7 +69,7 @@
         <div class = "post_comment">
           <form method="POST" action="{% url 'comment_create' post.id %}">
                 <p class="username">
-                <img src="img/bookusagi.png" width="55px" class="icon" alt="icon" align="middle">
+                <img src="{% static 'posts/img/bookusagi.png' %}" width="55px" class="icon" alt="icon" align="middle">
                 Username
                 </p>
                 <textarea name="comment" rows="8" cols="100">
