@@ -16,7 +16,7 @@
 <body>
     <div id="wrapper">
         <header>
-            <h1><div id="logo-img">サービス名</div></h1>
+            <h1><div id="logo-img"><a href="{% url 'home' %}">サービス名</a></div></h1>
 
             <!--Created by Kyohei Yasunaga-->
             {% if user.is_authenticated %}
