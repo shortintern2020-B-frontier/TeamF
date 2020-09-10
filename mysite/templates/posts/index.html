@@ -282,6 +282,7 @@ Made a templates extends by Yamamoto Sota
           };
         };
 
+        // マウスホイールでもタイムラインを横スクロールできるように変更
         document.getElementById('timeline').addEventListener('mousewheel', (e) => {
           if (e.deltaX == 0) {
             e.stopPropagation();
