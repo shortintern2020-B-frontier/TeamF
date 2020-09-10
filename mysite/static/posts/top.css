@@ -3,15 +3,30 @@
 
 @charset "utf-8";
 
+body {
+  background-image: url(img/mainback.svg);
+}
+
 /* Main */
 main {
-  padding: 0.5em;
-  background-color: #FDFCF5; /* 白百合色（Shirayuri-iro） */
+  padding: 2.0rem;
+}
+
+.font {
+  font-family: serif;
+  font-kerning: normal;
+  letter-spacing: 0.1em;
+  font-size: 1.1rem;
+}
+
+.font2 {
+  font-family: sans-serif;
+  font-kerning: normal;
 }
 
 .scroll-list {
   margin: 0 auto;
-  padding: 0;
+  padding-top: 5rem;
   width: 90%;
   direction: rtl;
   overflow-x: auto;
@@ -26,7 +41,7 @@ main {
   min-width: 13rem;
   max-width: 1000px;
   height: 45rem;
-  background: #F7EFE3; /* 生成色（Kinari-iro） */
+  background: #E6E6E6; /* 白鼠（Shironezumi） */
   white-space: nowrap;
   border-radius: 1rem;
   position: relative;
@@ -55,21 +70,23 @@ main {
 .post-box .cover-img {
   vertical-align: top;
   position: absolute;
-  top: 1rem;
+  top: -2.0rem;
   width: 4.5rem;
-  height: 4.5rem;
+  height: 7.0rem;
   left: 50%;
   transform: translateX(-50%);
   -webkit-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
-  border-radius: 50%;
+  border-radius: 10%;
+  border: solid;
+  border-color: #727171; /* 鈍色（Nibi-iro）*/
 }
 
 .cover-img img {
   width: 4.5rem;
-  height: 4.5rem;
-  object-fit:cover;
-  border-radius: 50%;
+  height: 7.0rem;
+  object-fit: cover;
+  border-radius: 10%;
 }
 
 .post-box .sentence {
@@ -88,21 +105,29 @@ main {
 }
 
 .post-box .bookmark-btn { 
+  background-color:#E6E6E6; /* 白鼠（Shironezumi）*/
+  color: #E6E6E6; /* 白鼠（Shironezumi）*/
   vertical-align: top;
   position: absolute;
-  top: 0;
-  width: 3rem;
-  height: 3rem;
+  top: -6.0rem;
+  width: 4.5rem;
+  height: 4.5rem;
+  border: none;
   left: 50%;
   transform: translateX(-50%);
   -webkit-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
 }
 
+.bookmark-btn:hover {
+  opacity: 0.7;
+  background-color: #727171; /* 鈍色（Nibi-iro） */
+}
+
 .post-box .wokashi {
   vertical-align: top;
   position: absolute;
-  top: 4rem;
+  top: 2rem;
   width: 4rem;
   height: 2.5rem;
   left: 0;
@@ -158,7 +183,7 @@ main {
 .post-box .ahare {
   vertical-align: top;
   position: absolute;
-  top: 7rem;
+  top: 6rem;
   width: 4rem;
   height: 2.5rem;
   left: 0;
@@ -228,7 +253,7 @@ main {
   height: 100%;
   right: 7%;
   top: 0;
-  color: #888;
+  color: #727171; /* 鈍色（Nibi-iro） */
 }
 
 .post-box .book-name {
@@ -243,7 +268,7 @@ main {
   height: 100%;
   left: 7%;
   top: 0;
-  color: #888;
+  color: #727171; /* 鈍色（Nibi-iro） */
 }
 
 .fixed-btn {
@@ -269,7 +294,8 @@ main {
   padding: 10px;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  background: #666;
+  background: #C8D5BB;
+  opacity: 0.9;
 }
 
 input[type="checkbox"]:checked + #popup {
