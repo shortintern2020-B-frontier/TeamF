@@ -135,6 +135,7 @@ def ahare_create(request, num):
 #Takahashi Shunichi
 def bookmark_create(request):
     if request.method == "POST":
+        path = request.POST["path"]
         user = User.objects.get(id=request.user.id)
         post = Post.objects.get(id=request.POST["post_id"])
         try:
@@ -143,7 +144,7 @@ def bookmark_create(request):
         except ObjectDoesNotExist as e:
             bookmark = Bookmark(user_id=user, post_id=post)
             bookmark.save()
-        return redirect(to="/posts")
+        return redirect(to=path)
 
 
 # Takahashi Shunichi

@@ -3,11 +3,11 @@
 body {
     background-color: #FDFCF5; /* 白百合色（Shirayuri-iro） */
 }
-
+/*
 img {
     max-width: 50%;
 }
-
+*/
 div.box {
     padding: 0.5em 1em;
     font-weight: bold;
@@ -25,14 +25,40 @@ div.box p {
 
 div.contents {
     margin: 2.0rem;
+    padding-top: 1rem;
 }
 
 div.userinfo p {
     display: inline-block;
 }
 
+div.bookinfo {
+    display: inline-block;
+}
+
 div.bookinfo p {
     display: inline-block;
+}
+
+div.bookinfo button.bookmark-btn {
+    font-size:0;
+    background-color: #FDFCF5; /* 白百合色（Shirayuri-iro） */
+    color: #FDFCF5; /* 白百合色（Shirayuri-iro） */
+    vertical-align: top;
+    position: absolute;
+    /* top: 6.0rem; */
+    width: 4.5rem;
+    height: 4.5rem;
+    border: none;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+}
+
+div.bookinfo button.bookmark-btn:hover {
+    opacity: 0.7;
+    background-color: #727171; /* 鈍色（Nibi-iro） */
 }
 
 p.time {
@@ -43,10 +69,12 @@ div.post {
     margin: 1.5rem;
     text-align: center;
 }
+
 /*
 div.post_comment {
     position: fixed;
     bottom: 2.0rem;
+    top: 10rem;
     margin: 2.0rem;
     display: inline-block;
 }
