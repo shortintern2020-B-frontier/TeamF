@@ -148,5 +148,14 @@
       "book_id": 15,
       "is_deleted": false
     }
-  }
+},
+  {
+    "model": "posts.post",
+    "pk": 16,
+    "fields": {
+      "user_id": 5,
+      "content": "真奈が死んだ時、残された私が手紙を書く意味は失われてしまったし、妹の手紙を読む勇気もなかったから、ずっと、この缶は開けられないままだった。",
+      "book_id": 16,
+      "is_deleted": false
+  },
 ]

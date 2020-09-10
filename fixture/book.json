@@ -148,5 +148,15 @@
       "cover_path": "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/0487/04870053.jpg?_ex=200x200",
       "item_url": "https://books.rakuten.co.jp/rb/6868871/"
     }
-  }
+  },
+  {
+    "model": "posts.book",
+    "pk": 16,
+    "fields": {
+      "title": "山月記",
+      "author": "中島敦",
+      "cover_path": "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/2537/9784325232537.jpg?_ex=200x200",
+      "item_url": "https://books.rakuten.co.jp/rb/15992364/"
+    }
+  },
 ]
