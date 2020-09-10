@@ -1,0 +1,302 @@
+<!-- Created by Naoki Hirabayashi.
+Masato Umakoshi: Modify for backend.
+design updated by Yamamoto Sota & Misawa Momoha
+Made a templates extends by Yamamoto Sota
+-->
+
+{% extends "base_header.html" %}
+{% load static %}
+
+<!doctype html>
+<html>
+
+<head>
+  {% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'posts/top.css' %}">
+  <title>タイムライン画面</title>
+  {% endblock head %}
+</head>
+
+<body>
+  {% block contents %}
+    <div id="content">
+      <form action="{% url 'find' %}" method="post">
+      {% csrf_token %}
+      {{ tag }}
+      <input type="submit" name="find" value="検索">
+      </form>
+      <main>
+        <div class="scroll-list" id="timeline">
+          {% for post, wokashi_sum, ahare_sum, book, bookmark_flag in zipped_post %}
+          <div class="post-box">
+
+              <div class="cover-img">
+                <img src="{{ book.cover_path }}" class="val-book-cover-path">
+              </div>
+
+            <div class="box-primary">
+<!--              <div class="cover-img">
+                <img src="{% static 'posts/img/book.png' %}">
+              </div>
+-->
+              <div class="sentence">
+                <span class="val-post-content">{{ post.content }}</span>
+                <!-- タグ列挙 ここから-->
+                {% for tag in post.tag_set.all %}
+                <p>{{ tag.category_id.category }}</p>
+                {% endfor %}
+                <!-- タグ列挙 ここまで-->
+              </div>
+            </div>
+            <div class="box-secondary">
+              <form action="{% url 'bookmark'%}" method="post">
+                <button type="submit" name="post_id" value={{post.id}} class="bookmark-btn">しおり</button>
+                {% csrf_token %}
+              </form>
+
+<!--             <button class="bookmark-btn">しおり</button>
+-->
+<!--              <div class="wokashi">
+-->
+              <div class="wokashi">
+                {% if wokashi_sum is None %}
+                  <button onclick="wokashi_create('{% url 'wokashi' post.id %}', 'wokashi_sum{{ post.id }}')" class="wokashi-btn-base">
+                    <img class="wokashi-btn0" src="{% static 'posts/img/wokashi_0.svg' %}">
+                  </button>
+                  <span class="wokashi-count" id="wokashi_sum{{ post.id }}">0</span>
+                {% else %}
+                  <button onclick="wokashi_create('{% url 'wokashi' post.id %}', 'wokashi_sum{{ post.id }}')" class="wokashi-btn-base">
+                    <img class="wokashi-btn" src="{% static 'posts/img/wokashi_1.svg' %}">
+                  </button>
+                  <span class="wokashi-count" id="wokashi_sum{{ post.id }}"> {{ wokashi_sum }} </span>
+                {% endif %}
+              </div>
+<!--              </div>
+              <div class="ahare">
+-->
+              <div class="ahare">
+                {% if ahare_sum is None %}
+                  <button onclick="ahare_create('{% url 'ahare' post.id %}', 'ahare_sum{{ post.id }}')" class="ahare-btn-base">
+                    <img class="ahare-btn0" src="{% static 'posts/img/ahare_0.svg' %}">
+                  </button>
+                  <span class="ahare-count" id="ahare_sum{{ post.id }}">0</span>
+                {% else %}
+                  <button onclick="ahare_create('{% url 'ahare' post.id %}', 'ahare_sum{{ post.id }}')" class="ahare-btn-base">
+                    <img class="ahare-btn" src="{% static 'posts/img/ahare_1.svg' %}">
+                  </button>
+                  <span class="ahare-count" id="ahare_sum{{ post.id }}"> {{ ahare_sum }} </span>
+                {% endif %}
+              </div>
+<!--              </div>
+-->
+              <div class="source">
+                <div class="author-name">
+                  <span class="val-book-author">著者名: {{ book.author }}</span>
+                </div>
+                <div class="book-name">
+                  <span class="val-book-title">書名: {{ book.title }}</span>
+                </div>
+              </div>
+<!--
+              <td>
+                  {{bookmark_flag}}
+              </td>
+              <td>
+                  <form action="{% url 'bookmark'%}" method="post">
+                      <button type="submit" name="post_id" value={{post.id}}>しおり</button>
+                  {% csrf_token %}
+                  </form>
+              </td>
+-->
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- スクロールして読み込んだ投稿に使うテンプレート -->
+      <!-- これをJavaScriptで複製して読み込んだ投稿を表示する -->
+      <template id="post-box-template">
+        <div class="post-box">
+          <div class="box-primary">
+            <div class="cover-img">
+              <img src="" class="val-book-cover-path">
+            </div>
+
+            <div class="sentence">
+              <span class="val-post-content"></span>
+            </div>
+          </div>
+
+          <div class="box-secondary">
+            <form action="{% url 'bookmark'%}" method="post">
+              <button type="submit" name="post_id" value="" class="bookmark-btn">しおり</button>
+              {% csrf_token %}
+            </form>
+
+            <div class="wokashi">
+              <button class="wokashi-btn-base">
+                <img class="" src="">
+              </button>
+              <span class="wokashi-count" id=""></span>
+            </div>
+
+            <div class="ahare">
+              <button class="ahare-btn-base">
+                <img class="" src="">
+              </button>
+              <span class="ahare-count" id=""></span>
+            </div>
+
+            <div class="source">
+              <div class="author-name">
+                <span class="val-book-author">著者名: </span>
+              </div>
+              <div class="book-name">
+                <span class="val-book-title">書名: </span>
+              </div>
+            </div>
+          </div>
+      </template>
+
+      <!-- Post form -->
+      {% if user.is_authenticated %}
+          <input type="checkbox" class="fixed-btn" name="show-popup">
+          <div id="popup">
+            <!-- Written by Yamamoto Sota -->
+            <!-- Updated by Naoki Hirabayashi -->
+            <form action="{% url 'create' %}" method="post">
+                {% csrf_token %}
+                <p class="username">
+                <img src="{% static 'posts/img/bookusagi.png' %}" class="icon" alt="icon" align="middle">
+                    Username
+                </p>
+                <textarea name="content" rows="8" cols="100" placeholder="気に入った一文を投稿しよう"></textarea>
+                <p>著者名</p>
+                <input type="text" name="author">
+                <p>書名</p>
+                <input type="text" name="title">
+                <br><br>
+                <input type="submit" name="btn1" value="投稿する">
+                <!--  -->
+            </form>
+          </div>
+      {% endif %}
+
+
+      <!-- This script was written by Naoki Hirabayashi -->
+      <script type="text/javascript">
+        let final_index = 10;
+        let end_flag = false;
+
+        const timeline = document.getElementById('timeline');
+        document.getElementById('timeline').onscroll = () => {
+          const scrollLeft = timeline.scrollLeft;
+          const scrollWidth = timeline.scrollWidth;
+          const clientWidth = timeline.clientWidth;
+          // console.log(scrollWidth + ' ' + scrollLeft + ' ' + clientWidth);
+
+          if ((scrollLeft < 0 && scrollWidth - Math.abs(scrollLeft) - 1 <= clientWidth) || (scrollLeft > 10 && scrollLeft < 50)) {
+            // スクロールの量はブラウザによって仕様が異なるので
+            //   - 最初のスクロール値がゼロで左にスクロールするとスクロール値が負になる場合
+            //   - 最初のスクロール値が正で左にスクロールするとスクロール地がゼロになる場合
+            // それぞれを条件に入れた
+
+            // console.log("append")
+            const xhr = new XMLHttpRequest();
+            // xhr.open("GET", "/posts/load_post_api/0");
+            xhr.open("GET", "/posts/load_post_api/" + final_index);
+            xhr.responseType = 'json';
+            xhr.send();
+
+            xhr.onload = () => {
+              const res = xhr.response;
+              const size = Object.keys(res).length;
+              final_index += size;
+
+              Object.values(res).forEach(info => {
+                // console.log(info);
+                const template = document.getElementById("post-box-template");
+                const clone = template.content.cloneNode(true);
+
+                // in <div id="primary-box"></div>
+                clone.querySelector(".val-book-cover-path").setAttribute("src", info['book_cover_path']);
+                clone.querySelector(".val-post-content").innerHTML = info['post_content'];
+
+                // in <div id="secondary-box"></div>
+                clone.querySelector(".bookmark-btn").setAttribute("value", info['post_id']);
+
+                clone.querySelector(".wokashi-btn-base").setAttribute("value", info['post_id']);
+                clone.querySelector(".wokashi-btn-base").onclick = () => wokashi_create("/posts/wokashi/"+info['post_id'], "wokashi_sum"+info['post_id']);
+                clone.querySelector(".wokashi-count").setAttribute("id", "wokashi_sum" + info['post_id'])
+                if (info['wokashi_sum'] == null) {
+                  clone.querySelector(".wokashi-count").innerHTML = 0;
+                  const img = clone.querySelector(".wokashi-btn-base").querySelector('img');
+                  img.setAttribute("class", "wokashi-btn0");
+                  img.setAttribute("src", "{% static 'posts/img/wokashi_0.svg' %}");
+                } else {
+                  clone.querySelector(".wokashi-count").innerHTML = info['wokashi_sum'];
+                  const img = clone.querySelector(".wokashi-btn-base").querySelector('img');
+                  img.setAttribute("class", "wokashi-btn");
+                  img.setAttribute("src", "{% static 'posts/img/wokashi_1.svg' %}");
+                }
+
+                clone.querySelector(".ahare-btn-base").setAttribute("value", info['post_id']);
+                clone.querySelector(".ahare-btn-base").onclick = () => ahare_create("/posts/ahare/"+info['post_id'], "ahare_sum"+info['post_id']);
+                clone.querySelector(".ahare-count").setAttribute("id", "ahare_sum" + info['post_id'])
+                if (info['ahare_sum'] == null) {
+                  clone.querySelector(".ahare-count").innerHTML = 0;
+                  const img = clone.querySelector(".ahare-btn-base").querySelector('img');
+                  img.setAttribute("class", "ahare-btn0");
+                  img.setAttribute("src", "{% static 'posts/img/ahare_0.svg' %}");
+                } else {
+                  clone.querySelector(".ahare-count").innerHTML = info['ahare_sum'];
+                  const img = clone.querySelector(".ahare-btn-base").querySelector('img');
+                  img.setAttribute("class", "ahare-btn");
+                  img.setAttribute("src", "{% static 'posts/img/ahare_1.svg' %}");
+                }
+
+                clone.querySelector(".author-name").innerHTML += info['book_author'];
+                clone.querySelector(".book-name").innerHTML += info['book_title'];
+
+                timeline.appendChild(clone);
+              });
+            };
+          }
+        };
+
+        const wokashi_create = (url, span_id) => {
+          const xhr = new XMLHttpRequest();
+            xhr.open("GET", url);
+            xhr.responseType = 'json';
+            xhr.send();
+            xhr.onload = () => {
+              const res = xhr.response;
+              // console.log(res);
+              const wokashi_sum = res['wokashi_sum']
+              const span = document.getElementById(span_id);
+              span.innerHTML = wokashi_sum;
+            };
+        };
+
+        const ahare_create = (url, span_id) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open("GET", url);
+          xhr.responseType = 'json';
+          xhr.send();
+          xhr.onload = () => {
+            const res = xhr.response;
+            // console.log(res);
+            const ahare_sum = res['ahare_sum'];
+            const span = document.getElementById(span_id);
+            span.innerHTML = ahare_sum;
+          };
+        };
+      </script>
+      <!-- End -->
+
+      </main>
+    </div>
+  {% endblock contents %}
+</body>
+
+</html>

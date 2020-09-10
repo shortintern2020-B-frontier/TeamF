@@ -1,0 +1,313 @@
+/* Created by Hirabayashi Naoki */
+/* design updated by Yamamoto Sota & Misawa Momoha */
+
+@charset "utf-8";
+
+body {
+  background-image: url(img/mainback.svg);
+}
+
+/* Main */
+main {
+  padding: 2.0rem;
+}
+
+.font {
+  font-family: serif;
+  font-kerning: normal;
+  letter-spacing: 0.1em;
+  font-size: 1.1rem;
+}
+
+.font2 {
+  font-family: sans-serif;
+  font-kerning: normal;
+}
+
+.scroll-list {
+  margin: 0 auto;
+  padding-top: 5rem;
+  width: 90%;
+  direction: rtl;
+  overflow-x: auto;
+  white-space: nowrap;
+  /* overflow-scrolling: touch;
+  -webkit-overflow-scrolling: touch; */
+}
+.post-box {
+  display: inline-block;
+  margin-right: 1.5rem;
+  padding: 10px;
+  min-width: 13rem;
+  max-width: 1000px;
+  height: 45rem;
+  background: #E6E6E6; /* 白鼠（Shironezumi） */
+  white-space: nowrap;
+  border-radius: 1rem;
+  position: relative;
+}
+
+.post-box .box-primary {
+  display: inline-block;
+  vertical-align: top;
+  position: absolute;
+  width: 35%;
+  right: 10%;
+  bottom: 0;
+  top: 0;
+}
+
+.post-box .box-secondary {
+  display: inline-block;
+  vertical-align: top;
+  position: absolute;
+  width: 35%;
+  height: 70%;
+  left: 10%;
+  bottom: 0;
+}
+
+.post-box .cover-img {
+  vertical-align: top;
+  position: absolute;
+  top: -2.0rem;
+  width: 4.5rem;
+  height: 7.0rem;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  border-radius: 10%;
+  border: solid;
+  border-color: #727171; /* 鈍色（Nibi-iro）*/
+}
+
+.cover-img img {
+  width: 4.5rem;
+  height: 7.0rem;
+  object-fit: cover;
+  border-radius: 10%;
+}
+
+.post-box .sentence {
+  vertical-align: top;
+  direction: ltr;
+  white-space: normal;
+  writing-mode: vertical-rl;
+  position: absolute;
+  top: 8rem;
+  width: auto;
+  height: 78%;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+}
+
+.post-box .bookmark-btn { 
+  background-color:#E6E6E6; /* 白鼠（Shironezumi）*/
+  color: #E6E6E6; /* 白鼠（Shironezumi）*/
+  vertical-align: top;
+  position: absolute;
+  top: -6.0rem;
+  width: 4.5rem;
+  height: 4.5rem;
+  border: none;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+}
+
+.bookmark-btn:hover {
+  opacity: 0.7;
+  background-color: #727171; /* 鈍色（Nibi-iro） */
+}
+
+.post-box .wokashi {
+  vertical-align: top;
+  position: absolute;
+  top: 2rem;
+  width: 4rem;
+  height: 2.5rem;
+  left: 0;
+  direction: ltr;
+}
+
+.wokashi .wokashi-btn0 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  opacity: 0.6;
+  -webkit-transition: width 0.2s ease, height 0.2s ease;
+  -moz-transition: width 0.2s ease, height 0.2s ease;
+  -o-transition: width 0.2s ease, height 0.2s ease;
+  -ms-transition: width 2s ease, height 0.2s ease;
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+.wokashi .wokashi-btn0:active {
+  width: 4.0rem;
+  height: 4.0rem;
+}
+
+.wokashi .wokashi-btn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  -webkit-transition: width 0.2s ease, height 0.2s ease;
+  -moz-transition: width 0.2s ease, height 0.2s ease;
+  -o-transition: width 0.2s ease, height 0.2s ease;
+  -ms-transition: width 2s ease, height 0.2s ease;
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+.wokashi .wokashi-btn:active {
+  width: 4.0rem;
+  height: 4.0rem;
+}
+
+.wokashi .wokashi-count {
+  position: absolute;
+  top: 50%;
+  right: 0%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+}
+
+.post-box .ahare {
+  vertical-align: top;
+  position: absolute;
+  top: 6rem;
+  width: 4rem;
+  height: 2.5rem;
+  left: 0;
+  direction: ltr;
+}
+
+.ahare .ahare-btn0 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  opacity: 0.6;
+  -webkit-transition: width 0.2s ease, height 0.2s ease;
+  -moz-transition: width 0.2s ease, height 0.2s ease;
+  -o-transition: width 0.2s ease, height 0.2s ease;
+  -ms-transition: width 2s ease, height 0.2s ease;
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+.ahare .ahare-btn0:active {
+  width: 4.0rem;
+  height: 4.0rem;
+}
+
+.ahare .ahare-btn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  -webkit-transition: width 0.2s ease, height 0.2s ease;
+  -moz-transition: width 0.2s ease, height 0.2s ease;
+  -o-transition: width 0.2s ease, height 0.2s ease;
+  -ms-transition: width 2s ease, height 0.2s ease;
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+.ahare .ahare-btn:active {
+  width: 4.0rem;
+  height: 4.0rem;
+}
+
+.ahare .ahare-count {
+  position: absolute;
+  top: 50%;
+  right: 0%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+}
+.post-box .source {
+  position: absolute;
+  height: 60%;
+  width: 100%;
+  bottom: 1rem;
+}
+
+.post-box .author-name {
+  display: inline-block;
+  vertical-align: top;
+  direction: ltr;
+  text-align: left;
+  white-space: normal;
+  writing-mode: vertical-rl;
+  position: absolute;
+  height: 100%;
+  right: 7%;
+  top: 0;
+  color: #727171; /* 鈍色（Nibi-iro） */
+}
+
+.post-box .book-name {
+  display: inline-block;
+  vertical-align: top;
+  height: 80%;
+  direction: ltr;
+  text-align: left;
+  white-space: normal;
+  writing-mode: vertical-rl;
+  position: absolute;
+  height: 100%;
+  left: 7%;
+  top: 0;
+  color: #727171; /* 鈍色（Nibi-iro） */
+}
+
+.fixed-btn {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  width: 60px;
+  height: 60px;
+}
+
+/* popup style */
+#show-popup {
+  display: none;
+}
+
+#popup {
+  display: none;
+  display:none;
+  position:fixed;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  padding: 10px;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  background: #C8D5BB;
+  opacity: 0.9;
+}
+
+input[type="checkbox"]:checked + #popup {
+  display:block;
+  transition:.2s;
+}
+
+#popup textarea {
+  width: 80%;
+  height: 100px;
+}
+
+#popup input[type="text"] {
+  width: 80%;
+}

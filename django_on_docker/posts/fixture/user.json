@@ -1,0 +1,79 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$MTirkMcddQPh$hTga8dnd9kD1j/udV3zDZQqHCa85DCUG/ROBSghd4A0=",
+      "is_superuser": true,
+      "username": "admin",
+      "email": "admin@benzene.com",
+      "is_staff": true
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$y9kDQZCeIRum$kjcVfJTl23Yi5qZeKHtm2bJlDTtzURF/9/O4bpVc6X4=",
+      "is_superuser": false,
+      "username": "Umakoshi",
+      "email": "umakoshi@benzene.com",
+      "is_staff": false
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$an27Psr5LnBF$/VtBGs71WeqQz32SUQ6PXRS5EIef8ife1xnCUDi73V4=",
+      "is_superuser": false,
+      "username": "Takahashi",
+      "email": "takahashi@benzene.com",
+      "is_staff": false
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$IwTGmDTFuF2l$yqTdYIt7C1nfXVkKx5LHBvgZlp0OeViKKLo4k77PFYw=",
+      "is_superuser": false,
+      "username": "Hirabayashi",
+      "email": "hirabayashi@benzene.com",
+      "is_staff": false
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$MIqH4Mm5hbq3$MlUt34st8VuJpqUYC5ngrdRgWOAEtWN+IlzTlDzHGVQ=",
+      "is_superuser": false,
+      "username": "Misawa",
+      "email": "misawa@benzene.com",
+      "is_staff": false
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 6,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$vPg7S06M6ekJ$EpQJTV+qRKgMca0ldt7harWk0qRLnLRARrZamdNhh5o=",
+      "is_superuser": false,
+      "username": "Yasunaga",
+      "email": "yasunaga@benzene.com",
+      "is_staff": false
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 7,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$AJpY98o4XUF8$M3vKs/ttscfHvZOplkByXwlVeF308VdATE8JXjFioNw=",
+      "is_superuser": false,
+      "username": "Yamamoto",
+      "email": "yamamoto@benzene.com",
+      "is_staff": false
+    }
+  }
+]

@@ -1,0 +1,129 @@
+[
+  {
+    "model": "posts.tag",
+    "pk": 1,
+    "fields": {
+      "post_id": 1,
+      "category_id": 6 
+    }
+  },
+  {
+    "model": "posts.tag",
+    "pk": 2,
+    "fields": {
+      "post_id": 1,
+      "category_id": 2
+    }
+  },
+  {
+    "model": "posts.tag",
+    "pk": 3,
+    "fields": {
+      "post_id": 2,
+      "category_id": 1
+    }
+  },
+  {
+    "model": "posts.tag",
+    "pk": 4,
+    "fields": {
+      "post_id": 3,
+      "category_id": 1
+    }
+  },
+  {
+    "model": "posts.tag",
+    "pk": 5,
+    "fields": {
+      "post_id": 4,
+      "category_id": 1
+    }
+  },
+  {
+    "model": "posts.tag",
+    "pk": 6,
+    "fields": {
+      "post_id": 5,
+      "category_id": 1
+    }
+  },  {
+    "model": "posts.tag",
+    "pk": 7,
+    "fields": {
+      "post_id": 6,
+      "category_id": 1
+    }
+  },
+  {
+    "model": "posts.tag",
+    "pk": 8,
+    "fields": {
+      "post_id": 7,
+      "category_id": 1
+    }
+  },
+  {
+    "model": "posts.tag",
+    "pk": 9,
+    "fields": {
+      "post_id": 8,
+      "category_id": 1
+    }
+  },
+  {
+    "model": "posts.tag",
+    "pk": 10,
+    "fields": {
+      "post_id": 9,
+      "category_id": 1
+    }
+  },
+  {
+    "model": "posts.tag",
+    "pk": 11,
+    "fields": {
+      "post_id": 10,
+      "category_id": 1
+    }
+  },
+  {
+    "model": "posts.tag",
+    "pk": 12,
+    "fields": {
+      "post_id": 11,
+      "category_id": 1
+    }
+  },
+  {
+    "model": "posts.tag",
+    "pk": 13,
+    "fields": {
+      "post_id": 12,
+      "category_id": 1
+    }
+  },
+  {
+    "model": "posts.tag",
+    "pk": 14,
+    "fields": {
+      "post_id": 13,
+      "category_id": 1
+    }
+  },
+  {
+    "model": "posts.tag",
+    "pk": 15,
+    "fields": {
+      "post_id": 14,
+      "category_id": 1
+    }
+  },
+  {
+    "model": "posts.tag",
+    "pk": 16,
+    "fields": {
+      "post_id": 15,
+      "category_id": 1
+    }
+  }
+]
