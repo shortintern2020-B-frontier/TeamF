@@ -331,7 +331,7 @@ def bookmark(request):
         "title": "ポスト一覧",
         "zipped_post": zipped_post,
     }
-    return render(request, "posts/index.html", params)
+    return render(request, "posts/bookmark.html", params)
 
 
 # Takahashi Shunichi
