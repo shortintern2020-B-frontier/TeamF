@@ -581,8 +581,10 @@ def ranking(request, kind):
     post_counter_list = [
         (post, counter[post.id]) for post, _ in valid_posts
     ]
-    post_counter_list = sorted(post_counter_list, key=lambda x: x[1], reverse=True)[:10]
+
+    post_counter_list = sorted(post_counter_list, key=lambda x: x[1], reverse=True)
     sorted_post = [post for post, _ in post_counter_list]
+    sorted_post = list(dict.fromkeys(sorted_post))[:10]
     zipped_post = _get_zipped_post(sorted_post, request)
 
     params = {
