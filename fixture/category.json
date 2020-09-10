@@ -1,0 +1,149 @@
+[
+  {
+    "model": "posts.category",
+    "pk": 1,
+    "fields": {
+      "category": "小説"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": 2,
+    "fields": {
+      "category": "随筆"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": 3,
+    "fields": {
+      "category": "評論"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": 4,
+    "fields": {
+      "category": "古典"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": 5,
+    "fields": {
+      "category": "ノンフィクション"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": 6,
+    "fields": {
+      "category": "科学"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": 7,
+    "fields": {
+      "category": "伝記"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": 8,
+    "fields": {
+      "category": "アート・エンターテインメント"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": 9,
+    "fields": {
+      "category": "教育"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": 10,
+    "fields": {
+      "category": "ビジネス"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": 11,
+    "fields": {
+      "category": "歴史"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": 12,
+    "fields": {
+      "category": "社会"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": 13,
+    "fields": {
+      "category": "政治"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": 14,
+    "fields": {
+      "category": "学問書"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": 15,
+    "fields": {
+      "category": "技術書"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": 16,
+    "fields": {
+      "category": "デザイン"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": 17,
+    "fields": {
+      "category": "宗教"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": 18,
+    "fields": {
+      "category": "人文"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": 19,
+    "fields": {
+      "category": "テクノロジー"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": 20,
+    "fields": {
+      "category": "ラノベ"
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": 21,
+    "fields": {
+      "category": "文学賞受賞作家"
+    }
+  }
+]
