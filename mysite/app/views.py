@@ -15,7 +15,7 @@ class SignUpView(CreateView):
 
         # Choice id to image path mapping
         choice2img_path = {
-            str(i): 'static/hoge.png' for i in range(6)
+            str(i): 'posts/img/bookusagi.png' for i in range(6)
         }
         url_path = choice2img_path[user_img]
 
