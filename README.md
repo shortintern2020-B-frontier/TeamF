@@ -24,3 +24,5 @@
 |　　|-- /delete/{post_id} : 投稿削除 \
 |　　| \
 |　　|-- /hoge/{post_id} : コメント作成
+|　　| \
+|　　|-- /ranking/[ahare|wokashi] : ランキング
