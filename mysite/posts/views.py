@@ -88,6 +88,7 @@ def index(request):
     params = {
         "title": "ポスト一覧",
         "zipped_post": zipped_post,
+        "tag": TagForm(initial={'tag':[]})
     }
     return render(request, "posts/index.html", params)
 
