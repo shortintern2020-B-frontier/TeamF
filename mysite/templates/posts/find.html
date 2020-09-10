@@ -20,6 +20,11 @@ Made a templates extends by Yamamoto Sota
 <body>
   {% block contents %}
     <div id="content">
+      <form action="{% url 'find' %}" method="post">
+      {% csrf_token %}
+      {{ tag }}
+      <input type="submit" name="find" value="検索">
+      </form>
       <main>
         <div class="scroll-list" id="timeline">
           {% for post, wokashi_sum, ahare_sum, book, bookmark_flag in zipped_post %}
@@ -41,7 +46,6 @@ Made a templates extends by Yamamoto Sota
                 <p>{{ tag.category_id.category }}</p>
                 {% endfor %}
                 <!-- タグ列挙 ここまで-->
-
               </div>
             </div>
             <div class="box-secondary">

@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from .models import Book, Post, Wokashi, Ahare, Bookmark, Comment, Nice
+from .models import Book, Post, Wokashi, Ahare, Bookmark, Comment, Nice, Category, Tag
 from django.contrib.auth.models import User
-from .forms import CommentForm, PostForm
+from .forms import CommentForm, PostForm, TagForm
 from django.db import transaction
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
@@ -22,6 +22,7 @@ import time
 # Takahashi Shunichi
 RAKUTEN_BOOKS_API_URL = "https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404"
 RAKUTEN_APP_ID = "1065776451953533134"
+NOCOVERPATH = '../static/img/book.png' #表紙がなかった場合に表示する画像のパス
 def get_book_cover_path(title, author):
     encoded_title = urllib.parse.quote(str(title))
     encoded_author = urllib.parse.quote(str(author))
@@ -30,7 +31,7 @@ def get_book_cover_path(title, author):
     if response.status_code != requests.codes.ok:
         cover_path = 'Requests failed'
     elif response.json()["count"] == 0:
-        cover_path = 'No book found'
+        cover_path = NOCOVERPATH
     else:
         cover_path = response.json()["Items"][0]["Item"]["largeImageUrl"]
     return cover_path
@@ -186,26 +187,27 @@ def create(request):
         content = request.POST["content"]
         title = request.POST["title"]
         author = request.POST["author"]
+        category_id_list = request.POST.getlist('tag')
 
         try:
             book = Book.objects.get(title=title, author=author)
         except ObjectDoesNotExist as e:
             cover_path = get_book_cover_path(title, author)
             time.sleep(1)
-            if cover_path != 'No book found':
-                book = Book(title=title, author=author, cover_path=cover_path)
-                book.save()
-            else:
-                NOCOVERPATH = 'posts/img/book.png' #表紙がなかった場合に表示する画像のパス
-                book = Book(title=title, author=author, cover_path=NOCOVERPATH)
-                book.save()
+            book = Book(title=title, author=author, cover_path=cover_path)
+            book.save()
 
         user = User.objects.get(id=request.user.id)
         post = Post(user_id=user, content=content, book_id=book)
         post.save()
+        if len(category_id_list) != 0:
+            for category_id in category_id_list:
+                category = Category.objects.get(id=category_id)
+                tag = Tag(post_id=post, category_id=category)
+                tag.save()
         assign_perm('change_delete_content', user, post)
         return redirect(to="/posts")
-    params = {"title": "ポスト投稿", "form": PostForm()}
+    params = {"title": "ポスト投稿", "form": PostForm(), "tag": TagForm()}
     return render(request, "posts/create.html", params)
 
 
@@ -220,11 +222,19 @@ def edit(request, num):
         "title": book.title,
         "author": book.author
     }
+    # tag = Tag.objects.filter(post_id=post.id)
+    tags = post.tag_set.all()
+    category = [tag.category_id.id for tag in tags]
 
     if request.method == "POST":
         content = request.POST["content"]
         title = request.POST["title"]
         author = request.POST["author"]
+        new_category_id_list = request.POST.getlist('tag')
+        old_category_id_list = [tag.category_id.id for tag in post.tag_set.all()]
+
+        create_category_id_set = set(new_category_id_list + old_category_id_list) - set(old_category_id_list)
+        delete_category_id_set = set(new_category_id_list + old_category_id_list) - set(new_category_id_list)
 
         user = User.objects.get(id=request.user.id)
         if user.has_perm('change_delete_content', post):
@@ -237,6 +247,14 @@ def edit(request, num):
             post.content = content
             post.book_id = book
             post.save()
+            if len(create_category_id_set) != 0:
+                for category_id in create_category_id_set:
+                    tag = Tag(post_id=post, category_id=Category.objects.get(id=category_id))
+                    tag.save()
+            if len(delete_category_id_set) != 0:
+                for category_id in delete_category_id_set:
+                    tag = Tag.objects.filter(post_id=post, category_id=Category.objects.get(id=category_id))
+                    tag.delete()
             return redirect(to="/posts")
         else:
             raise PermissionDenied
@@ -244,7 +262,8 @@ def edit(request, num):
     params = {
         "title": "ポスト編集",
         "id": num,
-        "form": PostForm(initial=initial_dict)
+        "form": PostForm(initial=initial_dict),
+        "tag": TagForm(initial={'tag':category}),
     }
     return render(request, "posts/edit.html", params)
 
@@ -288,6 +307,56 @@ def bookmark(request):
         "zipped_post": zipped_post,
     }
     return render(request, "posts/index.html", params)
+
+
+# Takahashi Shunichi
+def find(request):
+    # TODO Fix naming: book_id.id is too wierd.
+    post_id_list = []
+    category_id_list = []
+    if request.method == "POST":
+        category_id_list = request.POST.getlist('tag')
+        for category_id in category_id_list:
+            category = Category.objects.get(id=category_id)
+            tags = category.tag_set.all()
+            for tag in tags:
+                post_id = tag.post_id.id
+                post_id_list.append(post_id)
+        post_id_set = set(post_id_list)
+        posts = Post.objects.filter(is_deleted=False).filter(id__in=post_id_set)
+    else:
+        posts = Post.objects.filter(is_deleted=False)
+
+    posts_comments_updated_at = []
+    for p in posts:
+        is_comment = p.comment_set.exists()
+        if is_comment:
+            posts_comments_updated_at.append([p, p.comment_set.all().order_by('updated_at').reverse().first().updated_at])
+        else:
+            posts_comments_updated_at.append([p, p.updated_at])
+    sorted_data = sorted(posts_comments_updated_at, key=lambda x: x[1], reverse=True)
+    posts = list(map(lambda x: x[0], sorted_data))[:10]
+
+    wokashi_sum = [
+        p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
+    ]
+    ahare_sum = [
+        p.ahare_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
+    ]
+
+    books = [Book.objects.get(pk=post.book_id.id) for post in posts]
+    bookmark_flag = [
+        p.bookmark_set.filter(user_id=request.user.id).exists() for p in posts
+    ]
+    zipped_post = zip(posts, wokashi_sum, ahare_sum, books, bookmark_flag)
+
+    params = {
+        "title": "ポスト一覧",
+        "zipped_post": zipped_post,
+        "tag": TagForm(initial={'tag':category_id_list})
+    }
+    return render(request, "posts/find.html", params)
+
 
 @transaction.atomic
 def comment_create(request, num):
