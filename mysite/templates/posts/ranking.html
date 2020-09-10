@@ -19,6 +19,11 @@
   {% block contents %}
     <div id="content">
       <main>
+        {% if request.path == "/posts/ranking/wokashi" %}
+          <h2 class="page-title">週間をかしランキング</h2>
+        {% elif request.path == "/posts/ranking/ahare" %}
+          <h2 class="page-title">週間あはれランキング</h2>
+        {% endif %}
         <div class="scroll-list" id="timeline">
           {% for post, wokashi_sum, ahare_sum, book, bookmark_flag in zipped_post %}
             <div class="post-box">
