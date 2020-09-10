@@ -517,3 +517,24 @@ def load_post_api(request, num):
         jsonDict[str(post.id)] = elm
 
     return JsonResponse(jsonDict)
+
+
+# Umakoshi Masato
+def ranking(request, kind):
+    """Rendering ranking page.
+
+    Args:
+        request:
+        kind (str):
+    """
+    kind2class_mapping = {
+            'ahare': Ahare,
+            'wokashi': Wokashi
+    }
+
+    if kind not in kind2class_mapping:
+        raise Http404('Please choice ahare or wokashi')
+
+    params = {}
+
+    return render(request, "posts/ranking.html", params)

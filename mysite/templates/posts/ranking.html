@@ -1,0 +1,28 @@
+<!-- Created by Masato Umakoshi
+-->
+
+{% extends "base_header.html" %}
+{% load static %}
+
+<!doctype html>
+<html>
+
+<head>
+  {% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'posts/top.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+  <title>タイムライン画面</title>
+  {% endblock head %}
+</head>
+
+<body>
+  {% block contents %}
+    <div id="content">
+      <main>
+        hoge
+      </main>
+    </div>
+  {% endblock contents %}
+</body>
+
+</html>
