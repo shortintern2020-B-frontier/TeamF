@@ -3,11 +3,11 @@
 body {
     background-color: #FDFCF5; /* 白百合色（Shirayuri-iro） */
 }
-
+/*
 img {
     max-width: 50%;
 }
-
+*/
 div.box {
     padding: 0.5em 1em;
     font-weight: bold;
@@ -25,14 +25,40 @@ div.box p {
 
 div.contents {
     margin: 2.0rem;
+    padding-top: 1rem;
 }
 
 div.userinfo p {
     display: inline-block;
 }
 
+div.bookinfo {
+    display: inline-block;
+}
+
 div.bookinfo p {
     display: inline-block;
+}
+
+div.bookinfo button.bookmark-btn {
+    font-size:0;
+    background-color: #FDFCF5; /* 白百合色（Shirayuri-iro） */
+    color: #FDFCF5; /* 白百合色（Shirayuri-iro） */
+    vertical-align: top;
+    position: absolute;
+    /* top: 6.0rem; */
+    width: 4.5rem;
+    height: 4.5rem;
+    border: none;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+}
+
+div.bookinfo button.bookmark-btn:hover {
+    opacity: 0.7;
+    background-color: #727171; /* 鈍色（Nibi-iro） */
 }
 
 p.time {
@@ -43,10 +69,12 @@ div.post {
     margin: 1.5rem;
     text-align: center;
 }
+
 /*
 div.post_comment {
     position: fixed;
     bottom: 2.0rem;
+    top: 10rem;
     margin: 2.0rem;
     display: inline-block;
 }
@@ -136,17 +164,29 @@ opacity: 0.8;
     border-radius: 5px;
 }
 
-.fixed-btn {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    width: 60px;
-    height: 60px;
+/* popup style */
+#comment-btn-checkbox {
+  display: none;
 }
 
-/* popup style */
-#show-popup {
-    display: none;
+#comment-float-btn {
+  cursor: pointer;
+  display: inline-block;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  width: 60px;
+  height: 60px;
+  border: none;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.comment-btn-img {
+  width: 60px;
+  height: 60px;
+  max-width: 100%;
 }
 
 #popup {
@@ -162,7 +202,7 @@ opacity: 0.8;
     background: #666;
 }
 
-input[type="checkbox"]:checked + #popup {
+#comment-btn-checkbox:checked ~ #popup {
     display:block;
     transition:.2s;
 }

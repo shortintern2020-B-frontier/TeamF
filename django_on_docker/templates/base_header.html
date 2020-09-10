@@ -4,7 +4,7 @@
 
 <!doctype html>
 <html>
-
+ <!--Created by Kyohei Yasunaga-->
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
@@ -16,16 +16,16 @@
 <body>
     <div id="wrapper">
         <header>
-            <h1><div id="logo-img"><a href="{% url 'home' %}">サービス名</a></div></h1>
+            <h1><div id="logo-img"><a href="{% url 'home' %}"><img src="{% static 'img/logo3.svg' %}" alt="ロゴ" width="210" height="80"></a></div></h1>
 
-            <!--Created by Kyohei Yasunaga-->
+           
             {% if user.is_authenticated %}
                 <button id="signup-btn"><a href="{% url 'logout' %}">ログアウト</a></button>
             {% else %}
                 <button id="signin-btn"><a href="{% url 'login' %}">サインイン</a></button>
                 <button id="signin-btn"><a href="{% url 'create_account' %}">サインアップ</a></button>
             {% endif %}
-            <!--finish Created by Kyohei Yasunaga-->
+<!--finish Created by Kyohei Yasunaga-->
 
             <input id="drawer-checkbox" type="checkbox">
             <button id="drawer-icon"><label for="drawer-checkbox"> Menu </label></button>
@@ -33,9 +33,10 @@
             <nav>
                 <button id="drawer-icon"><label for="drawer-checkbox">　×　</label></button>
                 <ul>
-                <li><div><a href="fuga" class="menu-item">しおり</a></div></li>
-                <li><div><a href="#" class="menu-item">週間をかしランキング</a></div></li>
-                <li><div><a href="#" class="menu-item">週間あはれランキング</a></div></li>
+                <li><div><a href="{% url 'fuga' %}" class="menu-item">しおり</a></div></li>
+                <li><div><a href="{% url 'find' %}" class="menu-item">カテゴリ検索</a></div></li>
+                <li><div><a href="{% url 'ranking' 'wokashi' %}" class="menu-item">週間をかしランキング</a></div></li>
+                <li><div><a href="{% url 'ranking' 'ahare' %}" class="menu-item">週間あはれランキング</a></div></li>
                 </ul>
             </nav>
             </div>

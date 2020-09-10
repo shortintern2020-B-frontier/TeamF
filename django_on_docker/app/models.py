@@ -1,3 +1,4 @@
+# made by umakoshi masato
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -8,3 +9,6 @@ class ImageChoice(models.Model):
 
     def __str__(self):
         return self.url_path
+
+    def __iter__(self):
+        return self.url_path.__iter__()

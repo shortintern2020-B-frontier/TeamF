@@ -21,13 +21,15 @@ header {
   padding: 10px;
   background: #00081A; /* 檳榔子黒（Binroujikuro）*/
   color: #fff;
+  height:100px;
 }
-
+/*
 li {
   list-style: none;
 }
-
-#logo-img {
+*/
+#logo-img,#signup-btn, #signin-btn {
+  float:left;
 }
 
 #signup-btn, #signin-btn, #menu-btn {
@@ -37,6 +39,7 @@ li {
   color: #FCF5F7; /* 薄桜（Usuzakura） */
   border-style: none;
   border-radius: 5px;
+  margin-top:3.0rem;
 }
 
 #drawer-checkbox {
@@ -70,6 +73,11 @@ ul {
 li {
   list-style: none;
   margin: 1.0rem;
+}
+
+div.category-form-wrapper li {
+  float: left;
+  width: 25%;
 }
 
 a {
