@@ -1,9 +1,12 @@
+/* Created by Hirabayashi Naoki */
+/* design updated by Yamamoto Sota & Misawa Momoha */
+
 @charset "utf-8";
 
 /* Main */
 main {
   padding: 0.5em;
-  background: #fff;
+  background-color: #FDFCF5; /* 白百合色（Shirayuri-iro） */
 }
 
 .scroll-list {
@@ -13,87 +16,219 @@ main {
   direction: rtl;
   overflow-x: auto;
   white-space: nowrap;
-  overflow-scrolling: touch;
-  -webkit-overflow-scrolling: touch;
+  /* overflow-scrolling: touch;
+  -webkit-overflow-scrolling: touch; */
 }
-
 .post-box {
   display: inline-block;
-  margin-right: 10px;
+  margin-right: 1.5rem;
   padding: 10px;
-  min-width: 120px;
+  min-width: 13rem;
   max-width: 1000px;
-  height: 600px;
-  background: #ddd;
+  height: 45rem;
+  background: #F7EFE3; /* 生成色（Kinari-iro） */
   white-space: nowrap;
-
+  border-radius: 1rem;
+  position: relative;
 }
 
 .post-box .box-primary {
   display: inline-block;
   vertical-align: top;
-  height: 100%;
+  position: absolute;
+  width: 35%;
+  right: 10%;
+  bottom: 0;
+  top: 0;
 }
 
 .post-box .box-secondary {
   display: inline-block;
   vertical-align: top;
-  height: 100%;
+  position: absolute;
+  width: 35%;
+  height: 70%;
+  left: 10%;
+  bottom: 0;
 }
 
 .post-box .cover-img {
   vertical-align: top;
-  width: 60px;
-  height: 60px;
-  background: #f00;
+  position: absolute;
+  top: 1rem;
+  width: 4.5rem;
+  height: 4.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  border-radius: 50%;
 }
 
 .cover-img img {
-  width: 60px;
-  height: 60px;
+  width: 4.5rem;
+  height: 4.5rem;
+  object-fit:cover;
+  border-radius: 50%;
 }
 
 .post-box .sentence {
   vertical-align: top;
-  height: 500px;
   direction: ltr;
-  text-align: left;
   white-space: normal;
   writing-mode: vertical-rl;
+  position: absolute;
+  top: 8rem;
+  width: auto;
+  height: 78%;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
 }
 
-.post-box .bookmark-btn {
+.post-box .bookmark-btn { 
   vertical-align: top;
-  width: 60px;
-  height: 60px;
+  position: absolute;
+  top: 0;
+  width: 3rem;
+  height: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
 }
 
 .post-box .wokashi {
   vertical-align: top;
-  width: 60px;
-  height: 30px;
+  position: absolute;
+  top: 4rem;
+  width: 4rem;
+  height: 2.5rem;
+  left: 0;
   direction: ltr;
+}
+
+.wokashi .wokashi-btn0 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  opacity: 0.6;
+  -webkit-transition: width 0.2s ease, height 0.2s ease;
+  -moz-transition: width 0.2s ease, height 0.2s ease;
+  -o-transition: width 0.2s ease, height 0.2s ease;
+  -ms-transition: width 2s ease, height 0.2s ease;
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+.wokashi .wokashi-btn0:active {
+  width: 4.0rem;
+  height: 4.0rem;
+}
+
+.wokashi .wokashi-btn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  -webkit-transition: width 0.2s ease, height 0.2s ease;
+  -moz-transition: width 0.2s ease, height 0.2s ease;
+  -o-transition: width 0.2s ease, height 0.2s ease;
+  -ms-transition: width 2s ease, height 0.2s ease;
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+.wokashi .wokashi-btn:active {
+  width: 4.0rem;
+  height: 4.0rem;
+}
+
+.wokashi .wokashi-count {
+  position: absolute;
+  top: 50%;
+  right: 0%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
 }
 
 .post-box .ahare {
   vertical-align: top;
-  width: 60px;
-  height: 30px;
+  position: absolute;
+  top: 7rem;
+  width: 4rem;
+  height: 2.5rem;
+  left: 0;
   direction: ltr;
 }
 
+.ahare .ahare-btn0 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  opacity: 0.6;
+  -webkit-transition: width 0.2s ease, height 0.2s ease;
+  -moz-transition: width 0.2s ease, height 0.2s ease;
+  -o-transition: width 0.2s ease, height 0.2s ease;
+  -ms-transition: width 2s ease, height 0.2s ease;
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+.ahare .ahare-btn0:active {
+  width: 4.0rem;
+  height: 4.0rem;
+}
+
+.ahare .ahare-btn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  -webkit-transition: width 0.2s ease, height 0.2s ease;
+  -moz-transition: width 0.2s ease, height 0.2s ease;
+  -o-transition: width 0.2s ease, height 0.2s ease;
+  -ms-transition: width 2s ease, height 0.2s ease;
+  transition: width 0.2s ease, height 0.2s ease;
+}
+
+.ahare .ahare-btn:active {
+  width: 4.0rem;
+  height: 4.0rem;
+}
+
+.ahare .ahare-count {
+  position: absolute;
+  top: 50%;
+  right: 0%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+}
 .post-box .source {
-  height: 400px;
+  position: absolute;
+  height: 60%;
+  width: 100%;
+  bottom: 1rem;
 }
 
 .post-box .author-name {
   display: inline-block;
   vertical-align: top;
-  height: 80%;
   direction: ltr;
   text-align: left;
   white-space: normal;
   writing-mode: vertical-rl;
+  position: absolute;
+  height: 100%;
+  right: 7%;
+  top: 0;
+  color: #888;
 }
 
 .post-box .book-name {
@@ -104,6 +239,11 @@ main {
   text-align: left;
   white-space: normal;
   writing-mode: vertical-rl;
+  position: absolute;
+  height: 100%;
+  left: 7%;
+  top: 0;
+  color: #888;
 }
 
 .fixed-btn {

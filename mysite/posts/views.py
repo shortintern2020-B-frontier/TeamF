@@ -14,6 +14,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Sum
 from guardian.shortcuts import assign_perm
 from django.core.exceptions import PermissionDenied
+from django.http.response import JsonResponse
 
 import requests
 import time
@@ -48,7 +49,7 @@ def index(request):
         else:
             posts_comments_updated_at.append([p, p.updated_at])
     sorted_data = sorted(posts_comments_updated_at, key=lambda x: x[1], reverse=True)
-    posts = list(map(lambda x: x[0], sorted_data))
+    posts = list(map(lambda x: x[0], sorted_data))[:10]
 
     wokashi_sum = [
         p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
@@ -70,34 +71,62 @@ def index(request):
     return render(request, "posts/index.html", params)
 
 
-#Takahashi Shunichi
-def wokashi_create(request):
-    if request.method == "POST":
-        user = User.objects.get(id=request.user.id)
-        post = Post.objects.get(id=request.POST["post_id"])
-        try:
-            wokashi = Wokashi.objects.get(user_id=user, post_id=post)
-            if wokashi.count < 10:
-                wokashi.count += 1
-        except ObjectDoesNotExist as e:
-            wokashi = Wokashi(user_id=user, post_id=post)
-        wokashi.save()
-        return redirect(to="/posts")
+# Takahashi Shunichi
+# Naoki Hirabayashi
+def wokashi_create(request, num):
+    user = User.objects.get(id=request.user.id)
+    post = Post.objects.get(id=num)
+    try:
+        wokashi = Wokashi.objects.get(user_id=user, post_id=post)
+        if wokashi.count < 10:
+            wokashi.count += 1
+    except ObjectDoesNotExist as e:
+        wokashi = Wokashi(user_id=user, post_id=post)
+    wokashi.save()
+    ret_val = post.wokashi_set.all().aggregate(Sum('count'))['count__sum']
+    return JsonResponse({'wokashi_sum': ret_val})
+
+    # if request.method == "POST":
+    #     user = User.objects.get(id=request.user.id)
+    #     post = Post.objects.get(id=request.POST["post_id"])
+    #     try:
+    #         wokashi = Wokashi.objects.get(user_id=user, post_id=post)
+    #         if wokashi.count < 10:
+    #             wokashi.count += 1
+    #     except ObjectDoesNotExist as e:
+    #         wokashi = Wokashi(user_id=user, post_id=post)
+    #     wokashi.save()
+    #     return redirect(to="/posts")
 
 
-#Takahashi Shunichi
-def ahare_create(request):
-    if request.method == "POST":
-        user = User.objects.get(id=request.user.id)
-        post = Post.objects.get(id=request.POST["post_id"])
-        try:
-            ahare = Ahare.objects.get(user_id=user, post_id=post)
-            if ahare.count < 10:
-                ahare.count += 1
-        except ObjectDoesNotExist as e:
-            ahare = Ahare(user_id=user, post_id=post)
-        ahare.save()
-        return redirect(to="/posts")
+# Takahashi Shunichi
+# Naoki Hirabayashi
+def ahare_create(request, num):
+    user = User.objects.get(id=request.user.id)
+    post = Post.objects.get(id=num)
+    try:
+        ahare = Ahare.objects.get(user_id=user, post_id=post)
+        if ahare.count < 10:
+            ahare.count += 1
+        ret_val = ahare.count
+    except ObjectDoesNotExist as e:
+        ahare = Ahare(user_id=user, post_id=post)
+        ret_val = 1
+    ahare.save()
+    ret_val = post.ahare_set.all().aggregate(Sum('count'))['count__sum']
+    return JsonResponse({'ahare_sum': ret_val})
+
+    # if request.method == "POST":
+    #     user = User.objects.get(id=request.user.id)
+    #     post = Post.objects.get(id=request.POST["post_id"])
+    #     try:
+    #         ahare = Ahare.objects.get(user_id=user, post_id=post)
+    #         if ahare.count < 10:
+    #             ahare.count += 1
+    #     except ObjectDoesNotExist as e:
+    #         ahare = Ahare(user_id=user, post_id=post)
+    #     ahare.save()
+    #     return redirect(to="/posts")
 
 #Takahashi Shunichi
 def bookmark_create(request):
@@ -116,7 +145,6 @@ def bookmark_create(request):
 # Takahashi Shunichi
 # Umakoshi Masato
 def detail(request, num):
-    user = User.objects.get(id=request.user.id)
     post = Post.objects.get(id=num)
     book = Book.objects.get(pk=post.book_id.id)
     comments = Comment.objects.filter(post_id=num)
@@ -124,9 +152,21 @@ def detail(request, num):
     num_nices = [
         len(Nice.objects.filter(comment_id=comment.id)) for comment in comments
     ]
-    comment_perms = [
-        user.has_perm('change_delete_content', comment) for comment in comments
-    ]
+
+    comment_perms = None
+    try:
+        user = User.objects.get(id=request.user.id)
+        if user.is_authenticated:
+            comment_perms = [
+                user.has_perm('change_delete_content', comment) for comment in comments
+            ]
+    # When not logged in
+    except ObjectDoesNotExist:
+        pass
+
+    # When comment_perms is not created.
+    if not comment_perms:
+        comment_perms = [False for comment in comments]
 
     zipped_comments = zip(comments, user_per_comment, num_nices, comment_perms)
     params = {
@@ -360,3 +400,48 @@ def nice_create(request):
                 comment_id=comment)
         nice.save()
     return redirect(to=f"/posts/{comment.post_id.id}")
+
+
+# Naoki Hirabayashi
+def load_post_api(request, num):
+    # num 番目から (num + 9) 番目の投稿の情報を返す
+    posts = Post.objects.filter(is_deleted=False)
+
+    posts_comments_updated_at = []
+    for p in posts:
+        is_comment = p.comment_set.exists()
+        if is_comment:
+            posts_comments_updated_at.append([p, p.comment_set.all().order_by('updated_at').reverse().first().updated_at])
+        else:
+            posts_comments_updated_at.append([p, p.updated_at])
+    sorted_data = sorted(posts_comments_updated_at, key=lambda x: x[1], reverse=True)
+    posts = list(map(lambda x: x[0], sorted_data))[num:num+10]
+
+    wokashi_sum = [
+        p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
+    ]
+    ahare_sum = [
+        p.ahare_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
+    ]
+
+    books = [Book.objects.get(pk=post.book_id.id) for post in posts]
+    bookmark_flag = [
+        p.bookmark_set.filter(user_id=request.user.id).exists() for p in posts
+    ]
+
+    jsonDict = {}
+
+    for post in posts:
+        elm = {}
+        elm['post_id'] = post.id
+        elm['post_content'] = post.content
+        elm['wokashi_sum'] = post.wokashi_set.all().aggregate(Sum('count'))['count__sum']
+        elm['ahare_sum'] = post.ahare_set.all().aggregate(Sum('count'))['count__sum']
+        book = Book.objects.get(pk=post.book_id.id)
+        elm['book_author'] = book.author
+        elm['book_title'] = book.title
+        elm['book_cover_path'] = book.cover_path
+        elm['bookmark_flag'] = elm['bookmark_flag'] = post.bookmark_set.filter(user_id=request.user.id).exists()
+        jsonDict[str(post.id)] = elm
+
+    return JsonResponse(jsonDict)
