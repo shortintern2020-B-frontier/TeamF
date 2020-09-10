@@ -1,0 +1,40 @@
+/* Created by Hirabayashi Naoki */
+/* design updated by Yamamoto Sota & Misawa Momoha */
+
+@charset "utf-8";
+
+.find-form-wrapper {
+  width: 50%;
+  margin: 0 auto;
+  padding: 10px 20px;
+  background-color: #F7EFE3;
+  border-radius: 10px;
+}
+
+#id_tag {
+  margin: 10px 0 40px;
+  padding: 0;
+}
+
+#id_tag li {
+  margin: 10px 0;
+}
+
+
+label[for^="id_tag_"] {
+  font-family: sans-serif;
+}
+
+input[type="checkbox"] {
+
+}
+
+.search-btn-wrapper {
+  width: 100%;
+  text-align: center;
+}
+
+.search-btn {
+  margin: 0 auto;
+  padding: 5px 10px;
+}
