@@ -339,7 +339,7 @@ def find(request):
         else:
             posts_comments_updated_at.append([p, p.updated_at])
     sorted_data = sorted(posts_comments_updated_at, key=lambda x: x[1], reverse=True)
-    posts = list(map(lambda x: x[0], sorted_data))[:10]
+    posts = list(map(lambda x: x[0], sorted_data))
 
     wokashi_sum = [
         p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
