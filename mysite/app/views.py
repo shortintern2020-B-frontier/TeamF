@@ -11,8 +11,13 @@ class SignUpView(CreateView):
     def post(self, request, *args, **kwargs):
 
         form_data = request.POST
-        # user_img = form_data["user_img"]
-        # del form_data["user_img"]
+        user_img = form_data["user_img"]
+
+        # Choice id to image path mapping
+        choice2img_path = {
+            str(i): 'static/hoge.png' for i in range(6)
+        }
+        url_path = choice2img_path[user_img]
 
         form = SignUpForm(data=form_data)
         if form.is_valid():
@@ -23,7 +28,7 @@ class SignUpView(CreateView):
             user = authenticate(username=username,
                                 email=email,
                                 password=password)
-            img_choice = ImageChoice(user=user, url_path="hogehoge")
+            img_choice = ImageChoice(user=user, url_path=url_path)
             img_choice.save()
             login(request, user)
             return redirect("/")
