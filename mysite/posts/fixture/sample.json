@@ -117,5 +117,21 @@
       "groups": [], 
       "user_permissions": []
     }
+  },
+  {
+    "model": "posts.category",
+    "pk": 1,
+    "fields":
+    {
+      "category": "小説" 
+    }
+  },
+  {
+    "model": "posts.category",
+    "pk": 2,
+    "fields":
+    {
+      "category": "随筆" 
+    }
   }
  ]

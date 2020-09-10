@@ -313,6 +313,7 @@ def bookmark(request):
 def find(request):
     # TODO Fix naming: book_id.id is too wierd.
     post_id_list = []
+    category_id_list = []
     if request.method == "POST":
         category_id_list = request.POST.getlist('tag')
         for category_id in category_id_list:
