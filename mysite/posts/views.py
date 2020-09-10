@@ -309,6 +309,54 @@ def bookmark(request):
     return render(request, "posts/index.html", params)
 
 
+# Takahashi Shunichi
+def find(request):
+    # TODO Fix naming: book_id.id is too wierd.
+    post_id_list = []
+    if request.method == "POST":
+        category_id_list = request.POST.getlist('tag')
+        for category_id in category_id_list:
+            category = Category.objects.get(id=category_id)
+            tags = category.tag_set.all()
+            for tag in tags:
+                post_id = tag.post_id.id
+                post_id_list.append(post_id)
+        post_id_set = set(post_id_list)
+        posts = Post.objects.filter(is_deleted=False).filter(id__in=post_id_set)
+    else:
+        posts = Post.objects.filter(is_deleted=False)
+
+    posts_comments_updated_at = []
+    for p in posts:
+        is_comment = p.comment_set.exists()
+        if is_comment:
+            posts_comments_updated_at.append([p, p.comment_set.all().order_by('updated_at').reverse().first().updated_at])
+        else:
+            posts_comments_updated_at.append([p, p.updated_at])
+    sorted_data = sorted(posts_comments_updated_at, key=lambda x: x[1], reverse=True)
+    posts = list(map(lambda x: x[0], sorted_data))[:10]
+
+    wokashi_sum = [
+        p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
+    ]
+    ahare_sum = [
+        p.ahare_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
+    ]
+
+    books = [Book.objects.get(pk=post.book_id.id) for post in posts]
+    bookmark_flag = [
+        p.bookmark_set.filter(user_id=request.user.id).exists() for p in posts
+    ]
+    zipped_post = zip(posts, wokashi_sum, ahare_sum, books, bookmark_flag)
+
+    params = {
+        "title": "ポスト一覧",
+        "zipped_post": zipped_post,
+        "tag": TagForm(initial={'tag':category_id_list})
+    }
+    return render(request, "posts/find.html", params)
+
+
 @transaction.atomic
 def comment_create(request, num):
     """Posting comment function.
