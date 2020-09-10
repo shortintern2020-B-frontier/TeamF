@@ -270,6 +270,9 @@ Made a templates extends by Yamamoto Sota
             const wokashi_sum = res['wokashi_sum']
             const span = document.getElementById("wokashi-sum" + post_id);
             span.innerHTML = wokashi_sum;
+            const img = document.getElementById("wokashi-img" + post_id);
+            img.setAttribute("class", "wokashi-btn");
+            img.setAttribute("src", "{% static 'posts/img/wokashi_1.svg' %}");
           };
         };
 
@@ -285,6 +288,9 @@ Made a templates extends by Yamamoto Sota
             const ahare_sum = res['ahare_sum'];
             const span = document.getElementById("ahare-sum" + post_id);
             span.innerHTML = ahare_sum;
+            const img = document.getElementById("ahare-img" + post_id);
+            img.setAttribute("class", "ahare-btn");
+            img.setAttribute("src", "{% static 'posts/img/ahare_1.svg' %}");
           };
         };
       </script>
