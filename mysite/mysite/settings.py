@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+# made by yasunaga kyohei
 # updated by Yamamoto Sota（TEMPLATES, STATICFILES のパス設定）
 
 import os
