@@ -1,0 +1,161 @@
+[
+  {
+    "model": "posts.post",
+    "pk": 1,
+    "fields": {
+      "user_id": 2,
+      "content": "ただそれらの表面も、見えるものの奥に、もっと大切な要素があることは、しっておいてよいことである。",
+      "book_id": 1,
+      "is_deleted": false
+    }
+  },
+  {
+    "model": "posts.post",
+    "pk": 2,
+    "fields": {
+      "user_id": 3,
+      "content": "私の男は、ぬすんだ傘をゆっくり広げながら、 こちらに歩いてきた。",
+      "book_id": 2,
+      "is_deleted": false
+    }
+  },
+  {
+    "model": "posts.post",
+    "pk": 3,
+    "fields": {
+      "user_id": 4,
+      "content": "冬眞の吐いた白い息が、落ちてくる粉雪と色を混ぜた。",
+      "book_id": 3,
+      "is_deleted": false
+    }
+  },
+  {
+    "model": "posts.post",
+    "pk":4 ,
+    "fields": {
+      "user_id": 5,
+      "content": "だから愛美が台所に立って料理する姿はこれが最後だと、目に焼き付けた。",
+      "book_id": 4,
+      "is_deleted": false
+    }
+  },
+  {
+    "model": "posts.post",
+    "pk": 5,
+    "fields": {
+      "user_id": 6,
+      "content": "自分の持っていないものがなんなのかをはっきりと悟った。",
+      "book_id": 5,
+      "is_deleted": false
+    }
+  },
+  {
+    "model": "posts.post",
+    "pk": 6,
+    "fields": {
+      "user_id": 7,
+      "content": "とにかくぼくわか学のためにじゅー用なことをはっ見したさいしょのばか人間なのわかけてもいい。",
+      "book_id": 6,
+      "is_deleted": false
+    }
+  },
+  {
+    "model": "posts.post",
+    "pk": 7,
+    "fields": {
+      "user_id": 2,
+      "content": "絵の中のスズランは、ウェディングドレス姿で微笑んでいた。",
+      "book_id": 7,
+      "is_deleted": false
+    }
+  },
+  {
+    "model": "posts.post",
+    "pk": 8,
+    "fields": {
+      "user_id": 3,
+      "content": "「今日まで私の結婚相手を何一つ文句も言わず演じてくださって心から感謝しています。」",
+      "book_id": 8,
+      "is_deleted": false
+    }
+  },
+  {
+    "model": "posts.post",
+    "pk": 9,
+    "fields": {
+      "user_id": 4,
+      "content": "清瀬が求め、あがき、ついに届かずに終わろうとしているものを、いともたやすく視覚化してみせる。",
+      "book_id": 9,
+      "is_deleted": false
+    }
+  },
+  {
+    "model": "posts.post",
+    "pk": 10,
+    "fields": {
+      "user_id": 5,
+      "content": "「昨日見た光景があんまりにも温かかったから、名前は『甘露家』にしたよ」",
+      "book_id": 10,
+      "is_deleted": false
+    }
+  },
+  {
+    "model": "posts.post",
+    "pk": 11,
+    "fields": {
+      "user_id": 6,
+      "content": "裏返すと、丸い文字で、『月のウサギ』と書いてあった。",
+      "book_id": 11,
+      "is_deleted": false
+    }
+  },
+  {
+    "model": "posts.post",
+    "pk": 12,
+    "fields": {
+      "user_id": 7,
+      "content": "今、マシンガンを持ったギャングがいきなり現れて彼らに向かって発砲したらあの男はためらいなく自分の体を盾にして君子を守る、そんな気がする。",
+      "book_id": 12,
+      "is_deleted": false
+    }
+  },
+  {
+    "model": "posts.post",
+    "pk": 13,
+    "fields": {
+      "user_id": 2,
+      "content": "「めんまが現れるとしたら、俺の前なんだ......化けてでも、呪ってでも......俺の、おれの前に......!!」",
+      "book_id": 13,
+      "is_deleted": false
+    }
+  },
+  {
+    "model": "posts.post",
+    "pk": 14,
+    "fields": {
+      "user_id": 3,
+      "content": "それは俺にとっては二度目の、そして麻衣にとっては最初のプロポーズ",
+      "book_id": 14,
+      "is_deleted": false
+    }
+  },
+  {
+    "model": "posts.post",
+    "pk": 15,
+    "fields": {
+      "user_id": 4,
+      "content": "真奈が死んだ時、残された私が手紙を書く意味は失われてしまったし、妹の手紙を読む勇気もなかったから、ずっと、この缶は開けられないままだった。",
+      "book_id": 15,
+      "is_deleted": false
+    }
+},
+  {
+    "model": "posts.post",
+    "pk": 16,
+    "fields": {
+      "user_id": 5,
+      "content": "真奈が死んだ時、残された私が手紙を書く意味は失われてしまったし、妹の手紙を読む勇気もなかったから、ずっと、この缶は開けられないままだった。",
+      "book_id": 16,
+      "is_deleted": false
+  },
+]

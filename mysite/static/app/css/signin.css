@@ -1,0 +1,46 @@
+/* Created by Naoki Hirabayashi */
+
+@charset "utf-8";
+
+/* Main */
+main {
+  padding: 0.5em;
+  background: #fff;
+  font-family: sans-serif;
+}
+
+#form-wrapper {
+  margin: auto 0;
+  text-align: center;
+}
+
+#form-wrapper h2 {
+  margin: 20px;
+  font-size: 40px;
+}
+
+.form-ul {
+  margin: 0;
+  padding: 0;
+}
+
+.form-li {
+  margin: 4px 0 20px 0;
+  padding: 0;
+}
+
+#form-wrapper input[type="text"], input[type="email"], input[type="password"] {
+  margin: 10px;
+  padding: 5px 10px;
+  width: 300px;
+  height: 30px;
+  border: solid 2px black;
+  border-radius: 1em;
+}
+
+#form-wrapper .enter-btn {
+  margin: 10px;
+  padding: 10px 20px;
+  border: solid 2px black;
+  border-radius: 1em;
+}

@@ -1,0 +1,55 @@
+<!-- Created by Naoki Hirabayashi -->
+<!-- Made a templates extends by Yamamoto Sota -->
+
+{% extends "base_header.html" %}
+{% load static %}
+
+<!doctype html>
+<html>
+
+<head>
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'app/css/signin.css' %}">
+  <title>ログイン画面</title>
+{% endblock head %}
+</head>
+
+<body>
+{% block contents %}
+<main>
+  <div id="form-wrapper">
+    <h2 class="title">サインイン</h2>
+
+    <div margin-bottom="20px">
+      {% for error in form.non_field_errors %}
+        <p>{{ error }}</p>
+      {% endfor %}
+    </div>
+
+    <form action="{% url 'login' %}" method="post">
+      {% csrf_token %}
+      <ul class="form-ul">
+        {% for field in form %}
+        <li class="form-li">
+          <p>{{ field.label_tag }}</p>
+
+          {{ field }}
+
+          {% for error in field.errors %}
+            <p>{{ error }}</p>
+          {% endfor %}
+        </li>
+        {% endfor %}
+
+        <li class="form-li">
+          <input type="submit" value="サインイン" class="enter-btn">
+        </li>
+
+        <input type="hidden" name="next" value="{{ next }}" />
+      </ul>
+    </form>
+  </div>
+</main>
+{% endblock contents %}
+</body>
+</html>

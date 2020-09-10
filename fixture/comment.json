@@ -1,0 +1,14 @@
+[
+  {
+    "model": "posts.comment",
+    "pk": 1,
+    "fields": {
+      "user_id": 2,
+      "post_id": 16
+      "content": "ただそれらの表面も、見えるものの奥に、もっと大切な要素があることは、しっておいてよいことである。",
+      "book_id": 16,
+      "is_deleted": false
+    }
+  },
+
+]

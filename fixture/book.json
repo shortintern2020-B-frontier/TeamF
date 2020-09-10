@@ -1,0 +1,162 @@
+[
+  {
+    "model": "posts.book",
+    "pk": 1,
+    "fields": {
+      "title": "科学以前の心",
+      "author": "中谷宇吉郎/福岡伸一",
+      "cover_path": "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/2122/9784309412122.jpg?_ex=200x200",
+      "item_url": "https://books.rakuten.co.jp/rb/12273297/"
+    }
+  },
+  {
+    "model": "posts.book",
+    "pk": 2,
+    "fields": {
+      "title": "私の男",
+      "author": "桜庭一樹",
+      "cover_path": "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/4010/9784167784010.jpg?_ex=200x200",
+      "item_url": "https://books.rakuten.co.jp/rb/6443081/"
+    }
+  },
+  {
+    "model": "posts.book",
+    "pk": 3,
+    "fields": {
+      "title": "春となりを待つきみへ",
+      "author": "沖田円",
+      "cover_path": "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/1903/9784813701903.jpg?_ex=200x200",
+      "item_url": "https://books.rakuten.co.jp/rb/14584879/"
+    }
+  },
+  {
+    "model": "posts.book",
+    "pk": 4,
+    "fields": {
+      "title": "ぼくは明日、昨日のきみとデートする",
+      "author": "七月隆文",
+      "cover_path": "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/6980/9784800256980.jpg?_ex=200x200",
+      "item_url":  "https://books.rakuten.co.jp/rb/12849123/"
+    }
+  },
+  {
+    "model": "posts.book",
+    "pk": 5,
+    "fields": {
+      "title": "解錠師",
+      "author": "スティーヴ・ハミルトン/越前敏弥",
+      "cover_path": "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/8540/9784151718540.jpg?_ex=200x200",
+      "item_url": "https://books.rakuten.co.jp/rb/12127235/"
+    }
+  },
+  {
+    "model": "posts.book",
+    "pk": 6,
+    "fields": {
+      "title": "アルジャーノンに花束を",
+      "author": "ダニエル・キイス/小尾芙佐",
+      "cover_path": "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/3330/9784150413330.jpg?_ex=200x200",
+      "item_url": "https://books.rakuten.co.jp/rb/1098247/"
+    }
+  },
+  {
+    "model": "posts.book",
+    "pk": 7,
+    "fields": {
+      "title": "プラチナデータ",
+      "author": "東野圭吾",
+      "cover_path": "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/8844/9784344418844.jpg?_ex=200x200",
+      "item_url": "https://books.rakuten.co.jp/rb/12199944/"
+    }
+  },
+  {
+    "model": "posts.book",
+    "pk": 8,
+    "fields": {
+      "title": "ボクの妻と結婚してください。",
+      "author": "樋口卓治",
+      "cover_path": "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/0437/9784062930437.jpg?_ex=200x200",
+      "item_url": "https://books.rakuten.co.jp/rb/14445251/"
+    }
+  },
+  {
+    "model": "posts.book",
+    "pk": 9,
+    "fields": {
+      "title": "風が強く吹いている",
+      "author": "三浦しをん",
+      "cover_path": "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/7589/9784101167589.jpg?_ex=200x200",
+      "item_url": "https://books.rakuten.co.jp/rb/6105523/"
+    }
+  },
+  {
+    "model": "posts.book",
+    "pk": 10,
+    "fields": {
+      "title": "和菓子のアン",
+      "author": "坂木司",
+      "cover_path": "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/4845/9784334764845.jpg?_ex=200x200",
+      "item_url": "https://books.rakuten.co.jp/rb/11934423/"
+    }
+  },
+  {
+    "model": "posts.book",
+    "pk": 11,
+    "fields": {
+      "title": "ナミヤ雑貨店の奇蹟",
+      "author": "東野圭吾",
+      "cover_path": "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/4516/9784041014516.jpg?_ex=200x200",
+      "item_url": "https://books.rakuten.co.jp/rb/12960575/"
+    }
+  },
+  {
+    "model": "posts.book",
+    "pk": 12,
+    "fields": {
+      "title": "死亡フラグが立ちました！",
+      "author": "七尾与史",
+      "cover_path": "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/8997/9784800298997.jpg?_ex=200x200",
+      "item_url": "https://books.rakuten.co.jp/rb/16045827/"
+    }
+  },
+  {
+    "model": "posts.book",
+    "pk": 13,
+    "fields": {
+      "title": "あの日見た花の名前を僕達はまだ知らない。（上）",
+      "author": "岡田磨里",
+      "cover_path": "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/6205/9784041026205.jpg?_ex=200x200",
+      "item_url": "https://books.rakuten.co.jp/rb/14162724/"
+    }
+  },
+  {
+    "model": "posts.book",
+    "pk": 14,
+    "fields": {
+      "title": "8年越しの花嫁 奇跡の実話",
+      "author": "岡田惠和（脚本）",
+      "cover_path": "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/2067/9784092312067.jpg?_ex=200x200",
+      "item_url": "https://books.rakuten.co.jp/rb/15212421/"
+    }
+  },
+  {
+    "model": "posts.book",
+    "pk": 15,
+    "fields": {
+      "title": "吐息雪色",
+      "author": "綾崎隼",
+      "cover_path": "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/0487/04870053.jpg?_ex=200x200",
+      "item_url": "https://books.rakuten.co.jp/rb/6868871/"
+    }
+  },
+  {
+    "model": "posts.book",
+    "pk": 16,
+    "fields": {
+      "title": "山月記",
+      "author": "中島敦",
+      "cover_path": "https://thumbnail.image.rakuten.co.jp/@0_mall/book/cabinet/2537/9784325232537.jpg?_ex=200x200",
+      "item_url": "https://books.rakuten.co.jp/rb/15992364/"
+    }
+  },
+]
