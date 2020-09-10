@@ -547,6 +547,9 @@ def ranking(request, kind):
     Args:
         request:
         kind (str):
+
+    Author:
+        Masato Umakoshi
     """
     kind2class_mapping = {
             'ahare': Ahare,
