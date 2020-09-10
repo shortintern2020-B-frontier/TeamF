@@ -21,5 +21,5 @@ urlpatterns = [
     path("fuga", views.bookmark, name="fuga"),
     path("load_post_api/<int:num>", views.load_post_api, name="post_api"),
     path("fuga", views.bookmark, name="fuga"),
-#     path("find", views.find, name="find"),
+    path("find", views.find, name="find"),
 ]
