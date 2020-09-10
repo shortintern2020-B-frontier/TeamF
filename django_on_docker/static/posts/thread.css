@@ -70,6 +70,10 @@ div.post {
     text-align: center;
 }
 
+div.rakuten-books a{
+    color: #f00;
+}
+
 /*
 div.post_comment {
     position: fixed;
@@ -199,7 +203,8 @@ opacity: 0.8;
     padding: 10px;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    background: #666;
+    background: #C8D5BB;
+    opacity: 0.9;
 }
 
 #comment-btn-checkbox:checked ~ #popup {

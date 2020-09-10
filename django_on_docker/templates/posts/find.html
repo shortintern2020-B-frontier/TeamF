@@ -21,6 +21,7 @@ Made a templates extends by Yamamoto Sota
 <body>
   {% block contents %}
     <div id="content">
+      <h2 class="page-title">カテゴリ検索</h2>
       <div class="find-form-wrapper">
         <form action="{% url 'find' %}" method="post">
         {% csrf_token %}

@@ -22,6 +22,9 @@
                 <div class = "bookinfo">
                   <p class = "author">- {{ book.author }} </p>
                   <p class = "booktitle">{{ book.title }}</p>
+                  <div class="rakuten-books">
+                    <a href="{{ book.item_url }}">楽天Books</a>
+                  </div>
                   <form action="{% url 'bookmark'%}" method="post">
                   {% csrf_token %}
                       <button type="submit" name="post_id" value={{post.id}} class="bookmark-btn">
