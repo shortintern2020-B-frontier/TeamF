@@ -44,6 +44,7 @@ Made a templates extends by Yamamoto Sota
                 <!-- タグ列挙 ここまで-->
               </div>
             </div>
+            <a class="detail-link" href="{% url 'detail' post.id %}"></a>
             <div class="box-secondary">
               <form action="{% url 'bookmark'%}" method="post">
                 <button type="submit" name="post_id" value={{post.id}} class="bookmark-btn">
@@ -128,6 +129,8 @@ Made a templates extends by Yamamoto Sota
               <span class="val-post-content"></span>
             </div>
           </div>
+
+          <a class="detail-link" href=""></a>
 
           <div class="box-secondary">
             <form action="{% url 'bookmark'%}" method="post">
@@ -223,6 +226,9 @@ Made a templates extends by Yamamoto Sota
                 // in <div id="primary-box"></div>
                 clone.querySelector(".val-book-cover-path").setAttribute("src", info['book_cover_path']);
                 clone.querySelector(".val-post-content").innerHTML = info['post_content'];
+
+                // link to detail page
+                clone.querySelector(".detail-link").setAttribute("href", "/posts/" + info['post_id']);
 
                 // in <div id="secondary-box"></div>
                 clone.querySelector(".bookmark-btn").setAttribute("value", info['post_id']);
