@@ -16,6 +16,8 @@ from guardian.shortcuts import assign_perm
 from django.core.exceptions import PermissionDenied
 from django.http.response import JsonResponse
 
+from app.forms import SignUpForm
+
 from collections import defaultdict
 import requests
 import time
@@ -151,7 +153,10 @@ def ahare_create(request, num):
 def bookmark_create(request):
     if request.method == "POST":
         path = request.POST["path"]
-        user = User.objects.get(id=request.user.id)
+        try:
+            user = User.objects.get(id=request.user.id)
+        except ObjectDoesNotExist:
+            return render(request, "app/signup.html", {"form": SignUpForm()})
         post = Post.objects.get(id=request.POST["post_id"])
         try:
             bookmark = Bookmark.objects.get(user_id=user, post_id=post)
