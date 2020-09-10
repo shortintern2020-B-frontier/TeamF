@@ -92,6 +92,118 @@
           {% endfor %}
 
       </div>
+
+      <!-- This script was written by Naoki Hirabayashi -->
+      <script type="text/javascript">
+        let final_index = 10;
+        let end_flag = false;
+
+        const timeline = document.getElementById('timeline');
+        document.getElementById('timeline').onscroll = () => {
+          const scrollLeft = timeline.scrollLeft;
+          const scrollWidth = timeline.scrollWidth;
+          const clientWidth = timeline.clientWidth;
+          // console.log(scrollWidth + ' ' + scrollLeft + ' ' + clientWidth);
+
+          if ((scrollLeft < 0 && scrollWidth - Math.abs(scrollLeft) - 1 <= clientWidth) || (scrollLeft > 10 && scrollLeft < 50)) {
+            // スクロールの量はブラウザによって仕様が異なるので
+            //   - 最初のスクロール値がゼロで左にスクロールするとスクロール値が負になる場合
+            //   - 最初のスクロール値が正で左にスクロールするとスクロール地がゼロになる場合
+            // それぞれを条件に入れた
+
+            // console.log("append")
+            const xhr = new XMLHttpRequest();
+            // xhr.open("GET", "/posts/load_post_api/0");
+            xhr.open("GET", "/posts/load_post_api/" + final_index);
+            xhr.responseType = 'json';
+            xhr.send();
+
+            xhr.onload = () => {
+              const res = xhr.response;
+              const size = Object.keys(res).length;
+              final_index += size;
+
+              Object.values(res).forEach(info => {
+                // console.log(info);
+                const template = document.getElementById("post-box-template");
+                const clone = template.content.cloneNode(true);
+
+                // in <div id="primary-box"></div>
+                clone.querySelector(".val-book-cover-path").setAttribute("src", info['book_cover_path']);
+                clone.querySelector(".val-post-content").innerHTML = info['post_content'];
+
+                // in <div id="secondary-box"></div>
+                clone.querySelector(".bookmark-btn").setAttribute("value", info['post_id']);
+
+                clone.querySelector(".wokashi-btn-base").setAttribute("value", info['post_id']);
+                clone.querySelector(".wokashi-btn-base").onclick = () => wokashi_create("/posts/wokashi/"+info['post_id'], "wokashi_sum"+info['post_id']);
+                clone.querySelector(".wokashi-count").setAttribute("id", "wokashi_sum" + info['post_id'])
+                if (info['wokashi_sum'] == null) {
+                  clone.querySelector(".wokashi-count").innerHTML = 0;
+                  const img = clone.querySelector(".wokashi-btn-base").querySelector('img');
+                  img.setAttribute("class", "wokashi-btn0");
+                  img.setAttribute("src", "{% static 'posts/img/wokashi_0.svg' %}");
+                } else {
+                  clone.querySelector(".wokashi-count").innerHTML = info['wokashi_sum'];
+                  const img = clone.querySelector(".wokashi-btn-base").querySelector('img');
+                  img.setAttribute("class", "wokashi-btn");
+                  img.setAttribute("src", "{% static 'posts/img/wokashi_1.svg' %}");
+                }
+
+                clone.querySelector(".ahare-btn-base").setAttribute("value", info['post_id']);
+                clone.querySelector(".ahare-btn-base").onclick = () => ahare_create("/posts/ahare/"+info['post_id'], "ahare_sum"+info['post_id']);
+                clone.querySelector(".ahare-count").setAttribute("id", "ahare_sum" + info['post_id'])
+                if (info['ahare_sum'] == null) {
+                  clone.querySelector(".ahare-count").innerHTML = 0;
+                  const img = clone.querySelector(".ahare-btn-base").querySelector('img');
+                  img.setAttribute("class", "ahare-btn0");
+                  img.setAttribute("src", "{% static 'posts/img/ahare_0.svg' %}");
+                } else {
+                  clone.querySelector(".ahare-count").innerHTML = info['ahare_sum'];
+                  const img = clone.querySelector(".ahare-btn-base").querySelector('img');
+                  img.setAttribute("class", "ahare-btn");
+                  img.setAttribute("src", "{% static 'posts/img/ahare_1.svg' %}");
+                }
+
+                clone.querySelector(".author-name").innerHTML += info['book_author'];
+                clone.querySelector(".book-name").innerHTML += info['book_title'];
+
+                timeline.appendChild(clone);
+              });
+            };
+          }
+        };
+
+        const wokashi_create = (url, span_id) => {
+          const xhr = new XMLHttpRequest();
+            xhr.open("GET", url);
+            xhr.responseType = 'json';
+            xhr.send();
+            xhr.onload = () => {
+              const res = xhr.response;
+              // console.log(res);
+              const wokashi_sum = res['wokashi_sum']
+              const span = document.getElementById(span_id);
+              span.innerHTML = wokashi_sum;
+            };
+        };
+
+        const ahare_create = (url, span_id) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open("GET", url);
+          xhr.responseType = 'json';
+          xhr.send();
+          xhr.onload = () => {
+            const res = xhr.response;
+            // console.log(res);
+            const ahare_sum = res['ahare_sum'];
+            const span = document.getElementById(span_id);
+            span.innerHTML = ahare_sum;
+          };
+        };
+      </script>
+      <!-- End -->
+
     </main>
   </div>
   {% endblock contents %}
