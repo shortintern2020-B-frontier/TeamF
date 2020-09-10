@@ -42,7 +42,7 @@ def get_book_info(title, author):
     return cover_path, item_url
 
 
-def _get_zipped_post(posts):
+def _get_zipped_post(posts, request):
     """Get post related informations.
 
     Args:
@@ -81,7 +81,7 @@ def index(request):
     sorted_data = sorted(posts_comments_updated_at, key=lambda x: x[1], reverse=True)
     posts = list(map(lambda x: x[0], sorted_data))[:10]
 
-    zipped_post = _get_zipped_post(posts)
+    zipped_post = _get_zipped_post(posts, request)
 
     params = {
         "title": "ポスト一覧",
@@ -569,7 +569,7 @@ def ranking(request, kind):
     ]
     post_counter_list.sort(key=lambda x: x[1])
     sorted_post = [post for post, _ in post_counter_list]
-    zipped_post = _get_zipped_post(sorted_post)
+    zipped_post = _get_zipped_post(sorted_post, request)
 
     params = {
         "zipped_post:": zipped_post
