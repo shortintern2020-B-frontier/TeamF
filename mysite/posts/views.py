@@ -16,8 +16,12 @@ from guardian.shortcuts import assign_perm
 from django.core.exceptions import PermissionDenied
 from django.http.response import JsonResponse
 
+from app.forms import SignUpForm
+
+from collections import defaultdict
 import requests
 import time
+import datetime
 
 # Takahashi Shunichi
 RAKUTEN_BOOKS_API_URL = "https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404"
@@ -39,6 +43,30 @@ def get_book_info(title, author):
         item_url = response.json()["Items"][0]["Item"]["itemUrl"]
     return cover_path, item_url
 
+
+def _get_zipped_post(posts, request):
+    """Get post related informations.
+
+    Args:
+        posts(QuerySet<Post>)
+
+    Author:
+        Masato Umakoshi
+    """
+    wokashi_sum = [
+        p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
+    ]
+    ahare_sum = [
+        p.ahare_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
+    ]
+
+    books = [Book.objects.get(pk=post.book_id.id) for post in posts]
+    bookmark_flag = [
+        p.bookmark_set.filter(user_id=request.user.id).exists() for p in posts
+    ]
+    return zip(posts, wokashi_sum, ahare_sum, books, bookmark_flag)
+
+
 # Takahashi Shunichi
 # Umakoshi Masato
 def index(request):
@@ -55,22 +83,12 @@ def index(request):
     sorted_data = sorted(posts_comments_updated_at, key=lambda x: x[1], reverse=True)
     posts = list(map(lambda x: x[0], sorted_data))[:10]
 
-    wokashi_sum = [
-        p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
-    ]
-    ahare_sum = [
-        p.ahare_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
-    ]
-
-    books = [Book.objects.get(pk=post.book_id.id) for post in posts]
-    bookmark_flag = [
-        p.bookmark_set.filter(user_id=request.user.id).exists() for p in posts
-    ]
-    zipped_post = zip(posts, wokashi_sum, ahare_sum, books, bookmark_flag)
+    zipped_post = _get_zipped_post(posts, request)
 
     params = {
         "title": "ポスト一覧",
         "zipped_post": zipped_post,
+        "tag": TagForm(initial={'tag':[]})
     }
     return render(request, "posts/index.html", params)
 
@@ -135,7 +153,11 @@ def ahare_create(request, num):
 #Takahashi Shunichi
 def bookmark_create(request):
     if request.method == "POST":
-        user = User.objects.get(id=request.user.id)
+        path = request.POST["path"]
+        try:
+            user = User.objects.get(id=request.user.id)
+        except ObjectDoesNotExist:
+            return render(request, "app/signup.html", {"form": SignUpForm()})
         post = Post.objects.get(id=request.POST["post_id"])
         try:
             bookmark = Bookmark.objects.get(user_id=user, post_id=post)
@@ -143,7 +165,7 @@ def bookmark_create(request):
         except ObjectDoesNotExist as e:
             bookmark = Bookmark(user_id=user, post_id=post)
             bookmark.save()
-        return redirect(to="/posts")
+        return redirect(to=path)
 
 
 # Takahashi Shunichi
@@ -338,7 +360,7 @@ def find(request):
         else:
             posts_comments_updated_at.append([p, p.updated_at])
     sorted_data = sorted(posts_comments_updated_at, key=lambda x: x[1], reverse=True)
-    posts = list(map(lambda x: x[0], sorted_data))[:10]
+    posts = list(map(lambda x: x[0], sorted_data))
 
     wokashi_sum = [
         p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
@@ -513,7 +535,59 @@ def load_post_api(request, num):
         elm['book_author'] = book.author
         elm['book_title'] = book.title
         elm['book_cover_path'] = book.cover_path
-        elm['bookmark_flag'] = elm['bookmark_flag'] = post.bookmark_set.filter(user_id=request.user.id).exists()
+        elm['bookmark_flag'] = post.bookmark_set.filter(user_id=request.user.id).exists()
         jsonDict[str(post.id)] = elm
 
     return JsonResponse(jsonDict)
+
+
+def ranking(request, kind):
+    """Rendering ranking page.
+
+    Args:
+        request:
+        kind (str):
+    """
+    kind2class_mapping = {
+            'ahare': Ahare,
+            'wokashi': Wokashi
+    }
+    kind2title_mapping = {
+        'ahare': '週間あはれランキング',
+        'wokashi': '週間をかしランキング'
+    }
+
+    if kind not in kind2class_mapping:
+        raise Http404('Please choice ahare or wokashi')
+    target_class = kind2class_mapping[kind]
+    all_target = target_class.objects.all()
+    post_updates = [
+            (target.post_id, target.count, target.updated_at)
+            for target in all_target]
+
+    # Filtering
+    # TODO: This timezone.* should depends on setting
+    current_time = datetime.datetime.now(datetime.timezone.utc)
+    td = datetime.timedelta(weeks=1)
+    valid_posts = [
+        (post, count) for post, count, updated_at in post_updates
+        if current_time - td <= updated_at
+    ]
+
+    # Count and sort posts
+    counter = defaultdict(int)
+    for post, count in valid_posts:
+        counter[post.id] += count
+    post_counter_list = [
+        (post, counter[post.id]) for post, _ in valid_posts
+    ]
+    post_counter_list = sorted(post_counter_list, key=lambda x: x[1], reverse=True)[:10]
+    sorted_post = [post for post, _ in post_counter_list]
+    zipped_post = _get_zipped_post(sorted_post, request)
+
+    params = {
+        "title": kind2title_mapping[kind],
+        "zipped_post": zipped_post,
+    }
+
+    return render(request, "posts/ranking.html", params)
