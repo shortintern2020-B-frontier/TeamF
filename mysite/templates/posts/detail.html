@@ -22,17 +22,17 @@
             <div class = "bookinfo">
               <p class = "author">- {{ book.author }} </p>
               <p class = "booktitle">{{ book.title }}</p>
+              <form action="{% url 'bookmark'%}" method="post">
+                  <button type="submit" name="post_id" value={{post.id}} class="bookmark-btn">
+                      {% if bookmark_flag is False %}
+                          <img src="{% static 'posts/img/bookmark0.svg' %}">
+                      {% else %}
+                          <img src="{% static 'posts/img/bookmark.svg' %}">
+                      {% endif %}
+                      {% csrf_token %}
+                  </button>
+              </form>
             </div>
-            <form action="{% url 'bookmark'%}" method="post">
-              <button type="submit" name="post_id" value={{post.id}} class="bookmark-btn">
-                {% if bookmark_flag is False %}
-                  <img src="{% static 'posts/img/bookmark0.svg' %}">
-                {% else %}
-                  <img src="{% static 'posts/img/bookmark.svg' %}">
-                {% endif %}
-                {% csrf_token %}
-              </button>
-            </form>
         </div>
         <div class = "contents">
           {% if zipped_comments %}
