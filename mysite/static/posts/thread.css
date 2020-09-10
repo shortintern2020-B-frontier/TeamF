@@ -136,17 +136,22 @@ opacity: 0.8;
     border-radius: 5px;
 }
 
-.fixed-btn {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    width: 60px;
-    height: 60px;
+/* popup style */
+#comment-btn-checkbox {
+  display: none;
 }
 
-/* popup style */
-#show-popup {
-    display: none;
+#comment-float-btn {
+  cursor: pointer;
+  display: inline-block;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  width: 60px;
+  height: 60px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
 }
 
 #popup {
@@ -162,7 +167,7 @@ opacity: 0.8;
     background: #666;
 }
 
-input[type="checkbox"]:checked + #popup {
+#comment-btn-checkbox:checked ~ #popup {
     display:block;
     transition:.2s;
 }
