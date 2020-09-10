@@ -9,7 +9,7 @@ body {
 
 /* Main */
 main {
-  padding: 2.2rem;
+  padding: 2.0rem;
 }
 
 .font {
@@ -26,7 +26,7 @@ main {
 
 .scroll-list {
   margin: 0 auto;
-  padding: 0;
+  padding-top: 5rem;
   width: 90%;
   direction: rtl;
   overflow-x: auto;
@@ -70,21 +70,23 @@ main {
 .post-box .cover-img {
   vertical-align: top;
   position: absolute;
-  top: 1rem;
+  top: -2.0rem;
   width: 4.5rem;
-  height: 4.5rem;
+  height: 7.0rem;
   left: 50%;
   transform: translateX(-50%);
   -webkit-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
-  border-radius: 50%;
+  border-radius: 10%;
+  border: solid;
+  border-color: #727171; /* 鈍色（Nibi-iro）*/
 }
 
 .cover-img img {
   width: 4.5rem;
-  height: 4.5rem;
-  object-fit:cover;
-  border-radius: 50%;
+  height: 7.0rem;
+  object-fit: cover;
+  border-radius: 10%;
 }
 
 .post-box .sentence {
@@ -103,21 +105,29 @@ main {
 }
 
 .post-box .bookmark-btn { 
+  background-color:#E6E6E6; /* 白鼠（Shironezumi）*/
+  color: #E6E6E6; /* 白鼠（Shironezumi）*/
   vertical-align: top;
   position: absolute;
-  top: 0;
-  width: 3rem;
-  height: 3rem;
+  top: -6.0rem;
+  width: 4.5rem;
+  height: 4.5rem;
+  border: none;
   left: 50%;
   transform: translateX(-50%);
   -webkit-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
 }
 
+.bookmark-btn:hover {
+  opacity: 0.7;
+  background-color: #727171; /* 鈍色（Nibi-iro） */
+}
+
 .post-box .wokashi {
   vertical-align: top;
   position: absolute;
-  top: 4rem;
+  top: 2rem;
   width: 4rem;
   height: 2.5rem;
   left: 0;
@@ -173,7 +183,7 @@ main {
 .post-box .ahare {
   vertical-align: top;
   position: absolute;
-  top: 7rem;
+  top: 6rem;
   width: 4rem;
   height: 2.5rem;
   left: 0;

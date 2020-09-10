@@ -41,7 +41,13 @@ Made a templates extends by Yamamoto Sota
             </div>
             <div class="box-secondary">
               <form action="{% url 'bookmark'%}" method="post">
-                <button type="submit" name="post_id" value={{post.id}} class="bookmark-btn">しおり</button>
+                <button type="submit" name="post_id" value={{post.id}} class="bookmark-btn">
+                  {% if bookmark_flag is False %}
+                    <img src="{% static 'posts/img/bookmark0.svg' %}">
+                  {% else %}
+                    <img src="{% static 'posts/img/bookmark.svg' %}">
+                  {% endif %}
+                </button>
                 {% csrf_token %}
               </form>
 
