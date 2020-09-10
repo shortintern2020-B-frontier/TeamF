@@ -332,3 +332,26 @@ main {
 #popup input[type="text"] {
   width: 80%;
 }
+
+.category-form-wrapper {
+  width: 80%;
+  margin: 20px auto;
+}
+
+#id_tag {
+  margin: 10px 0 40px;
+  padding: 0;
+}
+
+#id_tag li {
+  margin: 10px 0;
+}
+
+
+label[for^="id_tag_"] {
+  font-family: sans-serif;
+}
+
+input[type="checkbox"] {
+
+}
