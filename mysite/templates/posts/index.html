@@ -44,13 +44,14 @@ Made a templates extends by Yamamoto Sota
                 <!-- タグ列挙 ここまで-->
               </div>
             </div>
+            <a class="detail-link" href="{% url 'detail' post.id %}"></a>
             <div class="box-secondary">
               <form action="{% url 'bookmark'%}" method="post">
                 <button type="submit" name="post_id" value={{post.id}} class="bookmark-btn">
                   {% if bookmark_flag is False %}
-                    <img src="{% static 'posts/img/bookmark0.svg' %}">
+                    <img class="bookmark-btn-img" src="{% static 'posts/img/bookmark0.svg' %}">
                   {% else %}
-                    <img src="{% static 'posts/img/bookmark.svg' %}">
+                    <img class="bookmark-btn-img" src="{% static 'posts/img/bookmark.svg' %}">
                   {% endif %}
                 </button>
                 {% csrf_token %}
@@ -125,13 +126,18 @@ Made a templates extends by Yamamoto Sota
             </div>
 
             <div class="sentence">
-              <span class="val-post-content"></span>
+              <p class="font"><span class="val-post-content"></span></p>
             </div>
           </div>
 
+          <a class="detail-link" href=""></a>
+
           <div class="box-secondary">
+
             <form action="{% url 'bookmark'%}" method="post">
-              <button type="submit" name="post_id" value="" class="bookmark-btn">しおり</button>
+              <button type="submit" name="post_id" value="" class="bookmark-btn">
+                <img class="bookmark-btn-img" src="">
+              </button>
               {% csrf_token %}
             </form>
 
@@ -151,10 +157,10 @@ Made a templates extends by Yamamoto Sota
 
             <div class="source">
               <div class="author-name">
-                <span class="val-book-author">著者名: </span>
+                <p class="font2"><span class="val-book-author">著者名: </span></p>
               </div>
               <div class="book-name">
-                <span class="val-book-title">書名: </span>
+                <p class="font2"><span class="val-book-title">書名: </span></p>
               </div>
             </div>
           </div>
@@ -227,8 +233,18 @@ Made a templates extends by Yamamoto Sota
                 clone.querySelector(".val-book-cover-path").setAttribute("src", info['book_cover_path']);
                 clone.querySelector(".val-post-content").innerHTML = info['post_content'];
 
+                // link to detail page
+                clone.querySelector(".detail-link").setAttribute("href", "/posts/" + info['post_id']);
+
                 // in <div id="secondary-box"></div>
                 clone.querySelector(".bookmark-btn").setAttribute("value", info['post_id']);
+                console.log(info['bookmark_flag']);
+                if (info['bookmark_flag']) {
+                  clone.querySelector(".bookmark-btn-img").setAttribute("src", "{% static 'posts/img/bookmark0.svg' %}");
+                } else {
+                  clone.querySelector(".bookmark-btn-img").setAttribute("src", "{% static 'posts/img/bookmark.svg' %}");
+                }
+
 
                 clone.querySelector(".wokashi-btn-base").setAttribute("value", info['post_id']);
                 clone.querySelector(".wokashi-btn-base").onclick = () => wokashi_create(info['post_id']);
@@ -264,8 +280,8 @@ Made a templates extends by Yamamoto Sota
                   img.setAttribute("src", "{% static 'posts/img/ahare_1.svg' %}");
                 }
 
-                clone.querySelector(".author-name").innerHTML += info['book_author'];
-                clone.querySelector(".book-name").innerHTML += info['book_title'];
+                clone.querySelector(".val-book-author").innerHTML += info['book_author'];
+                clone.querySelector(".val-book-title").innerHTML += info['book_title'];
 
                 timeline.appendChild(clone);
               });
