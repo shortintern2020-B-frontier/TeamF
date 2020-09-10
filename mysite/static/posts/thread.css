@@ -45,15 +45,23 @@ div.post {
 }
 
 div.post button.bookmark-btn {
+  background-color: #FDFCF5; /* 白百合色（Shirayuri-iro） */
+  color: #FDFCF5; /* 白百合色（Shirayuri-iro） */
   vertical-align: top;
   position: absolute;
-  top: 0;
-  width: 3rem;
-  height: 3rem;
+  /* top: 6.0rem; */
+  width: 4.5rem;
+  height: 4.5rem;
+  border: none;
   left: 50%;
   transform: translateX(-50%);
   -webkit-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
+}
+
+.bookmark-btn:hover {
+  opacity: 0.7;
+  background-color: #525171; /* 鈍色（Nibi-iro） */
 }
 
 /*

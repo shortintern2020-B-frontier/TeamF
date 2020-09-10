@@ -24,8 +24,14 @@
               <p class = "booktitle">{{ book.title }}</p>
             </div>
             <form action="{% url 'bookmark'%}" method="post">
-              <button type="submit" name="post_id" value={{post.id}} class="bookmark-btn">しおり</button>
-              {% csrf_token %}
+              <button type="submit" name="post_id" value={{post.id}} class="bookmark-btn">
+                {% if bookmark_flag is False %}
+                  <img src="{% static 'posts/img/bookmark0.svg' %}">
+                {% else %}
+                  <img src="{% static 'posts/img/bookmark.svg' %}">
+                {% endif %}
+                {% csrf_token %}
+              </button>
             </form>
         </div>
         <div class = "contents">
