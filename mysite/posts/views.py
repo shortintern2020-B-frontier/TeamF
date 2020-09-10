@@ -16,7 +16,7 @@ from guardian.shortcuts import assign_perm
 from django.core.exceptions import PermissionDenied
 from django.http.response import JsonResponse
 
-from collections import Counter
+from collections import defaultdict
 import requests
 import time
 import datetime
@@ -551,23 +551,26 @@ def ranking(request, kind):
     target_class = kind2class_mapping[kind]
     all_target = target_class.objects.all()
     post_updates = [
-            (target.post_id, target.updated_at) for target in all_target]
+            (target.post_id, target.count, target.updated_at)
+            for target in all_target]
 
     # Filtering
     # TODO: This timezone.* should depends on setting
     current_time = datetime.datetime.now(datetime.timezone.utc)
     td = datetime.timedelta(weeks=1)
     valid_posts = [
-        post for post, updated_at in post_updates
+        (post, count) for post, count, updated_at in post_updates
         if current_time - td <= updated_at
     ]
 
     # Count and sort posts
-    target_counter = Counter(post.id for post in valid_posts)
+    counter = defaultdict(int)
+    for post, count in valid_posts:
+        counter[post.id] += count
     post_counter_list = [
-        (post, target_counter[post.id]) for post in valid_posts
+        (post, counter[post.id]) for post, _ in valid_posts
     ]
-    post_counter_list.sort(key=lambda x: x[1])
+    post_counter_list = sorted(post_counter_list, key=lambda x: x[1], reverse=True)[:10]
     sorted_post = [post for post, _ in post_counter_list]
     zipped_post = _get_zipped_post(sorted_post, request)
 
