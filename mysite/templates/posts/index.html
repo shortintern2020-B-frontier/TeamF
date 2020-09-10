@@ -178,7 +178,7 @@ Made a templates extends by Yamamoto Sota
         let final_index = 10;
         let end_flag = false;
 
-        const timeline = document.getElementById('timeline');
+        // const timeline = document.getElementById('timeline');
         document.getElementById('timeline').onscroll = () => {
           const scrollLeft = timeline.scrollLeft;
           const scrollWidth = timeline.scrollWidth;
@@ -281,6 +281,10 @@ Made a templates extends by Yamamoto Sota
             span.innerHTML = ahare_sum;
           };
         };
+
+        document.getElementById('timeline').addEventListener('mousewheel', (e) => {
+          timeline.scrollBy(-e.deltaY, 0);
+        });
       </script>
       <!-- End -->
 
