@@ -1,0 +1,152 @@
+[
+  {
+    "model": "guardian.userobjectpermission",
+    "pk": 1,
+    "fields": {
+      "permission": 9,
+      "content_type": 2,
+      "object_pk": "1",
+      "user": 2
+    }
+  },
+  {
+    "model": "guardian.userobjectpermission",
+    "pk": 2,
+    "fields": {
+      "permission": 9,
+      "content_type": 2,
+      "object_pk": "2",
+      "user": 3
+    }
+  },
+  {
+    "model": "guardian.userobjectpermission",
+    "pk": 3,
+    "fields": {
+      "permission": 9,
+      "content_type": 2,
+      "object_pk": "3",
+      "user": 4
+    }
+  },
+  {
+    "model": "guardian.userobjectpermission",
+    "pk": 4,
+    "fields": {
+      "permission": 9,
+      "content_type": 2,
+      "object_pk": "4",
+      "user": 5
+    }
+  },
+  {
+    "model": "guardian.userobjectpermission",
+    "pk": 5,
+    "fields": {
+      "permission": 9,
+      "content_type": 2,
+      "object_pk": "5",
+      "user": 6
+    }
+  },
+  {
+    "model": "guardian.userobjectpermission",
+    "pk": 6,
+    "fields": {
+      "permission": 9,
+      "content_type": 2,
+      "object_pk": "6",
+      "user": 7
+    }
+  },
+  {
+    "model": "guardian.userobjectpermission",
+    "pk": 7,
+    "fields": {
+      "permission": 9,
+      "content_type": 2,
+      "object_pk": "7",
+      "user": 2
+    }
+  },
+  {
+    "model": "guardian.userobjectpermission",
+    "pk": 8,
+    "fields": {
+      "permission": 9,
+      "content_type": 2,
+      "object_pk": "8",
+      "user": 3
+    }
+  },
+  {
+    "model": "guardian.userobjectpermission",
+    "pk": 9,
+    "fields": {
+      "permission": 9,
+      "content_type": 2,
+      "object_pk": "9",
+      "user": 4
+    }
+  },
+  {
+    "model": "guardian.userobjectpermission",
+    "pk": 10,
+    "fields": {
+      "permission": 9,
+      "content_type": 2,
+      "object_pk": "10",
+      "user": 5
+    }
+  },
+  {
+    "model": "guardian.userobjectpermission",
+    "pk": 11,
+    "fields": {
+      "permission": 9,
+      "content_type": 2,
+      "object_pk": "11",
+      "user": 6
+    }
+  },
+  {
+    "model": "guardian.userobjectpermission",
+    "pk": 12,
+    "fields": {
+      "permission": 9,
+      "content_type": 2,
+      "object_pk": "12",
+      "user": 7
+    }
+  },
+  {
+    "model": "guardian.userobjectpermission",
+    "pk": 13,
+    "fields": {
+      "permission": 9,
+      "content_type": 2,
+      "object_pk": "13",
+      "user": 2
+    }
+  },
+  {
+    "model": "guardian.userobjectpermission",
+    "pk": 14,
+    "fields": {
+      "permission": 9,
+      "content_type": 2,
+      "object_pk": "14",
+      "user": 3
+    }
+  },
+  {
+    "model": "guardian.userobjectpermission",
+    "pk": 15,
+    "fields": {
+      "permission": 9,
+      "content_type": 2,
+      "object_pk": "15",
+      "user": 4
+    }
+  }
+]

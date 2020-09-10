@@ -2,6 +2,8 @@
 
 ## データベース
 - マイグレーションの作成: `python manage.py makemigrations`
+  - `django_on_docker/posts/migrations/0002_auto_20200908_0228.py` をコピー
+  - `django_on_docker/posts/fixture/sample.json` をコピー
 - マイグレーションの実行: `python manage.py migrate`
 - 管理者の追加: `python manage.py createsuperuser`
 - データベースの削除: `rm -d -r db.sqlite3` (*DBをPostgreSQLにした後変更する必要あり)

@@ -1,3 +1,4 @@
+# made by yasunaga kyohei
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render
@@ -14,6 +15,7 @@ class SignUpView(CreateView):
         user_img = form_data.get("user_img", "1")
 
         # Choice id to image path mapping
+        # update by umakoshi masato
         choice2img_path = {
             str(i): f'img/user_icon_{i}.png' for i in range(1, 6)
         }
