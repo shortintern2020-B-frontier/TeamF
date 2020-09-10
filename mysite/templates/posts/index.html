@@ -284,8 +284,8 @@ Made a templates extends by Yamamoto Sota
 
         // マウスホイールでもタイムラインを横スクロールできるように変更
         document.getElementById('timeline').addEventListener('mousewheel', (e) => {
+          e.stopPropagation();
           if (e.deltaX == 0) {
-            e.stopPropagation();
             e.preventDefault();
             timeline.scrollBy(-e.deltaY, 0);
           }
