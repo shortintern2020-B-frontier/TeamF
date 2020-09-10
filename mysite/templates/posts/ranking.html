@@ -53,29 +53,29 @@
 
                 <div class="wokashi">
                   {% if wokashi_sum is None %}
-                    <button onclick="wokashi_create('{% url 'wokashi' post.id %}', 'wokashi_sum{{ post.id }}')" class="wokashi-btn-base">
-                      <img class="wokashi-btn0" src="{% static 'posts/img/wokashi_0.svg' %}">
+                    <button onclick="wokashi_create('{{ post.id }}')" class="wokashi-btn-base">
+                      <img class="wokashi-btn0" id="wokashi-img{{ post.id }}" src="{% static 'posts/img/wokashi_0.svg' %}">
                     </button>
-                    <span class="wokashi-count" id="wokashi_sum{{ post.id }}">0</span>
+                    <span class="wokashi-count" id="wokashi-sum{{ post.id }}">0</span>
                   {% else %}
-                    <button onclick="wokashi_create('{% url 'wokashi' post.id %}', 'wokashi_sum{{ post.id }}')" class="wokashi-btn-base">
-                      <img class="wokashi-btn" src="{% static 'posts/img/wokashi_1.svg' %}">
+                    <button onclick="wokashi_create('{{ post.id }}')" class="wokashi-btn-base">
+                      <img class="wokashi-btn" id="wokashi-img{{ post.id }}" src="{% static 'posts/img/wokashi_1.svg' %}">
                     </button>
-                    <span class="wokashi-count" id="wokashi_sum{{ post.id }}"> {{ wokashi_sum }} </span>
+                    <span class="wokashi-count" id="wokashi-sum{{ post.id }}"> {{ wokashi_sum }} </span>
                   {% endif %}
                 </div>
 
                 <div class="ahare">
                   {% if ahare_sum is None %}
-                    <button onclick="ahare_create('{% url 'ahare' post.id %}', 'ahare_sum{{ post.id }}')" class="ahare-btn-base">
-                      <img class="ahare-btn0" src="{% static 'posts/img/ahare_0.svg' %}">
+                    <button onclick="ahare_create('{{ post.id }}')" class="ahare-btn-base">
+                      <img class="ahare-btn0" id="ahare-img{{ post.id }}" src="{% static 'posts/img/ahare_0.svg' %}">
                     </button>
-                    <span class="ahare-count" id="ahare_sum{{ post.id }}">0</span>
+                    <span class="ahare-count" id="ahare-sum{{ post.id }}">0</span>
                   {% else %}
-                    <button onclick="ahare_create('{% url 'ahare' post.id %}', 'ahare_sum{{ post.id }}')" class="ahare-btn-base">
-                      <img class="ahare-btn" src="{% static 'posts/img/ahare_1.svg' %}">
+                    <button onclick="ahare_create('{{ post.id }}')" class="ahare-btn-base">
+                      <img class="ahare-btn" id="ahare-img{{ post.id }}" src="{% static 'posts/img/ahare_1.svg' %}">
                     </button>
-                    <span class="ahare-count" id="ahare_sum{{ post.id }}"> {{ ahare_sum }} </span>
+                    <span class="ahare-count" id="ahare-sum{{ post.id }}"> {{ ahare_sum }} </span>
                   {% endif %}
                 </div>
 
@@ -96,22 +96,27 @@
 
       <!-- This script was written by Naoki Hirabayashi -->
       <script type="text/javascript">
-        const wokashi_create = (url, span_id) => {
+        const wokashi_create = (post_id) => {
           const xhr = new XMLHttpRequest();
-            xhr.open("GET", url);
-            xhr.responseType = 'json';
-            xhr.send();
-            xhr.onload = () => {
-              const res = xhr.response;
-              // console.log(res);
-              const wokashi_sum = res['wokashi_sum']
-              const span = document.getElementById(span_id);
-              span.innerHTML = wokashi_sum;
-            };
+          const url = "/posts/wokashi/" + post_id;
+          xhr.open("GET", url);
+          xhr.responseType = 'json';
+          xhr.send();
+          xhr.onload = () => {
+            const res = xhr.response;
+            // console.log(res);
+            const wokashi_sum = res['wokashi_sum']
+            const span = document.getElementById("wokashi-sum" + post_id);
+            span.innerHTML = wokashi_sum;
+            const img = document.getElementById("wokashi-img" + post_id);
+            img.setAttribute("class", "wokashi-btn");
+            img.setAttribute("src", "{% static 'posts/img/wokashi_1.svg' %}");
+          };
         };
 
-        const ahare_create = (url, span_id) => {
+        const ahare_create = (post_id) => {
           const xhr = new XMLHttpRequest();
+          const url = "/posts/ahare/" + post_id;
           xhr.open("GET", url);
           xhr.responseType = 'json';
           xhr.send();
@@ -119,8 +124,11 @@
             const res = xhr.response;
             // console.log(res);
             const ahare_sum = res['ahare_sum'];
-            const span = document.getElementById(span_id);
+            const span = document.getElementById("ahare-sum" + post_id);
             span.innerHTML = ahare_sum;
+            const img = document.getElementById("ahare-img" + post_id);
+            img.setAttribute("class", "ahare-btn");
+            img.setAttribute("src", "{% static 'posts/img/ahare_1.svg' %}");
           };
         };
       </script>
