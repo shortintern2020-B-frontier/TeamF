@@ -10,6 +10,7 @@
         <form action="{% url 'edit' id %}" method="post">
         {% csrf_token %}
         {{ form.as_table }}
+        {{ tag }}
         <tr><td></td><td><input type="submit" value="click"></td></tr>
         </form>
 </body>

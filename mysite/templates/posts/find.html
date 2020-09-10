@@ -13,7 +13,6 @@ Made a templates extends by Yamamoto Sota
 <head>
   {% block head %}
   <link rel="stylesheet" type="text/css" href="{% static 'posts/top.css' %}">
-  <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
   <title>タイムライン画面</title>
   {% endblock head %}
 </head>
@@ -21,6 +20,11 @@ Made a templates extends by Yamamoto Sota
 <body>
   {% block contents %}
     <div id="content">
+      <form action="{% url 'find' %}" method="post">
+      {% csrf_token %}
+      {{ tag }}
+      <input type="submit" name="find" value="検索">
+      </form>
       <main>
         <div class="scroll-list" id="timeline">
           {% for post, wokashi_sum, ahare_sum, book, bookmark_flag in zipped_post %}
@@ -36,7 +40,7 @@ Made a templates extends by Yamamoto Sota
               </div>
 -->
               <div class="sentence">
-                <p class="font"><span class="val-post-content">{{ post.content }}</span></p>
+                <span class="val-post-content">{{ post.content }}</span>
                 <!-- タグ列挙 ここから-->
                 {% for tag in post.tag_set.all %}
                 <p>{{ tag.category_id.category }}</p>
@@ -46,13 +50,7 @@ Made a templates extends by Yamamoto Sota
             </div>
             <div class="box-secondary">
               <form action="{% url 'bookmark'%}" method="post">
-                <button type="submit" name="post_id" value={{post.id}} class="bookmark-btn">
-                  {% if bookmark_flag is False %}
-                    <img src="{% static 'posts/img/bookmark0.svg' %}">
-                  {% else %}
-                    <img src="{% static 'posts/img/bookmark.svg' %}">
-                  {% endif %}
-                </button>
+                <button type="submit" name="post_id" value={{post.id}} class="bookmark-btn">しおり</button>
                 {% csrf_token %}
               </form>
 
@@ -93,10 +91,10 @@ Made a templates extends by Yamamoto Sota
 -->
               <div class="source">
                 <div class="author-name">
-                  <p class="font2"><span class="val-book-author">著者名: {{ book.author }}</span></p>
+                  <span class="val-book-author">著者名: {{ book.author }}</span>
                 </div>
                 <div class="book-name">
-                  <p class="font2"><span class="val-book-title">書名: {{ book.title }}</span></p>
+                  <span class="val-book-title">書名: {{ book.title }}</span>
                 </div>
               </div>
 <!--
