@@ -283,9 +283,11 @@ Made a templates extends by Yamamoto Sota
         };
 
         document.getElementById('timeline').addEventListener('mousewheel', (e) => {
-          e.stopPropagation();
-          e.preventDefault();
-          timeline.scrollBy(-e.deltaY, 0);
+          if (e.deltaX == 0) {
+            e.stopPropagation();
+            e.preventDefault();
+            timeline.scrollBy(-e.deltaY, 0);
+          }
         });
       </script>
       <!-- End -->
