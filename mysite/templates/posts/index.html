@@ -162,7 +162,10 @@ Made a templates extends by Yamamoto Sota
 
       <!-- Post form -->
       {% if user.is_authenticated %}
-          <input type="checkbox" class="fixed-btn" name="show-popup">
+          <input id="post-btn-checkbox" type="checkbox">
+          <button id="post-float-btn"><label for="post-btn-checkbox">
+            <img class="post-btn-img" src="{% static 'posts/img/post.svg' %}">
+          </label></button>
           <div id="popup">
             <!-- Written by Yamamoto Sota -->
             <!-- Updated by Naoki Hirabayashi -->
