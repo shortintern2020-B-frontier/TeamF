@@ -3,11 +3,11 @@
 body {
     background-color: #FDFCF5; /* 白百合色（Shirayuri-iro） */
 }
-
+/*
 img {
     max-width: 50%;
 }
-
+*/
 div.box {
     padding: 0.5em 1em;
     font-weight: bold;
@@ -25,6 +25,7 @@ div.box p {
 
 div.contents {
     margin: 2.0rem;
+    padding-top: 1rem;
 }
 
 div.userinfo p {
@@ -73,6 +74,7 @@ div.post {
 div.post_comment {
     position: fixed;
     bottom: 2.0rem;
+    top: 10rem;
     margin: 2.0rem;
     display: inline-block;
 }
