@@ -37,7 +37,7 @@
                   <!-- タグ列挙 ここまで-->
                 </div>
               </div>
-
+              <a class="detail-link" href="{% url 'detail' post.id %}"></a>
               <div class="box-secondary">
                 <form action="{% url 'bookmark'%}" method="post">
                   <button type="submit" name="post_id" value={{post.id}} class="bookmark-btn">
