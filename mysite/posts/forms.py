@@ -9,13 +9,13 @@ class PostForm(forms.Form):
 
 # Takahashi Shunichi
 class TagForm(forms.Form):
-    data = [[c.id, c.category] for c in Category.objects.all()]
-    # tag = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple)
-    tag = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=data)
+    # data = [[c.id, c.category] for c in Category.objects.all()]
+    tag = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple)
+    # tag = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=data)
 
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     self.fields['tag'].choices = [[c.id, c.category] for c in Category.objects.all()]
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['tag'].choices = [[c.id, c.category] for c in Category.objects.all()]
 
 
 class CommentForm(forms.Form):

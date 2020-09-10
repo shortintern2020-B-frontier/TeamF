@@ -22,8 +22,9 @@ import time
 # Takahashi Shunichi
 RAKUTEN_BOOKS_API_URL = "https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404"
 RAKUTEN_APP_ID = "1065776451953533134"
-NOCOVERPATH = '../static/img/book.png' #表紙がなかった場合に表示する画像のパス
-def get_book_cover_path(title, author):
+NOCOVERPATH = "../static/img/book.png" #表紙がなかった場合に表示する画像のパス
+NOITEMURL = "https://books.rakuten.co.jp/search"
+def get_book_info(title, author):
     encoded_title = urllib.parse.quote(str(title))
     encoded_author = urllib.parse.quote(str(author))
     response = requests.get("{}?format=json&applicationId={}&title={}&author={}".format(RAKUTEN_BOOKS_API_URL, RAKUTEN_APP_ID, encoded_title, encoded_author))
@@ -32,9 +33,11 @@ def get_book_cover_path(title, author):
         cover_path = 'Requests failed'
     elif response.json()["count"] == 0:
         cover_path = NOCOVERPATH
+        item_url = NOITEMURL + "?title={}&author={}".format(title, author)
     else:
         cover_path = response.json()["Items"][0]["Item"]["largeImageUrl"]
-    return cover_path
+        item_url = response.json()["Items"][0]["Item"]["itemUrl"]
+    return cover_path, item_url
 
 # Takahashi Shunichi
 # Umakoshi Masato
@@ -192,9 +195,9 @@ def create(request):
         try:
             book = Book.objects.get(title=title, author=author)
         except ObjectDoesNotExist as e:
-            cover_path = get_book_cover_path(title, author)
+            cover_path, item_url = get_book_info(title, author)
             time.sleep(1)
-            book = Book(title=title, author=author, cover_path=cover_path)
+            book = Book(title=title, author=author, cover_path=cover_path, item_url=item_url)
             book.save()
 
         user = User.objects.get(id=request.user.id)
@@ -238,11 +241,11 @@ def edit(request, num):
 
         user = User.objects.get(id=request.user.id)
         if user.has_perm('change_delete_content', post):
-            cover_path = get_book_cover_path(title, author)
+            cover_path, item_url = get_book_info(title, author)
             if Book.objects.filter(title=title, author=author).exists():
                 book = Book.objects.filter(title=title, author=author).first()
             else:
-                book = Book(title=title, author=author, cover_path=cover_path)
+                book = Book(title=title, author=author, cover_path=cover_path, item_url=item_url)
                 book.save()
             post.content = content
             post.book_id = book
