@@ -12,6 +12,11 @@ main {
   padding: 2.0rem;
 }
 
+.page-title {
+  font-size: 30px;
+  text-align: center;
+}
+
 .font {
   font-family: serif;
   font-kerning: normal;
