@@ -6,6 +6,7 @@ class Book(models.Model):
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
     cover_path = models.CharField(max_length=255)
+    item_url = models.CharField(max_length=255, default='https://books.rakuten.co.jp/')
 
     class Meta:
         unique_together = ('title', 'author')
@@ -101,3 +102,14 @@ class Nice(models.Model):
 
     class Meta:
         unique_together = ('user_id', 'comment_id')
+
+
+# Takahashi Shunichi
+class Category(models.Model):
+    category = models.CharField(max_length=255)
+
+
+# Takahashi Shunichi
+class Tag(models.Model):
+    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
+    category_id =  models.ForeignKey(Category, on_delete=models.CASCADE)

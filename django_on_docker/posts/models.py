@@ -20,12 +20,17 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
 
+    class Meta:
+        permissions = (
+            ('change_delete_content', 'Change Delete content'),
+        )
+
 
 # Takahashi Shunichi
 class Wokashi(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
-    count = models.IntegerField(default=0)
+    count = models.IntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -37,7 +42,7 @@ class Wokashi(models.Model):
 class Ahare(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
-    count = models.IntegerField(default=0)
+    count = models.IntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -78,6 +83,11 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
 
+    class Meta:
+        permissions = (
+            ('change_delete_comment', 'Change Delete comment'),
+        )
+
     def __str__(self):
         return self.comment
 
@@ -91,3 +101,14 @@ class Nice(models.Model):
 
     class Meta:
         unique_together = ('user_id', 'comment_id')
+
+
+# Takahashi Shunichi
+class Category(models.Model):
+    category = models.CharField(max_length=255)
+
+
+# Takahashi Shunichi
+class Tag(models.Model):
+    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
+    category_id =  models.ForeignKey(Category, on_delete=models.CASCADE)
