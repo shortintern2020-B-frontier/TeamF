@@ -8,3 +8,6 @@ class ImageChoice(models.Model):
 
     def __str__(self):
         return self.url_path
+
+    def __iter__(self):
+        return self.url_path.__iter__()
