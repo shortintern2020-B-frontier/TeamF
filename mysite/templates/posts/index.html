@@ -162,7 +162,8 @@ Made a templates extends by Yamamoto Sota
 
       <!-- Post form -->
       {% if user.is_authenticated %}
-          <input type="checkbox" class="fixed-btn" name="show-popup">
+          <input id="post-btn-checkbox" type="checkbox">
+          <button id="post-float-btn"><label for="post-btn-checkbox">投稿</label></button>
           <div id="popup">
             <!-- Written by Yamamoto Sota -->
             <!-- Updated by Naoki Hirabayashi -->

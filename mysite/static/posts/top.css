@@ -271,17 +271,22 @@ main {
   color: #727171; /* 鈍色（Nibi-iro） */
 }
 
-.fixed-btn {
+/* popup style */
+#post-btn-checkbox {
+  display: none;
+}
+
+#post-float-btn {
+  cursor: pointer;
+  display: inline-block;
   position: fixed;
   bottom: 10px;
   right: 10px;
   width: 60px;
   height: 60px;
-}
-
-/* popup style */
-#show-popup {
-  display: none;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
 }
 
 #popup {
@@ -298,7 +303,7 @@ main {
   opacity: 0.9;
 }
 
-input[type="checkbox"]:checked + #popup {
+#post-btn-checkbox:checked ~ #popup {
   display:block;
   transition:.2s;
 }
