@@ -31,6 +31,7 @@
                 <div class = "box">
                   <div class = "comment">
                     <div class = "userinfo">
+                        <img src="{% static user.imagechoice %}" width="55px" class="icon" alt="icon" align="middle">
                         <p class = "username">{{ user.username }}</p>
                         <p class = "time">{{ post.updated_at }}</p>
                     </div>
@@ -88,7 +89,7 @@
               <div id="popup">
                 <form method="POST" action="{% url 'comment_create' post.id %}">
                     <p class="username">
-                      <img src="{% static 'posts/img/bookusagi.png' %}" width="55px" class="icon" alt="icon" align="middle">
+                      <img src="{% static user.imagechoice %}" width="55px" class="icon" alt="icon" align="middle">
                       {{ user.username }}
                     </p>
                     <textarea name="comment" rows="8" cols="100" placeholder="本についての感想を語り合おう。"></textarea>
