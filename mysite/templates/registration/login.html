@@ -28,9 +28,9 @@
 
     <form action="{% url 'login' %}" method="post">
       {% csrf_token %}
-      <ul>
+      <ul class="form-ul">
         {% for field in form %}
-        <li>
+        <li class="form-li">
           <p>{{ field.label_tag }}</p>
 
           {{ field }}
@@ -41,7 +41,7 @@
         </li>
         {% endfor %}
 
-        <li>
+        <li class="form-li">
           <input type="submit" value="サインイン" class="enter-btn">
         </li>
 

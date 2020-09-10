@@ -27,9 +27,9 @@
 
       <form action="{% url 'create_account' %}" method="post">
         {% csrf_token %}
-        <ul>
+        <ul class="form-ul">
           {% for field in form %}
-          <li>
+          <li class="form-li">
             <p>{{ field.label_tag }}</p>
 
             {{ field }}
@@ -40,7 +40,7 @@
           </li>
           {% endfor %}
 
-          <li>
+          <li class="form-li">
             <div class="img-selection">
               <input id="img-choice1" type="radio" name="user_img" value="1">
               <label for="img-choice1">
@@ -69,7 +69,7 @@
             </div>
           </li>
 
-          <li>
+          <li class="form-li">
             <input type="submit" value="サインアップ" class="enter-btn">
           </li>
         </ul>
