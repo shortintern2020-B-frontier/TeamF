@@ -86,7 +86,9 @@
               <!-- Written by Naoki Hirabayashi -->
               <!-- Updated by Yamamoto Sota -->
               <input id="comment-btn-checkbox" type="checkbox">
-              <button id="comment-float-btn"><label for="comment-btn-checkbox">コメント</label></button>
+              <button id="comment-float-btn"><label for="comment-btn-checkbox">
+                <img class="comment-btn-img" src="{% static 'posts/img/post.svg' %}">
+              </label></button>
               <div id="popup">
                 <form method="POST" action="{% url 'comment_create' post.id %}">
                     <p class="username">

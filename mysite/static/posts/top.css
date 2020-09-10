@@ -284,9 +284,16 @@ main {
   right: 10px;
   width: 60px;
   height: 60px;
+  border: none;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
+}
+
+.post-btn-img {
+  width: 60px;
+  height: 60px;
+  max-width: 100%;
 }
 
 #popup {
