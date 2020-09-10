@@ -283,6 +283,8 @@ Made a templates extends by Yamamoto Sota
         };
 
         document.getElementById('timeline').addEventListener('mousewheel', (e) => {
+          e.stopPropagation();
+          e.preventDefault();
           timeline.scrollBy(-e.deltaY, 0);
         });
       </script>
