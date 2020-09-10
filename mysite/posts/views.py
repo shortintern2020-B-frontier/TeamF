@@ -16,8 +16,10 @@ from guardian.shortcuts import assign_perm
 from django.core.exceptions import PermissionDenied
 from django.http.response import JsonResponse
 
+from collections import Counter
 import requests
 import time
+import datetime
 
 # Takahashi Shunichi
 RAKUTEN_BOOKS_API_URL = "https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404"
@@ -534,7 +536,28 @@ def ranking(request, kind):
 
     if kind not in kind2class_mapping:
         raise Http404('Please choice ahare or wokashi')
+    target_class = kind2class_mapping[kind]
+    all_target = target_class.objects.all()
+    post_updates = [(target.post_id, target.updated_at) for target in all_target]
 
-    params = {}
+    # Filtering
+    current_time = datetime.datetime.now()
+    td = datetime.timedelta(weeks=1)
+    valid_posts = [
+        post for post, updated_at in post_updates
+        if current_time - td <= updated_at
+    ]
+
+    # Count and sort posts
+    target_counter = Counter(post.id for post in valid_posts)
+    post_counter_list = [
+        (post, target_counter[post.id]) for post in valid_posts
+    ]
+    post_counter_list.sort(key=lambda x: x[1])
+    sorted_post = [post for post, _ in post_counter_list]
+
+    params = {
+        "posts:": sorted_post
+    }
 
     return render(request, "posts/ranking.html", params)
