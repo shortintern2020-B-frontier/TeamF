@@ -46,7 +46,9 @@ Made a templates extends by Yamamoto Sota
             </div>
             <a class="detail-link" href="{% url 'detail' post.id %}"></a>
             <div class="box-secondary">
-              <form action="{% url 'bookmark'%}" method="post">
+              {% if user.is_authenticated %}
+                <form action="{% url 'bookmark'%}" method="post">
+              {% endif %}
                 <button type="submit" name="post_id" value={{post.id}} class="bookmark-btn">
                 <input type="hidden" name="path" value={{ request.path }}>
                   {% if bookmark_flag is False %}
@@ -55,8 +57,10 @@ Made a templates extends by Yamamoto Sota
                     <img class="bookmark-btn-img" src="{% static 'posts/img/bookmark.svg' %}">
                   {% endif %}
                 </button>
-                {% csrf_token %}
-              </form>
+              {% if user.is_authenticated %}
+                  {% csrf_token %}
+                </form>
+              {% endif %}
 
 <!--             <button class="bookmark-btn">しおり</button>
 -->
