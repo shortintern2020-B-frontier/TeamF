@@ -180,7 +180,7 @@ Made a templates extends by Yamamoto Sota
                 {% csrf_token %}
                 <p class="username">
                 <img src="{% static 'posts/img/bookusagi.png' %}" class="icon" alt="icon" align="middle">
-                    Username
+                  {{ user.username }}
                 </p>
                 <textarea name="content" rows="8" cols="100" placeholder="気に入った一文を投稿しよう"></textarea>
                 <p>著者名</p>
