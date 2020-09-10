@@ -39,7 +39,7 @@ def get_book_cover_path(title, author):
 # Umakoshi Masato
 def index(request):
     # TODO Fix naming: book_id.id is too wierd.
-    posts = Post.objects.filter(is_deleted=False)[:10]
+    posts = Post.objects.filter(is_deleted=False)
 
     posts_comments_updated_at = []
     for p in posts:
@@ -49,7 +49,7 @@ def index(request):
         else:
             posts_comments_updated_at.append([p, p.updated_at])
     sorted_data = sorted(posts_comments_updated_at, key=lambda x: x[1], reverse=True)
-    posts = list(map(lambda x: x[0], sorted_data))
+    posts = list(map(lambda x: x[0], sorted_data))[:10]
 
     wokashi_sum = [
         p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
@@ -71,34 +71,62 @@ def index(request):
     return render(request, "posts/index.html", params)
 
 
-#Takahashi Shunichi
-def wokashi_create(request):
-    if request.method == "POST":
-        user = User.objects.get(id=request.user.id)
-        post = Post.objects.get(id=request.POST["post_id"])
-        try:
-            wokashi = Wokashi.objects.get(user_id=user, post_id=post)
-            if wokashi.count < 10:
-                wokashi.count += 1
-        except ObjectDoesNotExist as e:
-            wokashi = Wokashi(user_id=user, post_id=post)
-        wokashi.save()
-        return redirect(to="/posts")
+# Takahashi Shunichi
+# Naoki Hirabayashi
+def wokashi_create(request, num):
+    user = User.objects.get(id=request.user.id)
+    post = Post.objects.get(id=num)
+    try:
+        wokashi = Wokashi.objects.get(user_id=user, post_id=post)
+        if wokashi.count < 10:
+            wokashi.count += 1
+    except ObjectDoesNotExist as e:
+        wokashi = Wokashi(user_id=user, post_id=post)
+    wokashi.save()
+    ret_val = post.wokashi_set.all().aggregate(Sum('count'))['count__sum']
+    return JsonResponse({'wokashi_sum': ret_val})
+
+    # if request.method == "POST":
+    #     user = User.objects.get(id=request.user.id)
+    #     post = Post.objects.get(id=request.POST["post_id"])
+    #     try:
+    #         wokashi = Wokashi.objects.get(user_id=user, post_id=post)
+    #         if wokashi.count < 10:
+    #             wokashi.count += 1
+    #     except ObjectDoesNotExist as e:
+    #         wokashi = Wokashi(user_id=user, post_id=post)
+    #     wokashi.save()
+    #     return redirect(to="/posts")
 
 
-#Takahashi Shunichi
-def ahare_create(request):
-    if request.method == "POST":
-        user = User.objects.get(id=request.user.id)
-        post = Post.objects.get(id=request.POST["post_id"])
-        try:
-            ahare = Ahare.objects.get(user_id=user, post_id=post)
-            if ahare.count < 10:
-                ahare.count += 1
-        except ObjectDoesNotExist as e:
-            ahare = Ahare(user_id=user, post_id=post)
-        ahare.save()
-        return redirect(to="/posts")
+# Takahashi Shunichi
+# Naoki Hirabayashi
+def ahare_create(request, num):
+    user = User.objects.get(id=request.user.id)
+    post = Post.objects.get(id=num)
+    try:
+        ahare = Ahare.objects.get(user_id=user, post_id=post)
+        if ahare.count < 10:
+            ahare.count += 1
+        ret_val = ahare.count
+    except ObjectDoesNotExist as e:
+        ahare = Ahare(user_id=user, post_id=post)
+        ret_val = 1
+    ahare.save()
+    ret_val = post.ahare_set.all().aggregate(Sum('count'))['count__sum']
+    return JsonResponse({'ahare_sum': ret_val})
+
+    # if request.method == "POST":
+    #     user = User.objects.get(id=request.user.id)
+    #     post = Post.objects.get(id=request.POST["post_id"])
+    #     try:
+    #         ahare = Ahare.objects.get(user_id=user, post_id=post)
+    #         if ahare.count < 10:
+    #             ahare.count += 1
+    #     except ObjectDoesNotExist as e:
+    #         ahare = Ahare(user_id=user, post_id=post)
+    #     ahare.save()
+    #     return redirect(to="/posts")
 
 #Takahashi Shunichi
 def bookmark_create(request):
@@ -374,17 +402,20 @@ def nice_create(request):
     return redirect(to=f"/posts/{comment.post_id.id}")
 
 
-# Created by Naoki Hirabayashi
+# Naoki Hirabayashi
 def load_post_api(request, num):
     # num 番目から (num + 9) 番目の投稿の情報を返す
     posts = Post.objects.filter(is_deleted=False)
 
-    if (num > len(posts)):
-        posts = []
-    elif (len(posts) - num < 10):
-        posts = posts[num:]
-    else:
-        posts = posts[num:num+10]
+    posts_comments_updated_at = []
+    for p in posts:
+        is_comment = p.comment_set.exists()
+        if is_comment:
+            posts_comments_updated_at.append([p, p.comment_set.all().order_by('updated_at').reverse().first().updated_at])
+        else:
+            posts_comments_updated_at.append([p, p.updated_at])
+    sorted_data = sorted(posts_comments_updated_at, key=lambda x: x[1], reverse=True)
+    posts = list(map(lambda x: x[0], sorted_data))[num:num+10]
 
     wokashi_sum = [
         p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
