@@ -545,6 +545,10 @@ def ranking(request, kind):
             'ahare': Ahare,
             'wokashi': Wokashi
     }
+    kind2title_mapping = {
+        'ahare': '週間あはれランキング',
+        'wokashi': '週間をかしランキング'
+    }
 
     if kind not in kind2class_mapping:
         raise Http404('Please choice ahare or wokashi')
@@ -575,6 +579,7 @@ def ranking(request, kind):
     zipped_post = _get_zipped_post(sorted_post, request)
 
     params = {
+        "title": kind2title_mapping[kind],
         "zipped_post": zipped_post,
     }
 
