@@ -41,6 +41,30 @@ def get_book_info(title, author):
         item_url = response.json()["Items"][0]["Item"]["itemUrl"]
     return cover_path, item_url
 
+
+def _get_zipped_post(posts):
+    """Get post related informations.
+
+    Args:
+        posts(QuerySet<Post>)
+
+    Author:
+        Masato Umakoshi
+    """
+    wokashi_sum = [
+        p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
+    ]
+    ahare_sum = [
+        p.ahare_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
+    ]
+
+    books = [Book.objects.get(pk=post.book_id.id) for post in posts]
+    bookmark_flag = [
+        p.bookmark_set.filter(user_id=request.user.id).exists() for p in posts
+    ]
+    return zip(posts, wokashi_sum, ahare_sum, books, bookmark_flag)
+
+
 # Takahashi Shunichi
 # Umakoshi Masato
 def index(request):
@@ -57,18 +81,7 @@ def index(request):
     sorted_data = sorted(posts_comments_updated_at, key=lambda x: x[1], reverse=True)
     posts = list(map(lambda x: x[0], sorted_data))[:10]
 
-    wokashi_sum = [
-        p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
-    ]
-    ahare_sum = [
-        p.ahare_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
-    ]
-
-    books = [Book.objects.get(pk=post.book_id.id) for post in posts]
-    bookmark_flag = [
-        p.bookmark_set.filter(user_id=request.user.id).exists() for p in posts
-    ]
-    zipped_post = zip(posts, wokashi_sum, ahare_sum, books, bookmark_flag)
+    zipped_post = _get_zipped_post(posts)
 
     params = {
         "title": "ポスト一覧",
@@ -538,7 +551,8 @@ def ranking(request, kind):
         raise Http404('Please choice ahare or wokashi')
     target_class = kind2class_mapping[kind]
     all_target = target_class.objects.all()
-    post_updates = [(target.post_id, target.updated_at) for target in all_target]
+    post_updates = [
+            (target.post_id, target.updated_at) for target in all_target]
 
     # Filtering
     current_time = datetime.datetime.now()
@@ -555,9 +569,10 @@ def ranking(request, kind):
     ]
     post_counter_list.sort(key=lambda x: x[1])
     sorted_post = [post for post, _ in post_counter_list]
+    zipped_post = _get_zipped_post(sorted_post)
 
     params = {
-        "posts:": sorted_post
+        "zipped_post:": zipped_post
     }
 
     return render(request, "posts/ranking.html", params)
