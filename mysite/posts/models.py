@@ -6,7 +6,7 @@ class Book(models.Model):
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
     cover_path = models.CharField(max_length=255)
-    item_url = models.CharField(max_length=255)
+    item_url = models.CharField(max_length=255, default='https://books.rakuten.co.jp/')
 
     class Meta:
         unique_together = ('title', 'author')
