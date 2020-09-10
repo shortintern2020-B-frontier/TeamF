@@ -17,6 +17,7 @@ class SignUpView(CreateView):
         choice2img_path = {
             str(i): 'posts/img/bookusagi.png' for i in range(6)
         }
+        choice2img_path['1'] = 'posts/img/banzai.png'
         url_path = choice2img_path[user_img]
 
         form = SignUpForm(data=form_data)
