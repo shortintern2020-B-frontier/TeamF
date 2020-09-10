@@ -11,7 +11,7 @@ class SignUpView(CreateView):
     def post(self, request, *args, **kwargs):
 
         form_data = request.POST
-        user_img = form_data["user_img"]
+        user_img = form_data.get("user_img", "1")
 
         # Choice id to image path mapping
         choice2img_path = {
