@@ -13,6 +13,7 @@ Made a templates extends by Yamamoto Sota
 <head>
   {% block head %}
   <link rel="stylesheet" type="text/css" href="{% static 'posts/top.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'posts/find.css' %}">
   <title>タイムライン画面</title>
   {% endblock head %}
 </head>
@@ -20,11 +21,16 @@ Made a templates extends by Yamamoto Sota
 <body>
   {% block contents %}
     <div id="content">
-      <form action="{% url 'find' %}" method="post">
-      {% csrf_token %}
-      {{ tag }}
-      <input type="submit" name="find" value="検索">
-      </form>
+      <div class="find-form-wrapper">
+        <form action="{% url 'find' %}" method="post">
+        {% csrf_token %}
+        {{ tag }}
+        <div class="search-btn-wrapper">
+          <input type="submit" class="search-btn" name="find" value="検索">
+        </div>
+        </form>
+      </div>
+
       <main>
         <div class="scroll-list" id="timeline">
           {% for post, wokashi_sum, ahare_sum, book, bookmark_flag in zipped_post %}
