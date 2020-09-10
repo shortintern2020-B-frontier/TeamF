@@ -534,7 +534,6 @@ def load_post_api(request, num):
     return JsonResponse(jsonDict)
 
 
-# Umakoshi Masato
 def ranking(request, kind):
     """Rendering ranking page.
 
@@ -555,7 +554,8 @@ def ranking(request, kind):
             (target.post_id, target.updated_at) for target in all_target]
 
     # Filtering
-    current_time = datetime.datetime.now()
+    # TODO: This timezone.* should depends on setting
+    current_time = datetime.datetime.now(datetime.timezone.utc)
     td = datetime.timedelta(weeks=1)
     valid_posts = [
         post for post, updated_at in post_updates
@@ -572,7 +572,7 @@ def ranking(request, kind):
     zipped_post = _get_zipped_post(sorted_post, request)
 
     params = {
-        "zipped_post:": zipped_post
+        "zipped_post": zipped_post,
     }
 
     return render(request, "posts/ranking.html", params)
