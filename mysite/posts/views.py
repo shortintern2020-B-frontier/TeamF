@@ -33,7 +33,7 @@ def get_book_info(title, author):
         cover_path = 'Requests failed'
     elif response.json()["count"] == 0:
         cover_path = NOCOVERPATH
-        item_url = NOITEMURL + "?title={}&author={}".format(title, author)
+        item_url = NOITEMURL + "?sitem={}".format(title)
     else:
         cover_path = response.json()["Items"][0]["Item"]["largeImageUrl"]
         item_url = response.json()["Items"][0]["Item"]["itemUrl"]
