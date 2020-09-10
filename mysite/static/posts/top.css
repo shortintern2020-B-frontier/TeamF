@@ -45,7 +45,6 @@ main {
   background: #E6E6E6; /* 白鼠（Shironezumi） */
   white-space: nowrap;
   border-radius: 1rem;
-  position: relative;
 }
 
 .post-box a.detail-link {
@@ -59,21 +58,23 @@ main {
 .post-box .box-primary {
   display: inline-block;
   vertical-align: top;
-  position: absolute;
+  margin: 0 20px;
+  /* position: absolute;
   width: 35%;
   right: 10%;
   bottom: 0;
-  top: 0;
+  top: 0; */
 }
 
 .post-box .box-secondary {
   display: inline-block;
   vertical-align: top;
-  position: absolute;
+  margin: 0 20px;
+  /* position: absolute;
   width: 35%;
   height: 70%;
   left: 10%;
-  bottom: 0;
+  bottom: 0; */
 }
 
 .post-box .cover-img {
@@ -103,21 +104,25 @@ main {
   direction: ltr;
   white-space: normal;
   writing-mode: vertical-rl;
-  position: absolute;
+  margin-top: 120px;
+  /* position: absolute;
   top: 8rem;
   width: auto;
   height: 78%;
   left: 50%;
   transform: translateX(-50%);
   -webkit-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
+  -ms-transform: translateX(-50%); */
 }
 
-.post-box .bookmark-btn { 
+.post-box .bookmark-btn {
   background-color:#E6E6E6; /* 白鼠（Shironezumi）*/
   color: #E6E6E6; /* 白鼠（Shironezumi）*/
   vertical-align: top;
-  position: absolute;
+  margin-top: 120px;
+  width: 4.5rem;
+  height: 4.5rem;
+  /* position: absolute;
   top: -6.0rem;
   width: 4.5rem;
   height: 4.5rem;
@@ -125,7 +130,7 @@ main {
   left: 50%;
   transform: translateX(-50%);
   -webkit-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
+  -ms-transform: translateX(-50%); */
 }
 
 .bookmark-btn:hover {
@@ -135,18 +140,22 @@ main {
 
 .post-box .wokashi {
   vertical-align: top;
-  position: absolute;
+  margin-top: 20px;
+  width: 4rem;
+  height: 2.5rem;
+  border: none;
+  /* position: absolute;
   top: 2rem;
   width: 4rem;
   height: 2.5rem;
-  left: 0;
+  left: 0; */
   direction: ltr;
 }
 
 .wokashi .wokashi-btn0 {
-  position: absolute;
+  /* position: absolute;
   left: 0;
-  top: 0;
+  top: 0; */
   width: 2.5rem;
   height: 2.5rem;
   opacity: 0.6;
@@ -163,9 +172,9 @@ main {
 }
 
 .wokashi .wokashi-btn {
-  position: absolute;
+  /* position: absolute;
   left: 0;
-  top: 0;
+  top: 0; */
   width: 2.5rem;
   height: 2.5rem;
   -webkit-transition: width 0.2s ease, height 0.2s ease;
@@ -181,28 +190,33 @@ main {
 }
 
 .wokashi .wokashi-count {
-  position: absolute;
+  width: 2.5rem;
+  height: 2.5rem;
+  /* position: absolute;
   top: 50%;
   right: 0%;
   transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
+  -ms-transform: translateY(-50%); */
 }
 
 .post-box .ahare {
   vertical-align: top;
-  position: absolute;
+  margin-top: 20px;
+  width: 4rem;
+  height: 2.5rem;
+  /* position: absolute;
   top: 6rem;
   width: 4rem;
   height: 2.5rem;
-  left: 0;
+  left: 0; */
   direction: ltr;
 }
 
 .ahare .ahare-btn0 {
-  position: absolute;
+  /* position: absolute;
   left: 0;
-  top: 0;
+  top: 0; */
   width: 2.5rem;
   height: 2.5rem;
   opacity: 0.6;
@@ -219,9 +233,9 @@ main {
 }
 
 .ahare .ahare-btn {
-  position: absolute;
+  /* position: absolute;
   left: 0;
-  top: 0;
+  top: 0; */
   width: 2.5rem;
   height: 2.5rem;
   -webkit-transition: width 0.2s ease, height 0.2s ease;
@@ -237,18 +251,20 @@ main {
 }
 
 .ahare .ahare-count {
-  position: absolute;
+  width: 2.5rem;
+  height: 2.5rem;
+  /* position: absolute;
   top: 50%;
   right: 0%;
   transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
+  -ms-transform: translateY(-50%); */
 }
 .post-box .source {
-  position: absolute;
+  /* position: absolute;
   height: 60%;
   width: 100%;
-  bottom: 1rem;
+  bottom: 1rem; */
 }
 
 .post-box .author-name {
@@ -258,25 +274,24 @@ main {
   text-align: left;
   white-space: normal;
   writing-mode: vertical-rl;
-  position: absolute;
+  /* position: absolute;
   height: 100%;
   right: 7%;
-  top: 0;
+  top: 0; */
   color: #727171; /* 鈍色（Nibi-iro） */
 }
 
 .post-box .book-name {
   display: inline-block;
   vertical-align: top;
-  height: 80%;
   direction: ltr;
   text-align: left;
   white-space: normal;
   writing-mode: vertical-rl;
-  position: absolute;
+  /* position: absolute;
   height: 100%;
   left: 7%;
-  top: 0;
+  top: 0; */
   color: #727171; /* 鈍色（Nibi-iro） */
 }
 
