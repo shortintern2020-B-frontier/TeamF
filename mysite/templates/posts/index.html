@@ -31,10 +31,6 @@ Made a templates extends by Yamamoto Sota
               </div>
 
             <div class="box-primary">
-<!--              <div class="cover-img">
-                <img src="{% static 'posts/img/book.png' %}">
-              </div>
--->
               <div class="sentence">
                 <p class="font"><span class="val-post-content">{{ post.content }}</span></p>
                 <!-- タグ列挙 ここから-->
@@ -58,10 +54,6 @@ Made a templates extends by Yamamoto Sota
                 {% csrf_token %}
               </form>
 
-<!--             <button class="bookmark-btn">しおり</button>
--->
-<!--              <div class="wokashi">
--->
               <div class="wokashi">
                 {% if wokashi_sum is None %}
                   <button onclick="wokashi_create('{{ post.id }}')" class="wokashi-btn-base">
@@ -75,9 +67,7 @@ Made a templates extends by Yamamoto Sota
                   <span class="wokashi-count" id="wokashi-sum{{ post.id }}"> {{ wokashi_sum }} </span>
                 {% endif %}
               </div>
-<!--              </div>
-              <div class="ahare">
--->
+
               <div class="ahare">
                 {% if ahare_sum is None %}
                   <button onclick="ahare_create('{{ post.id }}')" class="ahare-btn-base">
@@ -91,8 +81,7 @@ Made a templates extends by Yamamoto Sota
                   <span class="ahare-count" id="ahare-sum{{ post.id }}"> {{ ahare_sum }} </span>
                 {% endif %}
               </div>
-<!--              </div>
--->
+
               <div class="source">
                 <div class="author-name">
                   <p class="font2"><span class="val-book-author">著者名: {{ book.author }}</span></p>
@@ -101,17 +90,6 @@ Made a templates extends by Yamamoto Sota
                   <p class="font2"><span class="val-book-title">書名: {{ book.title }}</span></p>
                 </div>
               </div>
-<!--
-              <td>
-                  {{bookmark_flag}}
-              </td>
-              <td>
-                  <form action="{% url 'bookmark'%}" method="post">
-                      <button type="submit" name="post_id" value={{post.id}}>しおり</button>
-                  {% csrf_token %}
-                  </form>
-              </td>
--->
             </div>
           </div>
         {% endfor %}
@@ -194,7 +172,6 @@ Made a templates extends by Yamamoto Sota
                 </div>
 
                 <input type="submit" name="btn1" value="投稿する">
-                <!--  -->
             </form>
           </div>
       {% endif %}

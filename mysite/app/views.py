@@ -9,13 +9,21 @@ from app.models import ImageChoice
 
 
 class SignUpView(CreateView):
+    """View for sign up.
+
+    Author:
+        Kyohei Yasunaga
+        Masato Umakoshi
+    """
     def post(self, request, *args, **kwargs):
+        """
+        Basic function: Yasunaga
+        Image choice: Umakoshi
+        """
 
         form_data = request.POST
         user_img = form_data.get("user_img", "1")
 
-        # Choice id to image path mapping
-        # update by umakoshi masato
         choice2img_path = {
             str(i): f'img/user_icon_{i}.png' for i in range(1, 6)
         }
