@@ -1,3 +1,4 @@
+# Created by Misawa Momoha
 Django==3.1.1
 psycopg2==2.8.6
 dj_database_url==0.5.0

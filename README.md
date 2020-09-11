@@ -1,5 +1,10 @@
 # 特記事項
 
+## デプロイ
+
+Heroku: django_on_docker
+- http://radiant-badlands-82017.herokuapp.com/
+
 ## データベース
 - マイグレーションの作成: `python manage.py makemigrations`
   - `django_on_docker/posts/migrations/0002_auto_20200908_0228.py` をコピー
