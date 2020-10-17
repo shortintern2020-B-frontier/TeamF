@@ -182,7 +182,7 @@ Made a templates extends by Yamamoto Sota
         let final_index = 10;
         let end_flag = false;
 
-        const timeline = document.getElementById('timeline');
+        // const timeline = document.getElementById('timeline');
         document.getElementById('timeline').onscroll = () => {
           const scrollLeft = timeline.scrollLeft;
           const scrollWidth = timeline.scrollWidth;
@@ -307,6 +307,15 @@ Made a templates extends by Yamamoto Sota
             img.setAttribute("src", "{% static 'posts/img/ahare_1.svg' %}");
           };
         };
+
+        // マウスホイールでもタイムラインを横スクロールできるように変更
+        document.getElementById('timeline').addEventListener('mousewheel', (e) => {
+          e.stopPropagation();
+          if (e.deltaX == 0) {
+            e.preventDefault();
+            timeline.scrollBy(-e.deltaY, 0);
+          }
+        });
       </script>
       <!-- End -->
 

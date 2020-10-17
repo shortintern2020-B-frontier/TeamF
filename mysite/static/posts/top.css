@@ -38,6 +38,7 @@ main {
   white-space: nowrap;
   /* overflow-scrolling: touch;
   -webkit-overflow-scrolling: touch; */
+  overscroll-behavior: none;
 }
 .post-box {
   position: relative;
