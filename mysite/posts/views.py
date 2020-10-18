@@ -17,6 +17,7 @@ from django.core.exceptions import PermissionDenied
 from django.http.response import JsonResponse
 
 from app.forms import SignUpForm
+#from mysite.app.forms import SignUpForm
 
 from collections import defaultdict
 import requests
@@ -72,7 +73,7 @@ def _get_zipped_post(posts, request):
 def index(request):
     # TODO Fix naming: book_id.id is too wierd.
     posts = Post.objects.filter(is_deleted=False)
-
+    #print(len(posts))
     posts_comments_updated_at = []
     for p in posts:
         is_comment = p.comment_set.exists()
