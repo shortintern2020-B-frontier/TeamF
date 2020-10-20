@@ -90,6 +90,14 @@ Made a templates extends by Yamamoto Sota
                   <p class="font2"><span class="val-book-title">書名: {{ book.title }}</span></p>
                 </div>
               </div>
+                <div class="review">
+                    <!-- 書評ボタン -->
+                    <button id="signup-btn">
+                        <a href="{% url 'review' %}">
+                            <span class="review-btn">書評を投稿</span>
+                        </a>
+                    </button>
+                </div>
             </div>
           </div>
         {% endfor %}
@@ -142,6 +150,15 @@ Made a templates extends by Yamamoto Sota
               <div class="book-name">
                 <p class="font2"><span class="val-book-title">書名: </span></p>
               </div>
+            </div>
+
+            <div class="review">
+                <!-- 書評ボタン -->
+                <button id="signup-btn">
+                    <a href="{% url 'postList' %}">
+                        <span class="review-btn">書評を投稿</span>
+                    </a>
+                </button>
             </div>
           </div>
       </template>
@@ -265,6 +282,7 @@ Made a templates extends by Yamamoto Sota
 
                 clone.querySelector(".val-book-author").innerHTML += info['book_author'];
                 clone.querySelector(".val-book-title").innerHTML += info['book_title'];
+                clone.querySelector(".reward-btn").setAttribute("value", info['post_id']);
 
                 timeline.appendChild(clone);
               });

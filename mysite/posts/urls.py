@@ -26,4 +26,6 @@ urlpatterns = [
     path("ranking/<str:kind>", views.ranking, name="ranking"),
     # PostList
     path("postList", views.postList, name="postList"),
+    # Review
+    path("review", views.review, name="review"),
 ]
