@@ -21,6 +21,7 @@
            
             {% if user.is_authenticated %}
                 <button id="signup-btn"><a href="{% url 'logout' %}">ログアウト</a></button>
+                <button id="signup-btn"><a href="{% url 'postList' %}">投稿一覧</a></button>
             {% else %}
                 <button id="signin-btn"><a href="{% url 'login' %}">サインイン</a></button>
                 <button id="signin-btn"><a href="{% url 'create_account' %}">サインアップ</a></button>

@@ -72,8 +72,8 @@ def _get_zipped_post(posts, request):
 # Umakoshi Masato
 def index(request):
     # TODO Fix naming: book_id.id is too wierd.
+    print("this is index !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     posts = Post.objects.filter(is_deleted=False)
-    #print(len(posts))
     posts_comments_updated_at = []
     for p in posts:
         is_comment = p.comment_set.exists()
@@ -597,3 +597,28 @@ def ranking(request, kind):
     }
 
     return render(request, "posts/ranking.html", params)
+
+def postList(request):
+    print("test!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    tmp = Post.objects.filter(is_deleted=False)
+    posts = list(filter(lambda x: x.user_id == request.user.id, tmp))
+    posts_comments_updated_at = []
+    for p in posts:
+        if not p.user_id == request.user.id:
+            break
+        is_comment = p.comment_set.exists()
+        if is_comment:
+            posts_comments_updated_at.append([p, p.comment_set.all().order_by('updated_at').reverse().first().updated_at])
+        else:
+            posts_comments_updated_at.append([p, p.updated_at])
+    sorted_data = sorted(posts_comments_updated_at, key=lambda x: x[1], reverse=True)
+    posts = list(map(lambda x: x[0], sorted_data))[:10]
+
+    zipped_post = _get_zipped_post(posts, request)
+
+    params = {
+        "title": "ポスト一覧",
+        "zipped_post": zipped_post,
+        "tag": TagForm(initial={'tag':[]})
+    }
+    return render(request, "posts/list.html", params)

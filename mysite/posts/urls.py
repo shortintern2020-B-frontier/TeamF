@@ -23,5 +23,7 @@ urlpatterns = [
     path("fuga", views.bookmark, name="fuga"),
     path("find", views.find, name="find"),
     # Ranking
-    path("ranking/<str:kind>", views.ranking, name="ranking")
+    path("ranking/<str:kind>", views.ranking, name="ranking"),
+    # PostList
+    path("postList", views.postList, name="postList"),
 ]
