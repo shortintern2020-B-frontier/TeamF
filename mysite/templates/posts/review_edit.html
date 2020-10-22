@@ -22,7 +22,7 @@ Masato Umakoshi: Modify for backend.
         <div id="content">
 
             <main>
-                <form action="{% url 'create' %}" method="post">
+                <form action="{% url 'review_create' id %}" method="post">
                     {% csrf_token %}
                     <p class="username">
                     <img src="{% static 'posts/img/bookusagi.png' %}" class="icon" alt="icon" align="middle">
@@ -41,7 +41,10 @@ Masato Umakoshi: Modify for backend.
                     </p>
                     <br><br>
                     <!-- 以下のplaceholderは白文字・白背景のため不可視　cssでどうにかして-->
-                    <textarea name="content" rows="8" cols="100" placeholder="この本の書評を書こう">
+                    <p>タイトル</p>
+                    <input type="text" name="title" required>
+                    <br>
+                    <textarea name="content" rows="8" cols="100" placeholder="この本の書評を書こう" required>
                     </textarea>
                     <br>
                     <input type="submit" name="btn1" value="投稿する">

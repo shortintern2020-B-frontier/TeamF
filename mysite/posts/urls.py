@@ -28,5 +28,6 @@ urlpatterns = [
     path("postList", views.postList, name="postList"),
     # Review
     path("review_edit/<int:num>", views.review_edit, name="review_edit"),
-    path("review", views.review, name="review"),
+    path("review_create/<int:num>", views.review_create, name="review_create"),
+    path("review/<int:num>", views.review, name="review"),
 ]

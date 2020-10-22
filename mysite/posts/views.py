@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from .models import Book, Post, Wokashi, Ahare, Bookmark, Comment, Nice, Category, Tag
+from .models import Book, Post, Wokashi, Ahare, Bookmark, Comment, Nice, Category, Tag, Review
 from django.contrib.auth.models import User
 from .forms import CommentForm, PostForm, TagForm
 from django.db import transaction
@@ -623,13 +623,33 @@ def review_edit(request, num):
     print("this is review_edit page !!!!!!!!!!!!!!!!!!!!!")
     post = Post.objects.get(id=num)
     book = post.book_id
-    params = {"title": "書評投稿", "book": book}
+    params = {"title": "書評投稿", "book": book, "id": num}
     return render(request, "posts/review_edit.html", params)
 
-def review(request):
+def review_create(request, num):
+    if request.method != "POST":
+        raise Http404("Hogehoge")
+
+    user_id = request.user.id
+    title = request.POST['title']
+    review = request.POST['content']
+    print(request.POST)
+    review = Review(
+        user_id=User.objects.get(pk=user_id),
+        post_id=Post.objects.get(pk=num),
+        review=review,
+        title=title,
+    )
+    review.save()
+    return redirect(to=f'/posts/review/{num}')
+
+def review(request, num):
     print("this is review page !!!!!!!!!!!!!!!!!!!!!")
     posts = Post.objects.filter(is_deleted=False)
-    posts = list(filter(lambda x: x.user_id == request.user, posts))
+    post = Post.objects.get(id=num)
+    book = post.book_id
+    posts = list(filter(lambda x: x.user_id == request.user and book.title == x.book_id.title, posts))
+    reviews = Review.objects.filter(user_id=request.user, post_id=num)
     posts_comments_updated_at = []
     for p in posts:
         is_comment = p.comment_set.exists()
@@ -645,6 +665,8 @@ def review(request):
     params = {
         "title": "ポスト一覧",
         "zipped_post": zipped_post,
-        "tag": TagForm(initial={'tag':[]})
+        "tag": TagForm(initial={'tag':[]}),
+        "book": book,
+        "review": reviews.last()
     }
-    return render(request, "posts/list.html", params)
+    return render(request, "posts/review.html", params)
