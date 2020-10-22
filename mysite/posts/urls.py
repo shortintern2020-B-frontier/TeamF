@@ -29,5 +29,6 @@ urlpatterns = [
     # Review
     path("review_edit/<int:num>", views.review_edit, name="review_edit"),
     path("review_create/<int:num>", views.review_create, name="review_create"),
+    path("review_book_select", views.review_book_select, name="review_book_select"),
     path("review/<int:num>", views.review, name="review"),
 ]

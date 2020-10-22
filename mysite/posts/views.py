@@ -623,7 +623,12 @@ def review_edit(request, num):
     print("this is review_edit page !!!!!!!!!!!!!!!!!!!!!")
     post = Post.objects.get(id=num)
     book = post.book_id
-    params = {"title": "書評投稿", "book": book, "id": num}
+    # is alrady exist?
+    review = Review.objects.filter(user_id=request.user, post_id=num)
+    if review:
+        params = {"title": "書評投稿", "book": book, "id": num, "review": review.last()}
+    else:
+        params = {"title": "書評投稿", "book": book, "id": num, "review": {}}
     return render(request, "posts/review_edit.html", params)
 
 def review_create(request, num):
@@ -633,7 +638,6 @@ def review_create(request, num):
     user_id = request.user.id
     title = request.POST['title']
     review = request.POST['content']
-    print(request.POST)
     review = Review(
         user_id=User.objects.get(pk=user_id),
         post_id=Post.objects.get(pk=num),
@@ -667,6 +671,29 @@ def review(request, num):
         "zipped_post": zipped_post,
         "tag": TagForm(initial={'tag':[]}),
         "book": book,
+        "id": num,
         "review": reviews.last()
     }
     return render(request, "posts/review.html", params)
+
+def review_book_select(request):
+    posts = Post.objects.filter(is_deleted=False)
+    posts = list(filter(lambda x: x.user_id == request.user, posts))
+    posts_comments_updated_at = []
+    for p in posts:
+        is_comment = p.comment_set.exists()
+        if is_comment:
+            posts_comments_updated_at.append([p, p.comment_set.all().order_by('updated_at').reverse().first().updated_at])
+        else:
+            posts_comments_updated_at.append([p, p.updated_at])
+    sorted_data = sorted(posts_comments_updated_at, key=lambda x: x[1], reverse=True)
+    posts = list(map(lambda x: x[0], sorted_data))[:10]
+
+    zipped_post = _get_zipped_post(posts, request)
+
+    params = {
+        "title": "ポスト一覧",
+        "zipped_post": zipped_post,
+        "tag": TagForm(initial={'tag':[]})
+    }
+    return render(request, "posts/review_book_select.html", params)
