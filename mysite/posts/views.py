@@ -619,6 +619,13 @@ def postList(request):
     }
     return render(request, "posts/list.html", params)
 
+def review_edit(request, num):
+    print("this is review_edit page !!!!!!!!!!!!!!!!!!!!!")
+    post = Post.objects.get(id=num)
+    book = post.book_id
+    params = {"title": "書評投稿", "book": book}
+    return render(request, "posts/review_edit.html", params)
+
 def review(request):
     print("this is review page !!!!!!!!!!!!!!!!!!!!!")
     posts = Post.objects.filter(is_deleted=False)

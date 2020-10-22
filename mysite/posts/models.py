@@ -113,3 +113,12 @@ class Category(models.Model):
 class Tag(models.Model):
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
     category_id =  models.ForeignKey(Category, on_delete=models.CASCADE)
+
+
+class Review(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
+    review = models.CharField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_deleted = models.BooleanField(default=False)

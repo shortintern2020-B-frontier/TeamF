@@ -40,7 +40,7 @@ Made a templates extends by Yamamoto Sota
                 <!-- タグ列挙 ここまで-->
               </div>
             </div>
-            <a class="detail-link" href="{% url 'detail' post.id %}"></a>
+            <a class="detail-link" href="{% url 'review_edit' post.id %}"></a>
             <div class="box-secondary">
               <form action="{% url 'bookmark'%}" method="post">
                 <button type="submit" name="post_id" value={{post.id}} class="bookmark-btn">
@@ -90,14 +90,6 @@ Made a templates extends by Yamamoto Sota
                   <p class="font2"><span class="val-book-title">書名: {{ book.title }}</span></p>
                 </div>
               </div>
-                <div class="review">
-                    <!-- 書評ボタン -->
-                    <button id="signup-btn">
-                        <a href="{% url 'review' %}">
-                            <span class="review-btn">書評を投稿</span>
-                        </a>
-                    </button>
-                </div>
             </div>
           </div>
         {% endfor %}
@@ -150,15 +142,6 @@ Made a templates extends by Yamamoto Sota
               <div class="book-name">
                 <p class="font2"><span class="val-book-title">書名: </span></p>
               </div>
-            </div>
-
-            <div class="review">
-                <!-- 書評ボタン -->
-                <button id="signup-btn">
-                    <a href="{% url 'postList' %}">
-                        <span class="review-btn">書評を投稿</span>
-                    </a>
-                </button>
             </div>
           </div>
       </template>

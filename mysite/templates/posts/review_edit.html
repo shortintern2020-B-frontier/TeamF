@@ -1,0 +1,55 @@
+<!doctype html>
+<!-- Created by Yamamoto Sota
+Masato Umakoshi: Modify for backend.
+-->
+{% extends "base_header.html" %}
+{% load static %}
+<html>
+
+<head>
+    {% block head %}
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+      <link rel="stylesheet" type="text/css" href="{% static 'posts/common.css' %}">
+      <title>書評投稿画面</title>
+    {% endblock head %}
+</head>
+
+<body>
+  {% block contents %}
+    <div id="wrapper">
+
+        <div id="content">
+
+            <main>
+                <form action="{% url 'create' %}" method="post">
+                    {% csrf_token %}
+                    <p class="username">
+                    <img src="{% static 'posts/img/bookusagi.png' %}" class="icon" alt="icon" align="middle">
+                        {{ user.username }}
+                    </p>
+                    <div class="cover-img">
+                        <img src="{{ book.cover_path }}" class="val-book-cover-path">
+                    </div>
+                    <p>著者</p>
+                    <p>
+                        {{ book.author }}
+                    </p>
+                    <p>書名</p>
+                    <p>
+                        {{ book.title }}
+                    </p>
+                    <br><br>
+                    <!-- 以下のplaceholderは白文字・白背景のため不可視　cssでどうにかして-->
+                    <textarea name="content" rows="8" cols="100" placeholder="この本の書評を書こう">
+                    </textarea>
+                    <br>
+                    <input type="submit" name="btn1" value="投稿する">
+                </form>
+            </main>
+        </div>
+      </div>
+  {% endblock contents %}
+</body>
+
+</html>

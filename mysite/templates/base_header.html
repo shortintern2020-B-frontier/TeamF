@@ -38,6 +38,9 @@
                 <li><div><a href="{% url 'find' %}" class="menu-item">カテゴリ検索</a></div></li>
                 <li><div><a href="{% url 'ranking' 'wokashi' %}" class="menu-item">週間をかしランキング</a></div></li>
                 <li><div><a href="{% url 'ranking' 'ahare' %}" class="menu-item">週間あはれランキング</a></div></li>
+                {% if user.is_authenticated %}
+                    <li><div><a href="{% url 'review' %}" class="menu-item">書評をかく</a></div></li>
+                {% endif %}
                 </ul>
             </nav>
             </div>

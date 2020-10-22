@@ -27,5 +27,6 @@ urlpatterns = [
     # PostList
     path("postList", views.postList, name="postList"),
     # Review
+    path("review_edit/<int:num>", views.review_edit, name="review_edit"),
     path("review", views.review, name="review"),
 ]
