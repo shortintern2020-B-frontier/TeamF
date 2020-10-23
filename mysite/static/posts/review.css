@@ -11,6 +11,7 @@ div.cover-img {
 }
 
 div.book-detail {
+    margin-top: 7.0rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -52,4 +53,35 @@ textarea {
     letter-spacing: 0.1em;
     font-size: 1.2rem;
     line-height: 5.0rem;
+}
+
+div.userinfo {
+    text-align: center;
+}
+
+p.username {
+    display: inline-block;
+    font-size: 1.2rem;
+}
+
+p.review-title {
+    font-family: sans-serif;
+    font-kerning: normal;
+    font-size: 1.4rem;
+    width: 60%;
+    margin: 0 auto;
+}
+
+p.review {
+    width: 45%;
+    margin: 0 auto;
+    line-height: 2.0rem;
+    font-family: sans-serif;
+    font-kerning: normal;
+    font-size: 1.2rem;
+}
+
+div.review-edit {
+    margin-top: 3.0rem;
+    margin-left: 3.0rem;
 }

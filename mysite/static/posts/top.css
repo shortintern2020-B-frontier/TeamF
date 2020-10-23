@@ -12,6 +12,12 @@ main {
   padding: 2.0rem;
 }
 
+h3 {
+  margin-top: 7.0rem;
+  margin-left: 5.0rem;
+  font: bold;
+}
+
 .page-title {
   font-size: 30px;
   text-align: center;
@@ -31,7 +37,7 @@ main {
 
 .scroll-list {
   margin: 0 auto;
-  padding-top: 5rem;
+  padding-top: 7.0rem;
   width: 90%;
   direction: rtl;
   overflow-x: auto;
@@ -119,11 +125,11 @@ main {
 }
 
 .post-box .bookmark-btn { 
-  background-color:#E6E6E6; /* 白鼠（Shironezumi）*/
-  color: #E6E6E6; /* 白鼠（Shironezumi）*/
+  background-color:#fffffc; /* 胡粉色（Gohuniro） */
+  color: #fffffc; /* 胡粉色（Gohuniro） */
   vertical-align: top;
   position: absolute;
-  top: -6.0rem;
+  top: -5.0rem;
   width: 4.5rem;
   height: 4.5rem;
   border: none;
@@ -311,17 +317,20 @@ main {
 }
 
 #popup {
+  overflow: scroll;
   display: none;
   display:none;
   position:fixed;
   top: 50%;
   left: 50%;
   width: 50%;
+  max-height: 100%;
   padding: 10px;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   background: #C8D5BB;
   opacity: 0.9;
+  z-index: 2;
 }
 
 #post-btn-checkbox:checked ~ #popup {

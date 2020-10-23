@@ -5,6 +5,7 @@
 <!doctype html>
 <html>
 <!--Created by Kyohei Yasunaga-->
+<!--Updated by Yamamoto Sota-->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
@@ -20,14 +21,15 @@
             <div id="logo-img"><a href="{% url 'home' %}"><img src="{% static 'img/logo3.svg' %}" alt="ロゴ" width="350"></a></div>
         </h1>
 
-
-        {% if user.is_authenticated %}
-            <button id="signup-btn"><a href="{% url 'logout' %}">ログアウト</a></button>
-            <button id="signup-btn"><a href="{% url 'postList' %}">投稿一覧</a></button>
-        {% else %}
-            <button id="signin-btn"><a href="{% url 'login' %}">サインイン</a></button>
-            <button id="signin-btn"><a href="{% url 'create_account' %}">サインアップ</a></button>
-        {% endif %}
+        <div class="user-button">
+            {% if user.is_authenticated %}
+                <button id="signup-btn"><a href="{% url 'logout' %}">ログアウト</a></button>
+                <button id="signup-btn"><a href="{% url 'postList' %}">投稿一覧</a></button>
+            {% else %}
+                <button id="signin-btn"><a href="{% url 'login' %}">サインイン</a></button>
+                <button id="signin-btn"><a href="{% url 'create_account' %}">サインアップ</a></button>
+            {% endif %}
+        </div>
         <!--finish Created by Kyohei Yasunaga-->
 
         <input id="drawer-checkbox" type="checkbox">

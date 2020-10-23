@@ -1,8 +1,3 @@
-<!-- Created by Naoki Hirabayashi.
-Masato Umakoshi: Modify for backend.
-design updated by Yamamoto Sota & Misawa Momoha
-Made a templates extends by Yamamoto Sota
--->
 
 {% extends "base_header.html" %}
 {% load static %}
@@ -14,16 +9,17 @@ Made a templates extends by Yamamoto Sota
     {% block head %}
         <link rel="stylesheet" type="text/css" href="{% static 'posts/top.css' %}">
         <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
-        <title>タイムライン画面</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'posts/review.css' %}">
+        <title>{{ review.title }}</title>
     {% endblock head %}
 </head>
 
 <body>
 {% block contents %}
-    <div class="bookinfo">
-        <h1><p>{{ book.title }}({{ book.author }})</p></h1>
-        <img src="{{ book.cover_path }}">
-        {#    ↑は本のカバー画像を表示する　不必要なら消して   #}
+    <div class="book-info">
+        <div class="book-detail">
+            <h1><p>{{ book.title }}({{ book.author }})</p></h1>
+        </div>
     </div>
     <div class="userinfo">
         <img src="{% static user.imagechoice %}" width="55px" class="icon" alt="icon" align="middle">
@@ -54,9 +50,9 @@ Made a templates extends by Yamamoto Sota
                                 <button type="submit" name="post_id" value={{ post.id }} class="bookmark-btn">
                                     <input type="hidden" name="path" value={{ request.path }}>
                                     {% if bookmark_flag is False %}
-                                        <img class="bookmark-btn-img" src="{% static 'posts/img/bookmark0.svg' %}">
+                                        <img class="bookmark-btn-img" src="{% static 'posts/img/bookmark2.svg' %}">
                                     {% else %}
-                                        <img class="bookmark-btn-img" src="{% static 'posts/img/bookmark.svg' %}">
+                                        <img class="bookmark-btn-img" src="{% static 'posts/img/bookmark1.svg' %}">
                                     {% endif %}
                                 </button>
                                 {% csrf_token %}
@@ -106,9 +102,10 @@ Made a templates extends by Yamamoto Sota
                     </div>
                 {% endfor %}
             </div>
-            <p>{{ review.title }}</p>
+            <p class="review-title">{{ review.title }}</p>
             <br>
-            <p>{{ review.review }}</p>
+            <p class="review">{{ review.review }}</p>
+            <br><br>
             {% if user.is_authenticated %}
                 {% if user == review.user_id %}
                     <div class="review-edit">

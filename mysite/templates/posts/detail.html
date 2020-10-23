@@ -31,9 +31,9 @@ Masato Umakoshi: Modify for backend.
                   {% csrf_token %}
                       <button type="submit" name="post_id" value={{post.id}} class="bookmark-btn">
                           {% if bookmark_flag is False %}
-                              <img src="{% static 'posts/img/bookmark0.svg' %}">
+                              <img src="{% static 'posts/img/bookmark2.svg' %}">
                           {% else %}
-                              <img src="{% static 'posts/img/bookmark.svg' %}">
+                              <img src="{% static 'posts/img/bookmark1.svg' %}">
                           {% endif %}
                       </button>
 		              <input type="hidden" name="path" value={{ request.path }}>

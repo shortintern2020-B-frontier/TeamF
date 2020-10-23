@@ -1,8 +1,3 @@
-<!-- Created by Naoki Hirabayashi.
-Masato Umakoshi: Modify for backend.
-design updated by Yamamoto Sota & Misawa Momoha
-Made a templates extends by Yamamoto Sota
--->
 
 {% extends "base_header.html" %}
 {% load static %}
@@ -14,7 +9,7 @@ Made a templates extends by Yamamoto Sota
     {% block head %}
         <link rel="stylesheet" type="text/css" href="{% static 'posts/top.css' %}">
         <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
-        <title>タイムライン画面</title>
+        <title>自分の投稿一覧</title>
     {% endblock head %}
 </head>
 
@@ -48,9 +43,9 @@ Made a templates extends by Yamamoto Sota
                                 <button type="submit" name="post_id" value={{ post.id }} class="bookmark-btn">
                                     <input type="hidden" name="path" value={{ request.path }}>
                                     {% if bookmark_flag is False %}
-                                        <img class="bookmark-btn-img" src="{% static 'posts/img/bookmark0.svg' %}">
+                                        <img class="bookmark-btn-img" src="{% static 'posts/img/bookmark2.svg' %}">
                                     {% else %}
-                                        <img class="bookmark-btn-img" src="{% static 'posts/img/bookmark.svg' %}">
+                                        <img class="bookmark-btn-img" src="{% static 'posts/img/bookmark1.svg' %}">
                                     {% endif %}
                                 </button>
                                 {% csrf_token %}
@@ -96,6 +91,13 @@ Made a templates extends by Yamamoto Sota
                                     <p class="font2"><span class="val-book-title">書名: {{ book.title }}</span></p>
                                 </div>
                             </div>
+                            {% if review %}
+                            <div class="review">
+                                <form action="{% url 'review' book.id %}">
+                                    <input id = 'review_edit' type="submit" value="書評"/>
+                                </form>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 {% endfor %}
