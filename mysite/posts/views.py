@@ -67,6 +67,28 @@ def _get_zipped_post(posts, request):
     ]
     return zip(posts, wokashi_sum, ahare_sum, books, bookmark_flag)
 
+def _get_zipped_post_enhanced(posts, request, is_review_exist):
+    """Get post related informations.
+
+    Args:
+        posts(QuerySet<Post>)
+
+    Author:
+        Masato Umakoshi
+    """
+    wokashi_sum = [
+        p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
+    ]
+    ahare_sum = [
+        p.ahare_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
+    ]
+
+    books = [Book.objects.get(pk=post.book_id.id) for post in posts]
+    bookmark_flag = [
+        p.bookmark_set.filter(user_id=request.user.id).exists() for p in posts
+    ]
+    return zip(posts, wokashi_sum, ahare_sum, books, bookmark_flag, is_review_exist)
+
 
 # Takahashi Shunichi
 # Umakoshi Masato
@@ -601,7 +623,12 @@ def postList(request):
     posts = Post.objects.filter(is_deleted=False)
     posts = list(filter(lambda x: x.user_id == request.user, posts))
     posts_comments_updated_at = []
+    is_review_exist = []
     for p in posts:
+        review = Review.objects.filter(user_id=request.user, book_id=p.book_id)
+        print(len(review))
+        is_review_exist.append(len(review) == 0)
+
         is_comment = p.comment_set.exists()
         if is_comment:
             posts_comments_updated_at.append([p, p.comment_set.all().order_by('updated_at').reverse().first().updated_at])
@@ -610,7 +637,7 @@ def postList(request):
     sorted_data = sorted(posts_comments_updated_at, key=lambda x: x[1], reverse=True)
     posts = list(map(lambda x: x[0], sorted_data))[:10]
 
-    zipped_post = _get_zipped_post(posts, request)
+    zipped_post = _get_zipped_post_enhanced(posts, request, is_review_exist)
 
     params = {
         "title": "ポスト一覧",
@@ -624,7 +651,7 @@ def review_edit(request, num):
     post = Post.objects.get(id=num)
     book = post.book_id
     # is alrady exist?
-    review = Review.objects.filter(user_id=request.user, post_id=num)
+    review = Review.objects.filter(user_id=request.user, book_id=book)
     if review:
         params = {"title": "書評投稿", "book": book, "id": num, "review": review.last()}
     else:
@@ -637,23 +664,30 @@ def review_create(request, num):
 
     user_id = request.user.id
     title = request.POST['title']
-    review = request.POST['content']
-    review = Review(
-        user_id=User.objects.get(pk=user_id),
-        post_id=Post.objects.get(pk=num),
-        review=review,
-        title=title,
-    )
+    content = request.POST['content']
+    post = Post.objects.get(pk=num)
+    # is already exitst?
+    review = Review.objects.filter(user_id=request.user, book_id=post.book_id)
+    if review:
+        review = review.last()
+        review.title = title
+        review.review = content
+    else:
+        review = Review(
+            user_id=User.objects.get(pk=user_id),
+            book_id=post.book_id,
+            review=content,
+            title=title,
+        )
     review.save()
-    return redirect(to=f'/posts/review/{num}')
+    return redirect(to=f'/posts/review/{post.book_id.id}')
 
 def review(request, num):
     print("this is review page !!!!!!!!!!!!!!!!!!!!!")
     posts = Post.objects.filter(is_deleted=False)
-    post = Post.objects.get(id=num)
-    book = post.book_id
+    book = Book.objects.get(id=num)
     posts = list(filter(lambda x: x.user_id == request.user and book.title == x.book_id.title, posts))
-    reviews = Review.objects.filter(user_id=request.user, post_id=num)
+    reviews = Review.objects.filter(user_id=request.user, book_id=book)
     posts_comments_updated_at = []
     for p in posts:
         is_comment = p.comment_set.exists()

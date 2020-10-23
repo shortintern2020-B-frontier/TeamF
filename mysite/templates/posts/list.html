@@ -23,7 +23,7 @@ Made a templates extends by Yamamoto Sota
     <div id="content">
         <main>
             <div class="scroll-list" id="timeline">
-                {% for post, wokashi_sum, ahare_sum, book, bookmark_flag in zipped_post %}
+                {% for post, wokashi_sum, ahare_sum, book, bookmark_flag, review in zipped_post %}
                     <div class="post-box">
 
                         <div class="cover-img">
@@ -94,6 +94,13 @@ Made a templates extends by Yamamoto Sota
                                     <p class="font2"><span class="val-book-title">書名: {{ book.title }}</span></p>
                                 </div>
                             </div>
+                            {% if review %}
+                                <div class="review">
+                                    <form action="{% url 'review' book.id %}">
+                                        <input id = 'review_edit' type="submit" value="書評を確認する"/>
+                                    </form>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 {% endfor %}

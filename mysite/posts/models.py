@@ -117,7 +117,7 @@ class Tag(models.Model):
 
 class Review(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
+    book_id = models.ForeignKey(Book, on_delete=models.CASCADE, default=0)
     review = models.CharField(max_length=500)
     title = models.CharField(max_length=255, default="none")
     created_at = models.DateTimeField(auto_now_add=True)
