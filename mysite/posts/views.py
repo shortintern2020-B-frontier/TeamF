@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from .models import Book, Post, Wokashi, Ahare, Bookmark, Comment, Nice, Category, Tag
+from .models import Book, Post, Wokashi, Ahare, Bookmark, Comment, Nice, Category, Tag, Review
 from django.contrib.auth.models import User
 from .forms import CommentForm, PostForm, TagForm
 from django.db import transaction
@@ -17,6 +17,7 @@ from django.core.exceptions import PermissionDenied
 from django.http.response import JsonResponse
 
 from app.forms import SignUpForm
+#from mysite.app.forms import SignUpForm
 
 from collections import defaultdict
 import requests
@@ -66,13 +67,34 @@ def _get_zipped_post(posts, request):
     ]
     return zip(posts, wokashi_sum, ahare_sum, books, bookmark_flag)
 
+def _get_zipped_post_enhanced(posts, request, is_review_exist):
+    """Get post related informations.
+
+    Args:
+        posts(QuerySet<Post>)
+
+    Author:
+        Masato Umakoshi
+    """
+    wokashi_sum = [
+        p.wokashi_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
+    ]
+    ahare_sum = [
+        p.ahare_set.all().aggregate(Sum('count'))['count__sum'] for p in posts
+    ]
+
+    books = [Book.objects.get(pk=post.book_id.id) for post in posts]
+    bookmark_flag = [
+        p.bookmark_set.filter(user_id=request.user.id).exists() for p in posts
+    ]
+    return zip(posts, wokashi_sum, ahare_sum, books, bookmark_flag, is_review_exist)
+
 
 # Takahashi Shunichi
 # Umakoshi Masato
 def index(request):
     # TODO Fix naming: book_id.id is too wierd.
     posts = Post.objects.filter(is_deleted=False)
-
     posts_comments_updated_at = []
     for p in posts:
         is_comment = p.comment_set.exists()
@@ -596,3 +618,116 @@ def ranking(request, kind):
     }
 
     return render(request, "posts/ranking.html", params)
+
+def postList(request):
+    posts = Post.objects.filter(is_deleted=False)
+    posts = list(filter(lambda x: x.user_id == request.user, posts))
+    posts_comments_updated_at = []
+    is_review_exist = []
+    for p in posts:
+        review = Review.objects.filter(user_id=request.user, book_id=p.book_id)
+        print(len(review))
+        is_review_exist.append(len(review) == 0)
+
+        is_comment = p.comment_set.exists()
+        if is_comment:
+            posts_comments_updated_at.append([p, p.comment_set.all().order_by('updated_at').reverse().first().updated_at])
+        else:
+            posts_comments_updated_at.append([p, p.updated_at])
+    sorted_data = sorted(posts_comments_updated_at, key=lambda x: x[1], reverse=True)
+    posts = list(map(lambda x: x[0], sorted_data))[:10]
+
+    zipped_post = _get_zipped_post_enhanced(posts, request, is_review_exist)
+
+    params = {
+        "title": "ポスト一覧",
+        "zipped_post": zipped_post,
+        "tag": TagForm(initial={'tag':[]})
+    }
+    return render(request, "posts/list.html", params)
+
+def review_edit(request, num):
+    print("this is review_edit page !!!!!!!!!!!!!!!!!!!!!")
+    post = Post.objects.get(id=num)
+    book = post.book_id
+    # is alrady exist?
+    review = Review.objects.filter(user_id=request.user, book_id=book)
+    if review:
+        params = {"title": "書評投稿", "book": book, "id": num, "review": review.last()}
+    else:
+        params = {"title": "書評投稿", "book": book, "id": num, "review": {}}
+    return render(request, "posts/review_edit.html", params)
+
+def review_create(request, num):
+    if request.method != "POST":
+        raise Http404("Hogehoge")
+
+    user_id = request.user.id
+    title = request.POST['title']
+    content = request.POST['content']
+    post = Post.objects.get(pk=num)
+    # is already exitst?
+    review = Review.objects.filter(user_id=request.user, book_id=post.book_id)
+    if review:
+        review = review.last()
+        review.title = title
+        review.review = content
+    else:
+        review = Review(
+            user_id=User.objects.get(pk=user_id),
+            book_id=post.book_id,
+            review=content,
+            title=title,
+        )
+    review.save()
+    return redirect(to=f'/posts/review/{post.book_id.id}')
+
+def review(request, num):
+    print("this is review page !!!!!!!!!!!!!!!!!!!!!")
+    posts = Post.objects.filter(is_deleted=False)
+    book = Book.objects.get(id=num)
+    posts = list(filter(lambda x: x.user_id == request.user and book.title == x.book_id.title, posts))
+    reviews = Review.objects.filter(user_id=request.user, book_id=book)
+    posts_comments_updated_at = []
+    for p in posts:
+        is_comment = p.comment_set.exists()
+        if is_comment:
+            posts_comments_updated_at.append([p, p.comment_set.all().order_by('updated_at').reverse().first().updated_at])
+        else:
+            posts_comments_updated_at.append([p, p.updated_at])
+    sorted_data = sorted(posts_comments_updated_at, key=lambda x: x[1], reverse=True)
+    posts = list(map(lambda x: x[0], sorted_data))[:10]
+
+    zipped_post = _get_zipped_post(posts, request)
+
+    params = {
+        "title": "ポスト一覧",
+        "zipped_post": zipped_post,
+        "tag": TagForm(initial={'tag':[]}),
+        "book": book,
+        "id": num,
+        "review": reviews.last()
+    }
+    return render(request, "posts/review.html", params)
+
+def review_book_select(request):
+    posts = Post.objects.filter(is_deleted=False)
+    posts = list(filter(lambda x: x.user_id == request.user, posts))
+    posts_comments_updated_at = []
+    for p in posts:
+        is_comment = p.comment_set.exists()
+        if is_comment:
+            posts_comments_updated_at.append([p, p.comment_set.all().order_by('updated_at').reverse().first().updated_at])
+        else:
+            posts_comments_updated_at.append([p, p.updated_at])
+    sorted_data = sorted(posts_comments_updated_at, key=lambda x: x[1], reverse=True)
+    posts = list(map(lambda x: x[0], sorted_data))[:10]
+
+    zipped_post = _get_zipped_post(posts, request)
+
+    params = {
+        "title": "ポスト一覧",
+        "zipped_post": zipped_post,
+        "tag": TagForm(initial={'tag':[]})
+    }
+    return render(request, "posts/review_book_select.html", params)

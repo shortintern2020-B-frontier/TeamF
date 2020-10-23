@@ -18,18 +18,27 @@ header, footer, main, aside {
 }
 
 header {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
   padding: 10px;
-  background: #00081A; /* 檳榔子黒（Binroujikuro）*/
+  background:#fbfaf5;  /* 生成り色（Kinariiro） */
   color: #fff;
   height:100px;
+  border-bottom: medium solid #433D3C;  /* 檳榔子染（Binroujizome） */
+  z-index: 2;
 }
 
 li {
   list-style: none;
 }
 
-#logo-img,#signup-btn, #signin-btn {
+#logo-img {
   float:left;
+}
+
+div.user-button {
 }
 
 #signup-btn, #signin-btn, #menu-btn {
