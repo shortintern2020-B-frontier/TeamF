@@ -1,0 +1,55 @@
+/* Created by Yamamoto Sota */
+
+body {
+    background-image: url(img/mainback.svg);
+}
+
+div.cover-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.book-detail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.author {
+    display: inline-block;
+}
+
+div.book-name {
+    display: inline-block;
+}
+
+div.book-info {
+    width: 80%;
+    margin: 0 auto;
+    max-width: 500px;
+}
+
+div.input-form {
+    width: 60%;
+    margin: 0 auto;
+}
+
+input {
+    border: none;
+    outline: none;
+    font-family: sans-serif;
+    font-kerning: normal;
+    letter-spacing: 0.1em;
+    font-size: 1.4rem;
+}
+
+textarea {
+    border: none;
+    outline: none;
+    font-family: sans-serif;
+    font-kerning: normal;
+    letter-spacing: 0.1em;
+    font-size: 1.2rem;
+    line-height: 5.0rem;
+}

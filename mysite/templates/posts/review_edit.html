@@ -11,6 +11,7 @@ Masato Umakoshi: Modify for backend.
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
       <link rel="stylesheet" type="text/css" href="{% static 'common.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'posts/review.css' %}">
       <title>書評投稿画面</title>
     {% endblock head %}
 </head>
@@ -25,20 +26,22 @@ Masato Umakoshi: Modify for backend.
                 <form action="{% url 'review_create' id %}" method="post">
                     {% csrf_token %}
                     <p class="username">
-                    <img src="{% static 'posts/img/bookusagi.png' %}" class="icon" alt="icon" align="middle">
+                    <img src="{% static user.imagechoice %}" width="55px" class="icon" alt="icon" align="middle">
                         {{ user.username }}
                     </p>
-                    <div class="cover-img">
-                        <img src="{{ book.cover_path }}" class="val-book-cover-path">
+                    <div class="book-info">
+                        <div class="cover-img">
+                            <img src="{{ book.cover_path }}" class="val-book-cover-path">
+                        </div>
+                        <div class="book-detail">
+                            <div class="author">
+                                <p>著者：{{ book.author }}　　　</p>
+                            </div>
+                            <div class="book-name">
+                                <p>書名：{{ book.title }}</p>
+                            </div>
+                        </div>
                     </div>
-                    <p>著者</p>
-                    <p>
-                        {{ book.author }}
-                    </p>
-                    <p>書名</p>
-                    <p>
-                        {{ book.title }}
-                    </p>
                     <br><br>
                     <div class="input-form">
                         <!-- 以下のplaceholderは白文字・白背景のため不可視　cssでどうにかして-->
@@ -50,7 +53,8 @@ Masato Umakoshi: Modify for backend.
                         {% else %}
                             <input type="text" name="title" required>
                             <br>
-                            <textarea name="content" rows="8" cols="100" placeholder="この本の書評を書こう" required></textarea>
+                            <br>
+                            <textarea id="textarea" name="content" rows="8" cols="100" placeholder="この本の書評を書こう" required></textarea>
                         {% endif %}
                         <br>
                         <input type="submit" name="btn1" value="投稿する">
@@ -59,7 +63,7 @@ Masato Umakoshi: Modify for backend.
                 </form>
             </main>
         </div>
-      </div>
+    </div>
   {% endblock contents %}
 </body>
 

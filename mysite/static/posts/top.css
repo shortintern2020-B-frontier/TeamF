@@ -46,8 +46,8 @@ main {
   padding: 10px;
   min-width: 13rem;
   max-width: 1000px;
-  height: 45rem;
-  background: #E6E6E6; /* 白鼠（Shironezumi） */
+  height: 40rem;
+  background: #fffffc; /* 胡粉色（Gohuniro） */
   white-space: nowrap;
   border-radius: 1rem;
   position: relative;
